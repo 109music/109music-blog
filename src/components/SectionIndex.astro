@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import Row from './Row.astro';
+import { readingTime } from '../lib/site';
+
+interface Props { id: string; label: string; blurb: string; entries: any[]; }
+const { id, label, blurb, entries } = Astro.props;
+const sorted = entries
+  .filter((e) => !e.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+<Base title={label} description={`${blurb} ${label} from 109MUSIC.`} activeSection={id}>
+  <div class="wrap">
+    <section class="hero">
+      <p class="kicker mono rise">109MUSIC · {label}</p>
+      <h1 class="display rise">{label.split(' ')[0]}<br /><span class="lav">{label.split(' ')[1] ?? ''}</span></h1>
+      <p class="sub rise">{blurb}</p>
+    </section>
+
+    {sorted.length ? (
+      <ul class="rows">
+        {sorted.map((e, i) => (
+          <Row
+            n={i + 1}
+            href={`/${id}/${e.id}/`}
+            title={e.data.title}
+            dek={e.data.dek}
+            date={e.data.date}
+            label={label}
+            minutes={readingTime(e.body)}
+          />
+        ))}
+      </ul>
+    ) : (
+      <p class="empty">Nothing published in this section yet.</p>
+    )}
+  </div>
+</Base>

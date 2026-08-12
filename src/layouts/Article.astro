@@ -1,0 +1,110 @@
+---
+import Base from './Base.astro';
+import IGEmbed from '../components/IGEmbed.astro';
+import { SITE, url, fmtDate, isoDate, readingTime } from '../lib/site';
+
+interface Props {
+  entry: any;
+  sectionId: string;
+  sectionLabel: string;
+}
+const { entry, sectionId, sectionLabel } = Astro.props;
+const d = entry.data;
+const minutes = readingTime(entry.body);
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+
+const schema: any = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: d.title,
+  description: d.dek,
+  datePublished: isoDate(d.date),
+  dateModified: isoDate(d.updated ?? d.date),
+  inLanguage: 'en',
+  articleSection: sectionLabel,
+  keywords: d.tags.join(', '),
+  wordCount: entry.body.trim().split(/\s+/).length,
+  author: { '@type': 'Organization', name: SITE.author, url: SITE.instagram },
+  publisher: { '@type': 'Organization', name: SITE.author, url: new URL(url('/'), Astro.site).href },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+  isAccessibleForFree: true,
+};
+if (d.sources?.length) {
+  schema.citation = d.sources.map((s: any) => ({ '@type': 'CreativeWork', name: s.name, url: s.url }));
+}
+
+const graph: any[] = [schema];
+if (d.faq?.length) {
+  graph.push({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: d.faq.map((f: any) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  });
+}
+---
+<Base
+  title={d.title}
+  description={d.dek}
+  paper={true}
+  ogType="article"
+  schema={graph.length === 1 ? graph[0] : graph}
+  activeSection={sectionId}
+>
+  <div class="masthead">
+    <div class="wrap inner">
+      <span class="pill">{sectionLabel}</span>
+      <h1 class="display">{d.title}</h1>
+      <p class="dek">{d.dek}</p>
+      <div class="facts mono">
+        <span>Published <b>{fmtDate(d.date)}</b></span>
+        {d.updated && <span>Updated <b>{fmtDate(d.updated)}</b></span>}
+        <span><b>{minutes}</b> min read</span>
+        <span>By <b>109MUSIC</b></span>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap article">
+    <div class="body">
+      <slot />
+
+      <IGEmbed permalink={d.igEmbed} caption={`"${d.title}" as a carousel`} />
+
+      {d.faq?.length > 0 && (
+        <section>
+          <h2>Common questions</h2>
+          {d.faq.map((f: any) => (
+            <>
+              <h3>{f.q}</h3>
+              <p>{f.a}</p>
+            </>
+          ))}
+        </section>
+      )}
+
+      {d.sources?.length > 0 && (
+        <section class="sources">
+          <h2 class="display">Sources</h2>
+          <ol>
+            {d.sources.map((s: any) => (
+              <li><a href={s.url} target="_blank" rel="noopener">{s.name}</a></li>
+            ))}
+          </ol>
+        </section>
+      )}
+
+      {d.cta && (
+        <aside class="cta">
+          {d.cta.keyword && <span class="pill">Comment {d.cta.keyword}</span>}
+          <h2>{d.cta.heading}</h2>
+          <p>{d.cta.line}</p>
+          <a class="btn" href={d.cta.buttonUrl} target="_blank" rel="noopener">{d.cta.buttonText} →</a>
+        </aside>
+      )}
+    </div>
+  </main>
+</Base>

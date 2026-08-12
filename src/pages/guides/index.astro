@@ -1,0 +1,6 @@
+---
+import SectionIndex from '../../components/SectionIndex.astro';
+import { getCollection } from 'astro:content';
+const entries = await getCollection('guides');
+---
+<SectionIndex id="guides" label="Guides" blurb="Step-by-step playbooks with real numbers." entries={entries} />

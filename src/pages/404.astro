@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/site';
+---
+<Base title="Page not found" description="That page does not exist on the 109MUSIC blog.">
+  <div class="wrap">
+    <section class="hero">
+      <p class="kicker mono">Error 404</p>
+      <h1 class="display">THIS PAGE<br /><span class="lav">DOESN'T EXIST.</span></h1>
+      <p class="sub">The link is broken or the article moved. Start from the front page.</p>
+      <p style="margin-top:28px"><a class="mono" style="color:var(--lav)" href={url('/')}>← Back to 109MUSIC</a></p>
+    </section>
+  </div>
+</Base>

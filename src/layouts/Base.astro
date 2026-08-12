@@ -1,0 +1,79 @@
+---
+import '../styles/global.css';
+import { SITE, SECTIONS, url } from '../lib/site';
+
+interface Props {
+  title: string;
+  description: string;
+  paper?: boolean;
+  ogType?: string;
+  schema?: object | null;
+  activeSection?: string;
+}
+const {
+  title,
+  description,
+  paper = false,
+  ogType = 'website',
+  schema = null,
+  activeSection = '',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const fullTitle = title === SITE.name ? `${SITE.name} — ${SITE.tagline}` : `${title} | ${SITE.name}`;
+---
+<!doctype html>
+<html lang={SITE.lang}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <meta name="author" content={SITE.author} />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+
+  <meta property="og:type" content={ogType} />
+  <meta property="og:site_name" content={SITE.name} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:locale" content="en_GB" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+
+  <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
+  <link rel="alternate" type="application/rss+xml" title={`${SITE.name} — all articles`} href={url('/rss.xml')} />
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+        href={url('/fonts/archivo-black-latin-400-normal.woff2')} />
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+        href={url('/fonts/inter-latin-500-normal.woff2')} />
+
+  {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
+</head>
+<body class={paper ? 'paper' : ''}>
+  <div class="wrap">
+    <header class="chrome">
+      <a class="wordmark" href={url('/')}>@109MUSIC.CO</a>
+      <nav class="nav">
+        {SECTIONS.map((s) => (
+          <a href={url(`/${s.id}/`)} aria-current={activeSection === s.id ? 'page' : undefined}>{s.label}</a>
+        ))}
+        <a href={SITE.instagram} rel="me noopener" target="_blank">Instagram</a>
+      </nav>
+    </header>
+  </div>
+
+  <slot />
+
+  <div class="wrap">
+    <footer class="foot">
+      <span class="mono">© {new Date().getFullYear()} 109MUSIC · Independent music marketing</span>
+      <span class="mono">
+        <a href={url('/rss.xml')}>RSS</a> · <a href={SITE.instagram} target="_blank" rel="noopener">@109music.co</a> · <a href={SITE.beacons} target="_blank" rel="noopener">Beacons</a>
+      </span>
+    </footer>
+  </div>
+</body>
+</html>

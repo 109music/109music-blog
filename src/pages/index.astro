@@ -1,0 +1,102 @@
+---
+import Base from '../layouts/Base.astro';
+import Row from '../components/Row.astro';
+import { getCollection } from 'astro:content';
+import { SITE, SECTIONS, url, readingTime } from '../lib/site';
+
+const live = (arr: any[]) =>
+  arr.filter((e) => !e.data.draft).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const news = live(await getCollection('news'));
+const guides = live(await getCollection('guides'));
+const cases = live(await getCollection('case-studies'));
+
+const latest = [...news, ...guides, ...cases].sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+)[0];
+
+const buckets = [
+  { id: 'news', label: 'News', entries: news.slice(0, 4) },
+  { id: 'guides', label: 'Guides', entries: guides.slice(0, 4) },
+  { id: 'case-studies', label: 'Case Studies', entries: cases.slice(0, 4) },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      name: SITE.name,
+      url: new URL(url('/'), Astro.site).href,
+      description: SITE.description,
+      sameAs: [SITE.instagram, SITE.beacons],
+    },
+    {
+      '@type': 'WebSite',
+      name: SITE.name,
+      url: new URL(url('/'), Astro.site).href,
+      description: SITE.description,
+      inLanguage: 'en',
+      publisher: { '@type': 'Organization', name: SITE.name },
+    },
+  ],
+};
+---
+<Base title={SITE.name} description={SITE.description} schema={schema}>
+  <div class="wrap">
+    <section class="hero">
+      <p class="kicker mono rise">Independent music marketing · Published weekly</p>
+      <h1 class="display rise">MUSIC<br />MARKETING,<br /><span class="lav">BROKEN DOWN.</span></h1>
+      <p class="sub rise">
+        Release strategy, platform news and real rollout teardowns for independent artists.
+        Every number sourced. Every playbook runnable without a label budget.
+      </p>
+    </section>
+
+    {latest && (
+      <>
+        <div class="sec-head">
+          <h2 class="display">Latest</h2>
+          <a href={url('/rss.xml')}>Subscribe via RSS</a>
+        </div>
+        <ul class="rows">
+          <Row
+            n={1}
+            href={`/${latest.collection}/${latest.id}/`}
+            title={latest.data.title}
+            dek={latest.data.dek}
+            date={latest.data.date}
+            label={SECTIONS.find((s) => s.id === latest.collection)?.label ?? ''}
+            minutes={readingTime(latest.body)}
+          />
+        </ul>
+      </>
+    )}
+
+    {buckets.map((b) => (
+      <>
+        <div class="sec-head">
+          <h2 class="display">{b.label}</h2>
+          <a href={url(`/${b.id}/`)}>All {b.label} →</a>
+        </div>
+        {b.entries.length ? (
+          <ul class="rows">
+            {b.entries.map((e, i) => (
+              <Row
+                n={i + 1}
+                href={`/${b.id}/${e.id}/`}
+                title={e.data.title}
+                dek={e.data.dek}
+                date={e.data.date}
+                label={b.label}
+                minutes={readingTime(e.body)}
+              />
+            ))}
+          </ul>
+        ) : (
+          <p class="empty">Nothing here yet.</p>
+        )}
+      </>
+    ))}
+  </div>
+</Base>

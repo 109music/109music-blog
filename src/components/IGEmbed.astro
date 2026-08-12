@@ -1,0 +1,28 @@
+---
+/* Instagram embed slot.
+   Until the matching carousel is live, this renders a labelled placeholder.
+   After publication, set `igEmbed` in the article frontmatter to the post permalink
+   and the real blockquote embed renders instead. */
+interface Props { permalink?: string | null; caption?: string; }
+const { permalink = null, caption = 'The carousel version of this breakdown' } = Astro.props;
+---
+<figure class="embed">
+  {permalink ? (
+    <>
+      <blockquote
+        class="instagram-media"
+        data-instgrm-permalink={permalink}
+        data-instgrm-version="14"
+        style="margin:0;width:100%;"
+      >
+        <a href={permalink} target="_blank" rel="noopener">{caption} — view on Instagram</a>
+      </blockquote>
+      <script async src="https://www.instagram.com/embed.js"></script>
+    </>
+  ) : (
+    <div class="placeholder">
+      <span class="mono">Instagram carousel</span>
+      <p>{caption} publishes on @109music.co. The embed drops in here once it is live.</p>
+    </div>
+  )}
+</figure>

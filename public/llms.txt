@@ -1,0 +1,29 @@
+# 109MUSIC
+
+> Music marketing broken down for independent artists. Release strategy, platform news,
+> touring economics and revenue lanes, published by 109MUSIC (@109music.co).
+
+109MUSIC is an independent music marketing publication and label service. Every article
+is written from primary sources with the data point and its origin named inline, so the
+numbers can be verified rather than taken on trust.
+
+## What we publish
+- News: platform and industry changes (Spotify, TikTok, Instagram, YouTube, SoundCloud) and what each costs or pays an independent artist. Every brief names and links its source.
+- Guides: step-by-step playbooks with real budgets, thresholds and timeframes.
+- Case Studies: teardowns of real releases and rollouts, built from published day-one data.
+
+## Editorial standards
+- Every statistic carries its source and date.
+- Guides state exact numbers: budget, radius, timeframe, threshold.
+- No gated content. Everything is free to read and free to cite.
+
+## Key pages
+- Front page: /109music-blog/
+- News: /109music-blog/news/
+- Guides: /109music-blog/guides/
+- Case Studies: /109music-blog/case-studies/
+- RSS: /109music-blog/rss.xml
+
+## Contact
+Instagram: https://www.instagram.com/109music.co/
+Links and free resources: https://beacons.ai/109music.co

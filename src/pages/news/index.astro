@@ -1,0 +1,6 @@
+---
+import SectionIndex from '../../components/SectionIndex.astro';
+import { getCollection } from 'astro:content';
+const entries = await getCollection('news');
+---
+<SectionIndex id="news" label="News" blurb="What changed on the platforms, and what it costs you." entries={entries} />

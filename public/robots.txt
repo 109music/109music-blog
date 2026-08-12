@@ -1,0 +1,29 @@
+# 109MUSIC — AI search crawlers are explicitly welcome.
+# Being cited by AI answer engines is a primary distribution channel for this blog.
+
+User-agent: *
+Allow: /
+
+# Answer engines
+User-agent: GPTBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: Claude-Web
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Bingbot
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://109music.github.io/109music-blog/sitemap-index.xml

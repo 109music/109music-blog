@@ -2,7 +2,7 @@
 title: "Market your album like Charli: the no-dead-air rollout"
 dek: "A remix album bridged Brat to the next record, three songs dropped on consecutive days, a B-side surfaced on an alt account, and phone-locked shows kept footage scarce. Four rollout mechanics independent artists can run without the budget."
 date: 2026-08-12
-tags: ["case study", "album rollout", "release strategy", "charli xcx"]
+tags: ["case-study", "release-strategy", "music-marketing"]
 igEmbed: null
 cta:
   heading: "One rollout dissected every week"
@@ -27,6 +27,11 @@ The gap between album cycles is where independent artists lose everything they b
 The bridge here was a remix album plus guest producers, and a public note stating plainly that she was not going away. That combination does two jobs at once: it keeps the catalogue in rotation and it tells the audience explicitly that there is a reason to stay subscribed.
 
 **Your version.** Between records, ship something small every month. Alternate versions, a live take, a collaboration. It does not need to be a single, it needs to exist.
+
+<aside class="pullquote">
+  <p>The expensive part of a rollout is not the campaign. It is rebuilding attention you let go of.</p>
+  <cite>109MUSIC · Move 01</cite>
+</aside>
 
 ## Move 02 · Stagger the drops
 
@@ -54,6 +59,11 @@ Scarcity is the one lever that has become cheaper as everything else got more ex
 The release-day film, the clout-stacked collaborators and lyrics written to be argued about all serve the same function: they give people something to say.
 
 Music that generates opinions travels further than music that generates approval. This is the hardest move to copy honestly, because it cannot be manufactured on demand, but it can be planned for. Ask what somebody would post about your record beyond the fact that it exists.
+
+<aside class="pullquote">
+  <p>Music that generates opinions travels further than music that generates approval.</p>
+  <cite>109MUSIC · Move 04</cite>
+</aside>
 
 ## What this costs an independent artist
 

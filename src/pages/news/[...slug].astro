@@ -1,6 +1,7 @@
 ---
 import Article from '../../layouts/Article.astro';
 import { getCollection, render } from 'astro:content';
+import { sectionOf } from '../../lib/site';
 
 export async function getStaticPaths() {
   const entries = await getCollection('news');
@@ -9,9 +10,10 @@ export async function getStaticPaths() {
     .map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
 }
 
+const s = sectionOf('news')!;
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 ---
-<Article entry={entry} sectionId="news" sectionLabel="News">
+<Article entry={entry} sectionId={s.id} sectionLabel={s.label}>
   <Content />
 </Article>

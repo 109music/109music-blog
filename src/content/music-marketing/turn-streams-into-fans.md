@@ -2,7 +2,7 @@
 title: "How to turn streams into fans"
 dek: "Monthly listeners stopped converting into ticket sales in 2026. Post Malone canceled a tour at 60.6M monthly listeners. Here is the three-move fix independent artists can run without a budget."
 date: 2026-08-12
-tags: ["fanbase", "touring", "music marketing", "superfans"]
+tags: ["music-marketing", "touring", "spotify-growth"]
 igEmbed: null
 cta:
   heading: "Get the rest of the playbooks"
@@ -25,6 +25,12 @@ Chartmetric's August analysis, published as [Blue Dot Fever](https://hmc.chartme
 
 Those artists did not lose their audiences. They lost the assumption that an audience is the same thing as a fanbase.
 
+<div class="statgrid three">
+  <div><span class="figure">60.6M</span><span class="label">Post Malone monthly listeners at cancellation</span></div>
+  <div><span class="figure">26M</span><span class="label">ZAYN monthly listeners at cancellation</span></div>
+  <div><span class="figure">16.5M</span><span class="label">Pussycat Dolls, comeback remix under 180k streams</span></div>
+</div>
+
 <div class="keyfact">
   <span class="mono">The number that matters</span>
   <p>Chartmetric puts a single concert night near 57 dollars before travel. A monthly listener costs nothing. That gap is the entire problem: reach is free to give and expensive to convert.</p>
@@ -45,6 +51,11 @@ A crowd with no name is an audience. A crowd with a name is a community, and com
 This is the cheapest move on the list and the one most independent artists skip because it feels premature. It is not. Naming your listeners gives them a way to refer to themselves, which turns a private listening habit into a public identity. That identity is what gets defended in comment sections and what fills a room on a Tuesday.
 
 Pick a name that comes from your work, not from a marketing session. Use it consistently in captions, in Stories, on merch and from stage. Do it before you think you are big enough.
+
+<aside class="pullquote">
+  <p>A crowd with no name is an audience. A crowd with a name is a community, and communities show up.</p>
+  <cite>109MUSIC · Move 01</cite>
+</aside>
 
 ## Move 02 · Hold one colour
 

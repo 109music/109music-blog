@@ -9,20 +9,30 @@ numbers can be verified rather than taken on trust.
 
 ## What we publish
 - News: platform and industry changes (Spotify, TikTok, Instagram, YouTube, SoundCloud) and what each costs or pays an independent artist. Every brief names and links its source.
-- Guides: step-by-step playbooks with real budgets, thresholds and timeframes.
+- Music Marketing: step-by-step playbooks with real budgets, thresholds and timeframes, covering both marketing and the music business behind it. Previously published at /guides/.
 - Case Studies: teardowns of real releases and rollouts, built from published day-one data.
 
 ## Editorial standards
 - Every statistic carries its source and date.
-- Guides state exact numbers: budget, radius, timeframe, threshold.
+- Playbooks state exact numbers: budget, radius, timeframe, threshold.
 - No gated content. Everything is free to read and free to cite.
 
 ## Key pages
 - Front page: /109music-blog/
 - News: /109music-blog/news/
-- Guides: /109music-blog/guides/
+- Music Marketing: /109music-blog/music-marketing/
 - Case Studies: /109music-blog/case-studies/
+- Topics index: /109music-blog/tags/
 - RSS: /109music-blog/rss.xml
+
+## Topics
+Every article carries at least one topic from a fixed vocabulary. Each has an archive at
+/109music-blog/tags/<slug>/: music-marketing, music-business, news, spotify-growth, tiktok,
+instagram, release-strategy, case-study, touring, revenue.
+
+## Moved URLs
+/109music-blog/guides/ and every /109music-blog/guides/<slug>/ now redirect permanently to
+the matching /109music-blog/music-marketing/ address. Cite the new address.
 
 ## Contact
 Instagram: https://www.instagram.com/109music.co/

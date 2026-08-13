@@ -1,0 +1,50 @@
+---
+/* Sticky reading-progress indicator. Measures the article element, not the page,
+   so the masthead and the footer do not count toward "read". */
+---
+<div class="progress" role="presentation" aria-hidden="true"><i id="progress-bar"></i></div>
+
+<script is:inline>
+  (function () {
+    // This markup sits at the top of <body>, so .article does not exist yet at parse time.
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+
+    function init() {
+      var bar = document.getElementById('progress-bar');
+      var target = document.querySelector('.article');
+      if (!bar || !target) return;
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        bar.style.transition = 'none';
+      }
+
+      var ticking = false;
+
+      function update() {
+        ticking = false;
+        var rect = target.getBoundingClientRect();
+        var start = window.scrollY + rect.top;
+        var span = target.offsetHeight - window.innerHeight;
+        var p = span <= 0
+          ? (window.scrollY >= start ? 1 : 0)
+          : (window.scrollY - start) / span;
+        if (p < 0) p = 0;
+        if (p > 1) p = 1;
+        bar.style.transform = 'scaleX(' + p + ')';
+      }
+
+      function onScroll() {
+        if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      window.addEventListener('load', update);
+      update();
+    }
+  })();
+</script>

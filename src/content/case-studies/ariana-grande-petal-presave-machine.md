@@ -2,7 +2,7 @@
 title: "3 million saves before day one: inside petal's rollout"
 dek: "Ariana Grande entered release day for petal with 3.22M pre-saves and opened with 62.19M Spotify streams, charting all 12 tracks inside 24 hours. The mechanics scale down to an independent release."
 date: 2026-08-12
-tags: ["case study", "release strategy", "pre-save", "spotify"]
+tags: ["case-study", "release-strategy", "spotify-growth"]
 igEmbed: null
 cta:
   keyword: "CALL"
@@ -22,10 +22,13 @@ faq:
 
 The interesting thing about petal is not the size of the numbers. It is that the mechanism producing them is available to an artist with 200 fans.
 
-<div class="keyfact">
-  <span class="mono">Day one</span>
-  <p>3.22M pre-saves banked before release. 62.19M Spotify streams on day one. All 12 tracks charting globally inside 24 hours. Reported by In Music Blog, August 2026.</p>
+<div class="statgrid three">
+  <div><span class="figure">3.22M</span><span class="label">Pre-saves banked before release day</span></div>
+  <div><span class="figure">62.19M</span><span class="label">Spotify streams on day one</span></div>
+  <div><span class="figure">12 / 12</span><span class="label">Tracks charting globally inside 24 hours</span></div>
 </div>
+
+<p class="sourceline"><em>Figures reported by In Music Blog, August 2026.</em></p>
 
 ## Move 01 · The stockpile
 
@@ -42,6 +45,11 @@ For an independent artist the arithmetic is smaller but identical. 200 pre-saves
 Recommendation systems weight rate of change heavily, because rate of change is much harder to fake than a total. A release that gathers 10,000 streams in its first six hours reads as a live event. The same 10,000 spread across three weeks reads as background.
 
 Pre-saves are the only reliable way an artist without a marketing budget can compress plays into that first window on purpose.
+
+<aside class="pullquote">
+  <p>Every pre-save is a stream that has already happened. It just has not been counted yet.</p>
+  <cite>109MUSIC · Move 01</cite>
+</aside>
 
 ## Move 03 · Your version of the same machine
 

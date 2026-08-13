@@ -1,17 +1,14 @@
 ---
-import Article from '../../layouts/Article.astro';
-import { getCollection, render } from 'astro:content';
+/* Retired 2026-08-12: /guides/<slug>/ -> /music-marketing/<slug>/.
+   Driven by LEGACY_GUIDE_SLUGS, not by the live collection, so these stubs keep
+   working even if an article is later renamed, moved or unpublished. */
+import Redirect from '../../layouts/Redirect.astro';
+import { LEGACY_GUIDE_SLUGS, url } from '../../lib/site';
 
-export async function getStaticPaths() {
-  const entries = await getCollection('guides');
-  return entries
-    .filter((e) => !e.data.draft)
-    .map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+export function getStaticPaths() {
+  return LEGACY_GUIDE_SLUGS.map((slug) => ({ params: { slug }, props: { slug } }));
 }
 
-const { entry } = Astro.props;
-const { Content } = await render(entry);
+const { slug } = Astro.props;
 ---
-<Article entry={entry} sectionId="guides" sectionLabel="Guides">
-  <Content />
-</Article>
+<Redirect to={url(`/music-marketing/${slug}/`)} label="Music Marketing" />

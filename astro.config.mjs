@@ -10,6 +10,8 @@ export default defineConfig({
   site: `https://${GH_USER}.github.io`,
   base: `/${GH_REPO}`,
   trailingSlash: 'always',
-  build: { format: 'directory' },   // clean URLs: /guides/slug/
-  integrations: [sitemap()],
+  build: { format: 'directory' },   // clean URLs: /music-marketing/slug/
+  // Retired /guides/ URLs are redirect stubs. They stay reachable forever but must not
+  // be advertised in the sitemap, or Search Console files them as duplicates.
+  integrations: [sitemap({ filter: (page) => !page.includes('/guides/') })],
 });

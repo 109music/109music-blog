@@ -1,7 +1,10 @@
 ---
 import Base from './Base.astro';
 import IGEmbed from '../components/IGEmbed.astro';
-import { SITE, url, fmtDate, isoDate, readingTime } from '../lib/site';
+import TagChips from '../components/TagChips.astro';
+import RelatedArticles from '../components/RelatedArticles.astro';
+import ReadingProgress from '../components/ReadingProgress.astro';
+import { SITE, url, fmtDate, isoDate, readingTime, tagLabel } from '../lib/site';
 
 interface Props {
   entry: any;
@@ -12,6 +15,7 @@ const { entry, sectionId, sectionLabel } = Astro.props;
 const d = entry.data;
 const minutes = readingTime(entry.body);
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const heroGray = d.hero?.treatment !== 'colour';
 
 const schema: any = {
   '@context': 'https://schema.org',
@@ -22,7 +26,7 @@ const schema: any = {
   dateModified: isoDate(d.updated ?? d.date),
   inLanguage: 'en',
   articleSection: sectionLabel,
-  keywords: d.tags.join(', '),
+  keywords: d.tags.map((t: string) => tagLabel(t)).join(', '),
   wordCount: entry.body.trim().split(/\s+/).length,
   author: { '@type': 'Organization', name: SITE.author, url: SITE.instagram },
   publisher: { '@type': 'Organization', name: SITE.author, url: new URL(url('/'), Astro.site).href },
@@ -31,6 +35,9 @@ const schema: any = {
 };
 if (d.sources?.length) {
   schema.citation = d.sources.map((s: any) => ({ '@type': 'CreativeWork', name: s.name, url: s.url }));
+}
+if (d.hero) {
+  schema.image = new URL(url(d.hero.src), Astro.site).href;
 }
 
 const graph: any[] = [schema];
@@ -54,6 +61,8 @@ if (d.faq?.length) {
   schema={graph.length === 1 ? graph[0] : graph}
   activeSection={sectionId}
 >
+  <ReadingProgress slot="progress" />
+
   <div class="masthead">
     <div class="wrap inner">
       <span class="pill">{sectionLabel}</span>
@@ -65,23 +74,42 @@ if (d.faq?.length) {
         <span><b>{minutes}</b> min read</span>
         <span>By <b>109MUSIC</b></span>
       </div>
+      <TagChips tags={d.tags} label="Article topics" />
     </div>
   </div>
 
+  {/* Reserved full-width hero. Stage 2 supplies `hero` in frontmatter; nothing renders until then. */}
+  {d.hero && (
+    <div class="wrap">
+      <figure class="hero-frame">
+        <img src={url(d.hero.src)} alt={d.hero.alt} class={heroGray ? 'grayscale' : ''} fetchpriority="high" decoding="async" />
+      </figure>
+      {d.hero.credit && (
+        <p class="hero-credit mono">
+          {d.hero.creditUrl
+            ? <a href={d.hero.creditUrl} target="_blank" rel="noopener">{d.hero.credit}</a>
+            : d.hero.credit}
+        </p>
+      )}
+    </div>
+  )}
+
   <main class="wrap article">
     <div class="body">
-      <slot />
+      <div class="prose">
+        <slot />
+      </div>
 
       <IGEmbed permalink={d.igEmbed} caption={`"${d.title}" as a carousel`} />
 
       {d.faq?.length > 0 && (
-        <section>
+        <section class="faq">
           <h2>Common questions</h2>
           {d.faq.map((f: any) => (
-            <>
+            <div class="qa">
               <h3>{f.q}</h3>
               <p>{f.a}</p>
-            </>
+            </div>
           ))}
         </section>
       )}
@@ -102,9 +130,20 @@ if (d.faq?.length) {
           {d.cta.keyword && <span class="pill">Comment {d.cta.keyword}</span>}
           <h2>{d.cta.heading}</h2>
           <p>{d.cta.line}</p>
-          <a class="btn" href={d.cta.buttonUrl} target="_blank" rel="noopener">{d.cta.buttonText} →</a>
+          <a class="btn" href={d.cta.buttonUrl} target="_blank" rel="noopener">
+            <span>{d.cta.buttonText}</span><span class="arrow" aria-hidden="true">→</span>
+          </a>
+          {d.cta.keyword && (
+            <p class="fine">Comment {d.cta.keyword} on @109music.co and the link is sent to you</p>
+          )}
         </aside>
       )}
     </div>
   </main>
+
+  {/* Outside <main class="article"> on purpose: the .article rules restyle every h2 and a
+      inside it, which would leak into this module. */}
+  <div class="wrap">
+    <RelatedArticles collection={entry.collection} id={entry.id} tags={d.tags} />
+  </div>
 </Base>

@@ -2,7 +2,7 @@
 title: "4 new ways your music pays in 2026"
 dek: "Four revenue lanes opened for independent artists in one month: paid fan remixes on Spotify through the Merlin deal, TikTok LIVE gifts on original songs, SoundCloud's hand-picked The Upload, and YouTube fan funding that stays at 500 subscribers while ad thresholds double in 2027."
 date: 2026-08-12
-tags: ["music business", "revenue", "royalties", "youtube", "tiktok"]
+tags: ["music-business", "revenue", "tiktok"]
 igEmbed: null
 cta:
   keyword: "REVENUE"
@@ -27,6 +27,12 @@ faq:
 ---
 
 Four separate revenue changes landed inside a single month, and none of them require a label to access. Here is each one with its threshold and its catch.
+
+<div class="statgrid three">
+  <div><span class="figure">~15%</span><span class="label">Of global recorded music now inside Spotify's fan remix add-on, via Merlin</span></div>
+  <div><span class="figure">500</span><span class="label">YouTube subscribers to unlock fan funding, unchanged</span></div>
+  <div><span class="figure">8,000</span><span class="label">Watch hours for YouTube ad revenue from Feb 2027, doubled</span></div>
+</div>
 
 ## Lane 01 · Fans pay to remix your song
 
@@ -62,6 +68,11 @@ That last detail is the point. Almost every discovery surface in music now gates
 The part that matters more for musicians went unchanged: the fan funding tier still opens at 500 subscribers and 3,000 watch hours. That tier carries memberships and Super Thanks, which are direct payments from people who already like you.
 
 **Your move.** Stop treating 4,000 hours as the finish line. At 500 subscribers you can already take money directly from fans, and direct fan payment beats ad revenue per listener at every scale an independent artist operates at.
+
+<aside class="pullquote">
+  <p>Direct fan payment beats ad revenue per listener at every scale an independent artist operates at.</p>
+  <cite>109MUSIC · Lane 04</cite>
+</aside>
 
 ## What these four have in common
 

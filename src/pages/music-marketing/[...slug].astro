@@ -4,13 +4,13 @@ import { getCollection, render } from 'astro:content';
 import { sectionOf } from '../../lib/site';
 
 export async function getStaticPaths() {
-  const entries = await getCollection('case-studies');
+  const entries = await getCollection('music-marketing');
   return entries
     .filter((e) => !e.data.draft)
     .map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
 }
 
-const s = sectionOf('case-studies')!;
+const s = sectionOf('music-marketing')!;
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 ---

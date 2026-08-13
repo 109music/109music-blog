@@ -1,0 +1,46 @@
+---
+import { SITE } from '../lib/site';
+
+/* Permanent redirect stub for a retired URL.
+   GitHub Pages serves static files only, so a real 301 header is not available.
+   This is the strongest equivalent a static host allows: a meta refresh, a canonical
+   pointing at the destination, noindex on the stub, and an immediate JS replace that
+   keeps the old URL out of the browser's back history. Search engines treat this pattern
+   as a permanent redirect. Do not delete these files through any future rename.
+
+   `to` is root-relative (already base-prefixed by url()). The refresh, the JS and the
+   visible link all use it as-is so the stub works on any host, including local preview.
+   Only the canonical uses the absolute production URL, which is what canonicals require. */
+interface Props { to: string; label?: string; }
+const { to, label = '109MUSIC' } = Astro.props;
+const canonical = new URL(to, Astro.site).href;
+---
+<!doctype html>
+<html lang={SITE.lang}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Moved — {label}</title>
+  <meta http-equiv="refresh" content={`0; url=${to}`} />
+  <link rel="canonical" href={canonical} />
+  <meta name="robots" content="noindex, follow" />
+  <meta name="theme-color" content="#0A0A0A" />
+  <script is:inline set:html={`location.replace(${JSON.stringify(to)});`} />
+  <style is:inline>
+    body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+      background:#0A0A0A; color:rgba(255,255,255,0.94);
+      font-family:'Inter',system-ui,sans-serif; font-weight:500; padding:32px; text-align:center; }
+    p { max-width:44ch; line-height:1.6; margin:0 0 18px; }
+    .k { font-family:ui-monospace,Menlo,Consolas,monospace; font-size:11px; letter-spacing:.16em;
+      text-transform:uppercase; color:rgba(255,255,255,0.56); margin-bottom:20px; }
+    a { color:#C59FFD; }
+  </style>
+</head>
+<body>
+  <div>
+    <p class="k">109MUSIC · This page moved</p>
+    <p>Guides is now Music Marketing. You are being sent to the new address.</p>
+    <p><a href={to}>Continue to the article →</a></p>
+  </div>
+</body>
+</html>

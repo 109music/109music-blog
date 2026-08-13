@@ -2,7 +2,7 @@
 title: "How to sell out your next show on 250 dollars"
 dek: "A three-step Instagram ad plan for independent artists: a lifetime budget of 100 to 250 dollars per show, launched two to three weeks out, targeted 10 to 60 miles around the venue, tracked through a pixel you control."
 date: 2026-08-12
-tags: ["touring", "meta ads", "instagram ads", "ticket sales"]
+tags: ["touring", "instagram", "music-marketing"]
 igEmbed: null
 cta:
   keyword: "CALL"
@@ -55,6 +55,11 @@ Sell tickets through a page you control the tracking on, such as [Eventbrite wit
 
 That single number changes every decision. It tells you whether to scale the spend, which creative to kill, and whether the market is worth returning to next tour.
 
+<aside class="pullquote">
+  <p>Once purchases fire back into the ad account, you stop optimising for clicks and start seeing cost per ticket.</p>
+  <cite>109MUSIC · Step 03</cite>
+</aside>
+
 ## The creative that works
 
 Run 5 to 10 variations of live footage, not posed photos. Put the city and date on screen in the first second, because most impressions never get audio. Vertical, under 15 seconds, one clear line of text.
@@ -64,5 +69,10 @@ Keep placements to Instagram only at this budget. Spreading 200 dollars across e
 ## Reading the result
 
 Check the numbers nightly and compare cost per purchase against your ticket price. If a 20 dollar ticket costs you 4 dollars to sell, the campaign is working and you should push more budget into the winning creative. If it costs 18 dollars, the problem is usually the market or the offer, not the ad.
+
+<div class="statgrid">
+  <div><span class="figure">4 USD</span><span class="label">Cost per ticket on a 20 dollar ticket · scale the winning creative</span></div>
+  <div><span class="figure">18 USD</span><span class="label">Cost per ticket on the same ticket · the market or the offer is wrong, not the ad</span></div>
+</div>
 
 One honest caveat: ads amplify demand, they do not create it. If nobody in that city is listening yet, no budget fixes the room. Build the audience first, then spend money to convert the audience you already have.

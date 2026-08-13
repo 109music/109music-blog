@@ -1,6 +1,9 @@
 ---
 import SectionIndex from '../../components/SectionIndex.astro';
 import { getCollection } from 'astro:content';
+import { sectionOf } from '../../lib/site';
+
+const s = sectionOf('case-studies')!;
 const entries = await getCollection('case-studies');
 ---
-<SectionIndex id="case-studies" label="Case Studies" blurb="How a real rollout actually worked." entries={entries} />
+<SectionIndex id={s.id} label={s.label} blurb={s.blurb} entries={entries} />

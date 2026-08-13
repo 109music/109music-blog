@@ -2,7 +2,7 @@
 title: "EU AI Act labeling rules are now in force"
 dek: "Since 2 August 2026, AI-generated or AI-edited audio and video distributed in the EU must be labeled, with machine-readable markings required. The rules affect any artist using generative tools in their music or their content."
 date: 2026-08-10
-tags: ["ai music", "regulation", "eu ai act"]
+tags: ["news", "music-business"]
 igEmbed: null
 sources:
   - name: "European Commission: AI Act regulatory framework"
@@ -15,4 +15,4 @@ For working musicians this cuts two ways. If you use generative tools, for artwo
 
 Platforms moved quickly behind it. Spotify announced its AI Persona badges nine days later, on 11 August. That sequence is worth noting: regulation set the deadline, and the platforms shipped inside two weeks.
 
-What this means for your next release, and the recommendation slots freed up by the cleanup, is broken down in [what Spotify's 75 million track purge means for you](/109music-blog/guides/spotify-ai-purge-what-it-means/).
+What this means for your next release, and the recommendation slots freed up by the cleanup, is broken down in [what Spotify's 75 million track purge means for you](/109music-blog/music-marketing/spotify-ai-purge-what-it-means/).

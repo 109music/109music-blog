@@ -2,24 +2,24 @@
 import Base from '../layouts/Base.astro';
 import Row from '../components/Row.astro';
 import { getCollection } from 'astro:content';
-import { SITE, SECTIONS, url, readingTime } from '../lib/site';
+import { SITE, SECTIONS, TAGS, url, readingTime, labelOf } from '../lib/site';
 
 const live = (arr: any[]) =>
   arr.filter((e) => !e.data.draft).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-const news = live(await getCollection('news'));
-const guides = live(await getCollection('guides'));
-const cases = live(await getCollection('case-studies'));
+const buckets: { id: string; label: string; entries: any[] }[] = [];
+const everything: any[] = [];
+for (const s of SECTIONS) {
+  const entries = live(await getCollection(s.id as any));
+  everything.push(...entries);
+  buckets.push({ id: s.id, label: s.label, entries: entries.slice(0, 4) });
+}
 
-const latest = [...news, ...guides, ...cases].sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-)[0];
+const latest = [...everything].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())[0];
 
-const buckets = [
-  { id: 'news', label: 'News', entries: news.slice(0, 4) },
-  { id: 'guides', label: 'Guides', entries: guides.slice(0, 4) },
-  { id: 'case-studies', label: 'Case Studies', entries: cases.slice(0, 4) },
-];
+const tagCounts = new Map<string, number>();
+for (const e of everything) for (const t of e.data.tags) tagCounts.set(t, (tagCounts.get(t) ?? 0) + 1);
+const topTags = TAGS.filter((t) => (tagCounts.get(t.slug) ?? 0) > 0);
 
 const schema = {
   '@context': 'https://schema.org',
@@ -66,8 +66,9 @@ const schema = {
             title={latest.data.title}
             dek={latest.data.dek}
             date={latest.data.date}
-            label={SECTIONS.find((s) => s.id === latest.collection)?.label ?? ''}
+            label={labelOf(latest.collection)}
             minutes={readingTime(latest.body)}
+            hero={latest.data.hero}
           />
         </ul>
       </>
@@ -90,6 +91,7 @@ const schema = {
                 date={e.data.date}
                 label={b.label}
                 minutes={readingTime(e.body)}
+                hero={e.data.hero}
               />
             ))}
           </ul>
@@ -98,5 +100,21 @@ const schema = {
         )}
       </>
     ))}
+
+    {topTags.length > 0 && (
+      <>
+        <div class="sec-head">
+          <h2 class="display">Topics</h2>
+          <a href={url('/tags/')}>All topics →</a>
+        </div>
+        <nav class="chips" aria-label="Topics" style="margin-top:22px">
+          {topTags.map((t) => (
+            <a class="chip" href={url(`/tags/${t.slug}/`)}>
+              {t.label}<span class="n">{tagCounts.get(t.slug)}</span>
+            </a>
+          ))}
+        </nav>
+      </>
+    )}
   </div>
 </Base>

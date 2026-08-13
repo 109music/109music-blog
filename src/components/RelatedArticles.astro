@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import { SECTIONS, url, fmtDate, labelOf } from '../lib/site';
+
+/* Related reading. Ranked by shared tags first, then same section, then recency.
+   Tags do the topic work here, which is the whole point of the vocabulary. */
+interface Props { collection: string; id: string; tags: string[]; limit?: number; }
+const { collection, id, tags, limit = 3 } = Astro.props;
+
+const all: any[] = [];
+for (const s of SECTIONS) {
+  const entries = await getCollection(s.id as any);
+  for (const e of entries) {
+    if (e.data.draft) continue;
+    if (e.collection === collection && e.id === id) continue;
+    all.push(e);
+  }
+}
+
+const score = (e: any) => {
+  const shared = e.data.tags.filter((t: string) => tags.includes(t)).length;
+  return shared * 10 + (e.collection === collection ? 3 : 0);
+};
+
+const picks = all
+  .sort((a, b) => score(b) - score(a) || b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, limit);
+---
+{picks.length > 0 && (
+  <section class="related" aria-labelledby="related-h">
+    <div class="sec-head">
+      <h2 class="display" id="related-h">Keep reading</h2>
+      <a href={url('/tags/')}>All topics →</a>
+    </div>
+    <ul class="grid">
+      {picks.map((e) => (
+        <li class="card">
+          <a href={url(`/${e.collection}/${e.id}/`)}>
+            <span class="kick">{labelOf(e.collection)}</span>
+            <h3>{e.data.title}</h3>
+            <p>{e.data.dek.length > 132 ? `${e.data.dek.slice(0, 132).trimEnd()}…` : e.data.dek}</p>
+            <span class="when">{fmtDate(e.data.date)}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}

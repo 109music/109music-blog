@@ -1,9 +1,21 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { TAG_SLUGS } from './lib/site';
 
 const source = z.object({
   name: z.string(),
   url: z.string().url(),
+});
+
+/* Hero imagery lands in Stage 2. The field exists now so the index and article
+   layouts already reserve the geometry, and Stage 2 is a data change, not a rebuild. */
+const hero = z.object({
+  src: z.string(),
+  alt: z.string(),
+  credit: z.string().optional(),
+  creditUrl: z.string().url().optional(),
+  // 'colour' opts one article out of the default grayscale treatment.
+  treatment: z.enum(['grayscale', 'colour']).default('grayscale'),
 });
 
 const base = z.object({
@@ -12,7 +24,9 @@ const base = z.object({
   dek: z.string(),
   date: z.coerce.date(),
   updated: z.coerce.date().optional(),
-  tags: z.array(z.string()).default([]),
+  // Controlled vocabulary only. An unlisted tag fails the build on purpose.
+  tags: z.array(z.enum(TAG_SLUGS)).min(1),
+  hero: hero.nullable().default(null),
   // Beacons comment-keyword CTA (must already have a live automation) or a plain link CTA
   cta: z
     .object({
@@ -38,6 +52,7 @@ const mk = (dir: string) =>
 
 export const collections = {
   news: mk('news'),
-  guides: mk('guides'),
+  // Renamed from `guides` on 2026-08-12. Old URLs redirect from src/pages/guides/.
+  'music-marketing': mk('music-marketing'),
   'case-studies': mk('case-studies'),
 };

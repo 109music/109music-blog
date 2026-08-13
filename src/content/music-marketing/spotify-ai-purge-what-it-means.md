@@ -2,7 +2,7 @@
 title: "Spotify deleted 75 million tracks. What it means for you"
 dek: "Spotify removed about 75 million spam and AI-generated uploads in 12 months and begins badging AI acts in mid-September 2026. Badged profiles are excluded from personalised recommendations by default, which hands recommendation slots back to human catalogues."
 date: 2026-08-12
-tags: ["spotify", "ai music", "streaming", "algorithm"]
+tags: ["spotify-growth", "music-business"]
 igEmbed: null
 cta:
   heading: "We track what the platforms change"
@@ -44,11 +44,22 @@ When payouts grew from 1 billion dollars in 2014 to 10 billion in 2024, mass-upl
 
 Understanding the motive matters, because it tells you how durable the change is. Policies driven by platform economics and regulation tend to stick. Policies driven by goodwill do not.
 
+<div class="stat">
+  <span class="figure">10x</span>
+  <span class="label">Spotify royalty pool growth, 2014 to 2024</span>
+  <p>From 1 billion dollars to 10 billion. Fraud followed the money, which is why the cleanup is durable: it protects Spotify's own economics, not just yours.</p>
+</div>
+
 ## What it changes for an independent artist
 
 Recommendation slots are finite. Every algorithmic playlist, every Discover Weekly position and every autoplay queue has a fixed number of places, and for two years those places were being taken by uploads that existed only to farm fractions of a cent.
 
 Removing 75 million of them, then excluding badged synthetic acts from personalised recommendations by default, does not guarantee you anything. It changes the denominator. Fewer entries compete for the same slots, and the competition that remains is more likely to be somebody who actually made something.
+
+<aside class="pullquote">
+  <p>This did not guarantee you anything. It changed the denominator.</p>
+  <cite>109MUSIC · What it changes</cite>
+</aside>
 
 ## Three things to do before mid-September
 

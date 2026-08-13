@@ -1,0 +1,81 @@
+---
+import Base from '../../layouts/Base.astro';
+import Row from '../../components/Row.astro';
+import { getCollection } from 'astro:content';
+import { SECTIONS, TAGS, url, readingTime, labelOf } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const bySlug = new Map<string, any[]>();
+  for (const s of SECTIONS) {
+    const entries = await getCollection(s.id as any);
+    for (const e of entries) {
+      if (e.data.draft) continue;
+      for (const t of e.data.tags) {
+        if (!bySlug.has(t)) bySlug.set(t, []);
+        bySlug.get(t)!.push(e);
+      }
+    }
+  }
+  // Every vocabulary term gets a page, including empty ones. A chip must never 404.
+  return TAGS.map((t) => ({
+    params: { tag: t.slug },
+    props: {
+      tag: t,
+      entries: (bySlug.get(t.slug) ?? []).sort(
+        (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+      ),
+    },
+  }));
+}
+
+const { tag, entries } = Astro.props;
+const description = `${tag.blurb} Every 109MUSIC article tagged ${tag.label}.`;
+const words = tag.label.split(' ');
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: tag.label,
+  description,
+  url: new URL(url(`/tags/${tag.slug}/`), Astro.site).href,
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: entries.map((e: any, i: number) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: e.data.title,
+      url: new URL(url(`/${e.collection}/${e.id}/`), Astro.site).href,
+    })),
+  },
+};
+---
+<Base title={tag.label} description={description} activeSection="tags" schema={schema}>
+  <div class="wrap">
+    <section class="hero">
+      <p class="kicker mono rise"><a href={url('/tags/')} style="text-decoration:none">109MUSIC · Topics</a></p>
+      <h1 class="display rise">
+        {words[0]}{words[1] && <><br /><span class="lav">{words.slice(1).join(' ')}</span></>}
+      </h1>
+      <p class="sub rise">{tag.blurb}</p>
+    </section>
+
+    {entries.length ? (
+      <ul class="rows">
+        {entries.map((e: any, i: number) => (
+          <Row
+            n={i + 1}
+            href={`/${e.collection}/${e.id}/`}
+            title={e.data.title}
+            dek={e.data.dek}
+            date={e.data.date}
+            label={labelOf(e.collection)}
+            minutes={readingTime(e.body)}
+            hero={e.data.hero}
+          />
+        ))}
+      </ul>
+    ) : (
+      <p class="empty">Nothing tagged {tag.label} yet. <a class="lav" href={url('/tags/')}>Back to all topics →</a></p>
+    )}
+  </div>
+</Base>

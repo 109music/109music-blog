@@ -1,6 +1,6 @@
 ---
-import SectionIndex from '../../components/SectionIndex.astro';
-import { getCollection } from 'astro:content';
-const entries = await getCollection('guides');
+/* Retired 2026-08-12: /guides/ -> /music-marketing/. Keep this stub permanently. */
+import Redirect from '../../layouts/Redirect.astro';
+import { url } from '../../lib/site';
 ---
-<SectionIndex id="guides" label="Guides" blurb="Step-by-step playbooks with real numbers." entries={entries} />
+<Redirect to={url('/music-marketing/')} label="Music Marketing" />

@@ -1038,3 +1038,62 @@ body {
       synthesise a fake bold on top of an already-black face, thickening the
       counters. The hero must ask for 400 and let the face do the work. */
 .hero h1.wordmark-face { font-weight: 400; }
+
+/* ---------- Vertical rhythm, corrected ----------
+   The 144px block padding was copied from the reference, but the reference puts it
+   between DENSE blocks — multi-column grids, twelve service cards. Ours are a heading
+   and three rows. Worse, it applied top AND bottom, so adjacent sections summed to
+   288px, and component margins stacked on top: measured gaps of 287–434px on desktop.
+
+   One token now owns block separation, applied on one side only, and the components
+   inside stop adding their own. */
+:root { --block-gap: clamp(26px, 3.4vw, 50px); }
+
+.wrap > section { padding: 0 0 var(--block-gap); }
+.wrap > section + section { padding-top: var(--block-gap); }
+.wrap > section:first-child { padding-top: clamp(28px, 4vw, 56px); }
+.wrap > section:last-child { padding-bottom: clamp(34px, 5vw, 80px); }
+
+/* Components no longer add separation of their own — the section owns it. */
+.wrap > section > .rows { margin-top: 18px; }
+.wrap > section > .wire { margin-top: 18px; }
+.startwhere .momentnav { margin-top: 20px; }
+.leadstory .leadcard { margin-top: 16px; }
+.sec-intro { margin-top: 10px; }
+
+/* Slabs are their own block: the padding IS the block, so it can be generous, but
+   148px each side around four lines of text read as an unfinished page. */
+.slab { padding: clamp(40px, 5.6vw, 76px) 0; }
+.slab--tight { padding: clamp(30px, 4.4vw, 58px) 0; }
+.lightband { padding: clamp(30px, 4.4vw, 58px) 0; }
+
+/* The section-rhythm rules above were later in the cascade than the original
+   "a slab supplies its own rhythm" rule, so slab padding and section padding were
+   stacking: 96 + 56 on one side of every slab boundary. Re-assert it, last word. */
+.slab .wrap > section,
+.lightband .wrap > section {
+  padding-top: 0; padding-bottom: 0; border-top: 0;
+}
+
+/* Site header — black across the whole site so it reads as one piece with the hero
+   instead of leaving a pale strip cutting the top of the page. */
+.sitehead { padding: 0; }
+.sitehead .chrome { border-bottom: 1px solid var(--on-dark-rule); }
+.sitehead .wordmark { color: var(--on-dark); }
+.sitehead .wordmark:hover { color: var(--lav); }
+.sitehead .nav a { color: var(--on-dark-mute); }
+.sitehead .nav a:hover, .sitehead .nav a[aria-current='page'] { color: var(--lav); border-color: var(--lav); }
+
+/* News wire: the date carries the accent. It is the field that orders a wire and it
+   was the faintest thing in the row. Lavender indexes without competing with the
+   headline, and leaves the headline's own lavender free to mean hover. */
+.slab .wire-date { color: var(--lav); }
+
+/* Section h1 accent word: on a light band lavender fails contrast and deep purple is
+   out by decision, so the word sets in ink and the lavender rule below carries it. */
+.lightband .hero h1 .lav { color: var(--ink); }
+
+/* The hero keeps its own generous padding — it is the one block that earns it. */
+.slab .wrap > section.hero { padding-top: clamp(20px, 3vw, 44px); padding-bottom: clamp(20px, 3vw, 40px); }
+/* Cards already carry internal padding; the section must not add a second helping. */
+.wrap > section.leadstory { padding-bottom: var(--block-gap); }

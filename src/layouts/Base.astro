@@ -61,7 +61,8 @@ const fullTitle = title === SITE.name ? `${SITE.name} — ${SITE.tagline}` : `${
 <body class={paper ? 'paper' : ''}>
   <slot name="progress" />
 
-  <div class="wrap">
+  <div class="slab sitehead">
+   <div class="wrap">
     <header class="chrome">
       <a class="wordmark" href={url('/')}>@109MUSIC.CO</a>
       <nav class="nav" aria-label="Sections">
@@ -71,6 +72,7 @@ const fullTitle = title === SITE.name ? `${SITE.name} — ${SITE.tagline}` : `${
         <a href={SITE.instagram} rel="me noopener" target="_blank">Instagram</a>
       </nav>
     </header>
+   </div>
   </div>
 
   <slot />

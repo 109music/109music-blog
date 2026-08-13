@@ -1,0 +1,88 @@
+---
+/* Pagefind overlay. The index is built from the compiled HTML in dist/ by the build
+   script, so it regenerates on every deploy with no extra workflow step. The UI is
+   ours rather than Pagefind's default so it obeys the palette and the accent budget. */
+---
+<div class="searchoverlay" data-search hidden>
+  <div class="searchpanel" role="dialog" aria-modal="true" aria-label="Search 109MUSIC">
+    <div class="searchbar">
+      <svg viewBox="0 0 20 20" aria-hidden="true" width="17" height="17">
+        <circle cx="9" cy="9" r="6.2" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M13.6 13.6 L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <input type="search" data-search-input placeholder="Search articles, news, playbooks" aria-label="Search" autocomplete="off" />
+      <button type="button" data-search-close aria-label="Close search">ESC</button>
+    </div>
+    <div class="searchresults" data-search-results aria-live="polite"></div>
+  </div>
+</div>
+
+<script is:inline>
+  /* is:inline keeps Vite out of this file. Without it the bundler rewrites the dynamic
+     import into its preload helper and injects a __VITE_PRELOAD__ placeholder for a
+     module that does not exist until pagefind runs at the very end of the build, so the
+     import throws at runtime and the overlay silently returns nothing. */
+  /* is:inline runs at parse time, and this component sits above the header, so the
+     open button does not exist yet. Wire everything once the DOM is complete. */
+  document.addEventListener('DOMContentLoaded', function () {
+  const overlay = document.querySelector('[data-search]');
+  const input = document.querySelector('[data-search-input]');
+  const results = document.querySelector('[data-search-results]');
+  let pagefind = null, lastFocus = null, timer = null;
+
+  const SECTION = (u) => {
+    if (u.includes('/news/')) return 'News';
+    if (u.includes('/music-marketing/')) return 'Music Marketing';
+    if (u.includes('/case-studies/')) return 'Case Studies';
+    if (u.includes('/resources/')) return 'Resources';
+    if (u.includes('/services/') || u.includes('/submit-your-track/')) return 'Services';
+    if (u.includes('/tags/')) return 'Topics';
+    return '109MUSIC';
+  };
+
+  async function open() {
+    lastFocus = document.activeElement;
+    overlay.hidden = false;
+    document.body.style.overflow = 'hidden';
+    input.focus();
+    if (!pagefind) {
+      try { pagefind = await import('/pagefind/pagefind.js'); await pagefind.options({ excerptLength: 22 }); }
+      catch (e) { results.innerHTML = '<p class="searchnote">Search index not available in dev. It is built on deploy.</p>'; }
+    }
+  }
+  function close() {
+    overlay.hidden = true;
+    document.body.style.overflow = '';
+    input.value = ''; results.innerHTML = '';
+    if (lastFocus) lastFocus.focus();
+  }
+
+  document.querySelectorAll('[data-search-open]').forEach((b) => b.addEventListener('click', open));
+  document.querySelector('[data-search-close]').addEventListener('click', close);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !overlay.hidden) close();
+    if ((e.key === '/' || (e.key === 'k' && (e.metaKey || e.ctrlKey))) && overlay.hidden
+        && !/input|textarea/i.test(document.activeElement.tagName)) { e.preventDefault(); open(); }
+  });
+
+  input.addEventListener('input', () => {
+    clearTimeout(timer);
+    timer = setTimeout(run, 160);
+  });
+
+  async function run() {
+    const q = input.value.trim();
+    if (!pagefind || q.length < 2) { results.innerHTML = ''; return; }
+    const search = await pagefind.search(q);
+    const items = await Promise.all(search.results.slice(0, 8).map((r) => r.data()));
+    if (!items.length) { results.innerHTML = `<p class="searchnote">Nothing for “${q}”.</p>`; return; }
+    results.innerHTML = items.map((d) => `
+      <a class="searchhit" href="${d.url}">
+        <span class="searchsec mono">${SECTION(d.url)}</span>
+        <span class="searchttl">${d.meta.title ?? d.url}</span>
+        <span class="searchexc">${d.excerpt}</span>
+      </a>`).join('');
+  }
+  });
+</script>

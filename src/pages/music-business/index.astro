@@ -18,9 +18,16 @@ const all = (
   )
 ).flat();
 
-const sorted = all
+const tagged = all
   .filter(({ entry }) => !entry.data.draft && entry.data.tags.includes('music-business'))
   .sort((a, b) => b.entry.data.date.valueOf() - a.entry.data.date.valueOf());
+
+/* Two blocks, derived — no extra frontmatter, no second home for any article.
+   Evergreen = the pieces that explain how the business works and do not expire.
+   Business news = the same subject arriving as a dated event, which News also carries. */
+const evergreen = tagged.filter(({ collection }) => collection !== 'news');
+const businessNews = tagged.filter(({ collection }) => collection === 'news');
+const sorted = tagged;
 
 const present = orderTags([...new Set(sorted.flatMap(({ entry }) => entry.data.tags))]);
 ---
@@ -41,23 +48,41 @@ const present = orderTags([...new Set(sorted.flatMap(({ entry }) => entry.data.t
   </div>
 
   <div class="wrap">
-    {sorted.length ? (
-      <ul class="rows">
-        {sorted.map(({ entry, collection }, i) => (
-          <Row
-            n={i + 1}
-            href={`/${collection}/${entry.id}/`}
-            title={entry.data.title}
-            dek={entry.data.dek}
-            date={entry.data.date}
-            label={labelOf(collection)}
-            minutes={readingTime(entry.body)}
-            hero={entry.data.hero}
-          />
-        ))}
-      </ul>
-    ) : (
-      <p class="empty">Nothing filed under Music Business yet.</p>
-    )}
+    <section>
+      <div class="sec-head">
+        <h2 class="display">How it works</h2>
+      </div>
+      <p class="sec-intro">
+        The pieces that explain the machinery. These do not expire.
+      </p>
+      {evergreen.length ? (
+        <ul class="rows">
+          {evergreen.map(({ entry, collection }, i) => (
+            <Row n={i + 1} href={`/${collection}/${entry.id}/`} title={entry.data.title}
+                 dek={entry.data.dek} date={entry.data.date} label={labelOf(collection)}
+                 minutes={readingTime(entry.body)} hero={entry.data.hero} />
+          ))}
+        </ul>
+      ) : (<p class="empty">Nothing filed here yet.</p>)}
+    </section>
+
+    <section>
+      <div class="sec-head">
+        <h2 class="display">Business news</h2>
+        <a href={url('/news/')}>All news →</a>
+      </div>
+      <p class="sec-intro">
+        The same subject as it happens. These also appear in News, in date order.
+      </p>
+      {businessNews.length ? (
+        <ul class="rows">
+          {businessNews.map(({ entry, collection }, i) => (
+            <Row n={i + 1} href={`/${collection}/${entry.id}/`} title={entry.data.title}
+                 dek={entry.data.dek} date={entry.data.date} label={labelOf(collection)}
+                 minutes={readingTime(entry.body)} hero={entry.data.hero} />
+          ))}
+        </ul>
+      ) : (<p class="empty">No business news yet.</p>)}
+    </section>
   </div>
 </Base>

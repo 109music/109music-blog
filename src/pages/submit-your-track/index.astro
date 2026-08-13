@@ -1,0 +1,48 @@
+---
+import Base from '../../layouts/Base.astro';
+import { url, wa } from '../../lib/site';
+/* Stripe Payment Link goes here in Phase 2. Until it exists the page routes to
+   WhatsApp rather than showing a dead button. */
+const STRIPE_LINK: string | null = null;
+---
+<Base title="Submit your track" description="Playlist pitching for one track, 5 EUR. No bots, no bought placements." activeSection="submit">
+  <div class="slab">
+   <div class="wrap">
+    <section class="hero">
+      <p class="kicker mono rise">109MUSIC · Playlisting</p>
+      <h1 class="display rise">Submit your<br /><span class="lav">track</span></h1>
+      <p class="statement rise">
+        One track, pitched to real curators for <b>5 EUR</b>. No bots, no bought placements,
+        and you get the list of who was pitched.
+      </p>
+      <div class="hero-cta rise">
+        {STRIPE_LINK ? (
+          <a class="btn" href={STRIPE_LINK}><span>Pay 5 EUR and submit</span><span class="arrow" aria-hidden="true">→</span></a>
+        ) : (
+          <a class="btn" href={wa('playlisting')} target="_blank" rel="noopener">
+            <span>Ask about playlisting</span><span class="arrow" aria-hidden="true">→</span>
+          </a>
+        )}
+      </div>
+    </section>
+   </div>
+  </div>
+
+  <div class="wrap">
+    <section>
+      <div class="sec-head"><h2 class="display">What you get</h2></div>
+      <ul class="ticks">
+        <li>Your track pitched to curators who actually programme your genre</li>
+        <li>The list of who was pitched, so you can judge the work</li>
+        <li>An honest read on whether the track is ready, before we pitch it</li>
+      </ul>
+    </section>
+    <section>
+      <div class="sec-head"><h2 class="display">What you do not get</h2></div>
+      <ul class="ticks">
+        <li>Guaranteed placements. Anyone promising those is buying them</li>
+        <li>Bot streams, or playlists whose listeners are not real</li>
+      </ul>
+    </section>
+  </div>
+</Base>

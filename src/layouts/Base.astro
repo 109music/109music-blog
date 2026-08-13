@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
-import { SITE, NAV, url } from '../lib/site';
+import { SITE, NAV, NAV_CTA, FOOT_NAV, url } from '../lib/site';
+import Search from '../components/Search.astro';
 
 interface Props {
   title: string;
@@ -59,6 +60,7 @@ const fullTitle = title === SITE.name ? `${SITE.name} — ${SITE.tagline}` : `${
   <slot name="head" />
 </head>
 <body class={paper ? 'paper' : ''}>
+  <Search />
   <slot name="progress" />
 
   <div class="slab sitehead">
@@ -69,7 +71,13 @@ const fullTitle = title === SITE.name ? `${SITE.name} — ${SITE.tagline}` : `${
         {NAV.map((n) => (
           <a href={url(n.href)} aria-current={activeSection === n.id ? 'page' : undefined}>{n.label}</a>
         ))}
-        <a href={SITE.instagram} rel="me noopener" target="_blank">Instagram</a>
+        <button class="searchbtn" type="button" data-search-open aria-label="Search" aria-haspopup="dialog">
+          <svg viewBox="0 0 20 20" aria-hidden="true" width="15" height="15">
+            <circle cx="9" cy="9" r="6.2" fill="none" stroke="currentColor" stroke-width="2"/>
+            <path d="M13.6 13.6 L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <a class="navcta" href={url(NAV_CTA.href)}>{NAV_CTA.label} <span aria-hidden="true">→</span></a>
       </nav>
     </header>
    </div>
@@ -82,7 +90,7 @@ const fullTitle = title === SITE.name ? `${SITE.name} — ${SITE.tagline}` : `${
     <footer class="foot">
       <span class="mono">© {new Date().getFullYear()} 109MUSIC · Independent music marketing</span>
       <span class="mono">
-        <a href={url('/rss.xml')}>RSS</a> · <a href={SITE.instagram} target="_blank" rel="noopener">@109music.co</a> · <a href={SITE.beacons} target="_blank" rel="noopener">Beacons</a>
+        {FOOT_NAV.map((f) => (<><a href={url(f.href)}>{f.label}</a> · </>))}<a href={SITE.instagram} target="_blank" rel="noopener">@109music.co</a> · <a href={SITE.beacons} target="_blank" rel="noopener">Beacons</a>
       </span>
     </footer>
    </div>

@@ -80,7 +80,19 @@ export const NAV = [
   { href: '/music-marketing/', label: 'Music Marketing', id: 'music-marketing' },
   { href: '/music-business/', label: 'Music Business', id: 'music-business' },
   { href: '/case-studies/', label: 'Case Studies', id: 'case-studies' },
-  { href: '/tags/', label: 'Topics', id: 'tags' },
+  { href: '/resources/', label: 'Resources', id: 'resources' },
+  { href: '/services/', label: 'Services', id: 'services' },
+] as const;
+
+/* The one conversion point in the header, styled as a button rather than a link so it
+   stops competing with six editorial sections it would always lose to. */
+export const NAV_CTA = { href: '/submit-your-track/', label: 'Submit your track' };
+
+/* Second tier. Topics is navigation of the second order — you reach it from a section,
+   not from the masthead — and the rest are exits from the site. */
+export const FOOT_NAV = [
+  { href: '/tags/', label: 'Topics' },
+  { href: '/rss.xml', label: 'RSS' },
 ] as const;
 
 export const sectionOf = (id: string) =>

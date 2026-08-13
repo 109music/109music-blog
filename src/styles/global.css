@@ -1097,3 +1097,62 @@ body {
 .slab .wrap > section.hero { padding-top: clamp(20px, 3vw, 44px); padding-bottom: clamp(20px, 3vw, 40px); }
 /* Cards already carry internal padding; the section must not add a second helping. */
 .wrap > section.leadstory { padding-bottom: var(--block-gap); }
+
+/* Header CTA + search button */
+.navcta {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--lav); color: var(--ink) !important;
+  font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; padding: 9px 14px; text-decoration: none; border: 0 !important;
+  transition: background-color .25s var(--ease), gap .25s var(--ease);
+}
+.navcta:hover { background: var(--white); gap: 11px; }
+.searchbtn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; padding: 0; background: transparent; cursor: pointer;
+  border: 1px solid var(--on-dark-rule); color: var(--on-dark-mute); border-radius: 999px;
+  transition: color .25s var(--ease), border-color .25s var(--ease);
+}
+.searchbtn:hover { color: var(--lav); border-color: var(--lav); }
+
+/* Tick list for service and product pages */
+.ticks { list-style: none; margin: 18px 0 24px; padding: 0; display: grid; gap: 10px; max-width: 60ch; }
+.ticks li { position: relative; padding-left: 26px; line-height: 1.55; }
+.ticks li::before {
+  content: ''; position: absolute; left: 0; top: 0.55em; width: 12px; height: 2px;
+  background: var(--lav-deep);
+}
+
+/* ---------- Search overlay ---------- */
+.searchoverlay {
+  position: fixed; inset: 0; z-index: 10000;
+  background: rgba(10, 10, 10, 0.72); backdrop-filter: blur(3px);
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: clamp(60px, 12vh, 140px) var(--gutter) 40px;
+}
+.searchoverlay[hidden] { display: none; }
+.searchpanel {
+  width: 100%; max-width: 720px; background: var(--bone);
+  border: 2px solid var(--ink); border-radius: 22px; overflow: hidden;
+}
+.searchbar { display: flex; align-items: center; gap: 12px; padding: 16px 18px; border-bottom: 1px solid var(--on-bone-rule); color: var(--ink); }
+.searchbar input {
+  flex: 1; border: 0; background: transparent; font-family: var(--body);
+  font-size: 17px; font-weight: 600; color: var(--ink); outline: none; min-width: 0;
+}
+.searchbar input::placeholder { color: rgba(10, 10, 10, 0.45); }
+.searchbar button {
+  border: 1px solid var(--on-bone-rule); background: transparent; cursor: pointer;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; color: rgba(10,10,10,0.64);
+  padding: 5px 9px; border-radius: 6px;
+}
+.searchbar button:hover { border-color: var(--lav-deep); color: var(--lav-deep); }
+.searchresults { max-height: min(58vh, 520px); overflow-y: auto; }
+.searchhit { display: grid; gap: 5px; padding: 15px 18px; text-decoration: none; border-bottom: 1px solid var(--on-bone-rule); }
+.searchhit:last-child { border-bottom: 0; }
+.searchhit:hover, .searchhit:focus-visible { background: var(--bone-sunk); }
+.searchsec { color: var(--lav-deep); font-size: 10px; }
+.searchttl { font-family: var(--display); font-weight: 800; text-transform: uppercase; letter-spacing: -0.02em; font-size: 17px; line-height: 1.14; color: var(--ink); }
+.searchexc { font-size: 0.9em; line-height: 1.5; color: rgba(10, 10, 10, 0.64); }
+.searchexc mark { background: var(--lav); color: var(--ink); padding: 0 2px; }
+.searchnote { margin: 0; padding: 20px 18px; color: rgba(10, 10, 10, 0.62); font-size: 0.94em; }

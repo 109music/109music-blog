@@ -6,4 +6,4 @@ import { sectionOf } from '../../lib/site';
 const s = sectionOf('news')!;
 const entries = await getCollection('news');
 ---
-<SectionIndex id={s.id} label={s.label} blurb={s.blurb} entries={entries} />
+<SectionIndex id={s.id} label={s.label} blurb={s.blurb} entries={entries} dark={true} />

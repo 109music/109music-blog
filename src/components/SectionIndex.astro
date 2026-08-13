@@ -3,8 +3,8 @@ import Base from '../layouts/Base.astro';
 import Row from './Row.astro';
 import { readingTime, url, orderTags, tagLabel } from '../lib/site';
 
-interface Props { id: string; label: string; blurb: string; entries: any[]; }
-const { id, label, blurb, entries } = Astro.props;
+interface Props { id: string; label: string; blurb: string; entries: any[]; dark?: boolean; }
+const { id, label, blurb, entries, dark = false } = Astro.props;
 const sorted = entries
   .filter((e) => !e.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
@@ -15,7 +15,7 @@ const present = orderTags([...new Set(sorted.flatMap((e) => e.data.tags))]);
 const words = label.split(' ');
 ---
 <Base title={label} description={`${blurb} ${label} from 109MUSIC.`} activeSection={id}>
-  <div class="slab slab--tight">
+  <div class={dark ? "slab slab--tight" : "lightband"}>
    <div class="wrap">
     <section class="hero">
       <p class="kicker mono rise">109MUSIC · {label}</p>

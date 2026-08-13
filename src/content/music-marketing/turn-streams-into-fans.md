@@ -3,11 +3,6 @@ title: "How to turn streams into fans"
 dek: "Monthly listeners stopped converting into ticket sales in 2026. Post Malone canceled a tour at 60.6M monthly listeners. Here is the three-move fix independent artists can run without a budget."
 date: 2026-08-12
 tags: ["music-marketing", "touring", "spotify-growth"]
-hero:
-  src: "/img/heroes/hero-streams-into-fans.webp"
-  alt: "Three figures on black: 60.6M Post Malone, 26M ZAYN, 16.5M Pussycat Dolls. Caption reads none of it sold the room."
-  credit: "109MUSIC original graphic"
-  treatment: "colour"
 moment: "always-on"
 igEmbed: null
 cta:

@@ -21,6 +21,23 @@ Two other figures stand out for independent artists. US CD sales rose 16 percent
   <div><span class="figure">+16%</span><span class="label">US CD sales, to 16.3 million units</span></div>
 </div>
 
+<figure class="chart">
+  <span class="chart-title">Where streaming actually grew, midyear 2026</span>
+  <span class="chart-sub">On-demand stream growth, year on year</span>
+  <div class="bars">
+    <div class="bar-row">
+      <div class="bar-head"><span class="bar-name">Global</span><span class="bar-value">+9.8%</span></div>
+      <div class="track"><div class="fill" style="width:100%"></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-head"><span class="bar-name">United States</span><span class="bar-value">+4.8%</span></div>
+      <div class="track"><div class="fill muted" style="width:49%"></div></div>
+    </div>
+  </div>
+  <p class="chart-note">The US grew at <b>roughly half</b> the global rate. Bars are scaled to the global figure.</p>
+  <figcaption>109MUSIC · Source: Luminate 2026 Midyear Music Report</figcaption>
+</figure>
+
 The read: growth has moved international and physical. If your release plan treats the US streaming market as the default target and a digital-only release as the default format, you are aiming at the slowest-growing part of the business. Territory-specific pitching and a small physical run are no longer niche moves.
 
-More on building demand that converts in our guide to [turning streams into fans](/109music-blog/music-marketing/turn-streams-into-fans/).
+More on building demand that converts in our guide to [turning streams into fans](/music-marketing/turn-streams-into-fans/).

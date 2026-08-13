@@ -36,19 +36,19 @@
 
 @font-face {
   font-family: 'Archivo Black'; font-style: normal; font-weight: 400; font-display: swap;
-  src: url('/109music-blog/fonts/archivo-black-latin-400-normal.woff2') format('woff2');
+  src: url('/fonts/archivo-black-latin-400-normal.woff2') format('woff2');
 }
 @font-face {
   font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap;
-  src: url('/109music-blog/fonts/inter-latin-500-normal.woff2') format('woff2');
+  src: url('/fonts/inter-latin-500-normal.woff2') format('woff2');
 }
 @font-face {
   font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap;
-  src: url('/109music-blog/fonts/inter-latin-600-normal.woff2') format('woff2');
+  src: url('/fonts/inter-latin-600-normal.woff2') format('woff2');
 }
 @font-face {
   font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap;
-  src: url('/109music-blog/fonts/inter-latin-700-normal.woff2') format('woff2');
+  src: url('/fonts/inter-latin-700-normal.woff2') format('woff2');
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -603,3 +603,67 @@ a { color: inherit; }
 .foot a:hover { color: var(--lav); }
 
 .empty { padding: 40px 0 10px; color: var(--on-dark-mute); }
+
+/* ---------- Chart (Stage 2) ----------
+   Original data visualisation, built in HTML so it inherits the brand fonts, stays
+   crisp at every density, weighs nothing, and re-themes with the page. One measure
+   per chart, one hue, value labelled on every bar — no legend, no second axis. */
+.chart {
+  margin: 2.2em 0; padding: 22px 22px 18px;
+  border: 1px solid var(--on-bone-rule); background: var(--bone-sunk);
+}
+.chart .chart-title {
+  display: block; margin: 0 0 4px; font-family: var(--display);
+  font-size: clamp(17px, 2.4vw, 21px); letter-spacing: -0.02em;
+  text-transform: uppercase; color: var(--ink); line-height: 1.05;
+}
+.chart .chart-sub {
+  display: block; margin: 0 0 20px; font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--on-bone-mute);
+  line-height: 1.5;
+}
+.chart .bars { display: grid; gap: 16px; }
+.chart .bar-row { display: grid; gap: 7px; }
+.chart .bar-head {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+}
+.chart .bar-name {
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.13em;
+  text-transform: uppercase; color: var(--on-bone-mute);
+}
+.chart .bar-value {
+  font-family: var(--display); font-size: clamp(18px, 3.4vw, 24px);
+  letter-spacing: -0.02em; color: var(--ink); line-height: 1; white-space: nowrap;
+}
+.chart .track { height: 14px; background: rgba(10, 10, 10, 0.07); }
+.chart .fill {
+  height: 100%; background: var(--lav-deep);
+  border-radius: 0 4px 4px 0;
+  transform-origin: 0 50%;
+}
+/* Lighter step of the same hue = the de-emphasised comparison, not a second series. */
+.chart .fill.muted { background: rgba(102, 56, 176, 0.34); }
+.chart .chart-note {
+  margin: 18px 0 0; padding-top: 12px; border-top: 1px solid var(--on-bone-rule);
+  font-size: 0.9em; line-height: 1.5; color: var(--on-bone-mute);
+}
+.chart .chart-note b { color: var(--ink); font-weight: 700; }
+.chart figcaption {
+  margin-top: 12px; font-family: var(--mono); font-size: 9.5px;
+  letter-spacing: 0.13em; text-transform: uppercase; color: var(--on-bone-faint);
+}
+
+/* Dark-surface variant, used on index pages and available for the Stage 2 seam test. */
+.chart.on-dark, body:not(.paper) .chart {
+  background: var(--ink-soft); border-color: var(--on-dark-rule);
+}
+body:not(.paper) .chart .chart-title,
+body:not(.paper) .chart .bar-value { color: var(--on-dark); }
+body:not(.paper) .chart .chart-sub,
+body:not(.paper) .chart .bar-name,
+body:not(.paper) .chart .chart-note { color: var(--on-dark-mute); }
+body:not(.paper) .chart .track { background: rgba(255, 255, 255, 0.09); }
+body:not(.paper) .chart .fill { background: var(--lav); }
+body:not(.paper) .chart .fill.muted { background: rgba(197, 159, 253, 0.32); }
+body:not(.paper) .chart .chart-note { border-top-color: var(--on-dark-rule); }
+body:not(.paper) .chart .chart-note b { color: var(--on-dark); }

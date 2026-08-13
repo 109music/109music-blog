@@ -25,6 +25,27 @@ Chartmetric's August analysis, published as [Blue Dot Fever](https://hmc.chartme
 
 Those artists did not lose their audiences. They lost the assumption that an audience is the same thing as a fanbase.
 
+<figure class="chart">
+  <span class="chart-title">Reach at the moment the tour was cancelled</span>
+  <span class="chart-sub">Spotify monthly listeners</span>
+  <div class="bars">
+    <div class="bar-row">
+      <div class="bar-head"><span class="bar-name">Post Malone</span><span class="bar-value">60.6M</span></div>
+      <div class="track"><div class="fill" style="width:100%"></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-head"><span class="bar-name">ZAYN</span><span class="bar-value">26M</span></div>
+      <div class="track"><div class="fill muted" style="width:43%"></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-head"><span class="bar-name">Pussycat Dolls</span><span class="bar-value">16.5M</span></div>
+      <div class="track"><div class="fill muted" style="width:27%"></div></div>
+    </div>
+  </div>
+  <p class="chart-note">Every one of these is a reach number most independent artists will never see, and none of them sold the room. <b>Reach is not the constraint.</b></p>
+  <figcaption>109MUSIC · Source: Chartmetric, Blue Dot Fever, 10 August 2026</figcaption>
+</figure>
+
 <div class="statgrid three">
   <div><span class="figure">60.6M</span><span class="label">Post Malone monthly listeners at cancellation</span></div>
   <div><span class="figure">26M</span><span class="label">ZAYN monthly listeners at cancellation</span></div>

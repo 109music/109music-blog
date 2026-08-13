@@ -36,6 +36,23 @@ Every pre-save is a stream that has already happened, it just has not been count
 
 That is the entire trick, and it is why the pre-save wall matters more than any single piece of release-week promotion. By the time petal went live, 3.22 million plays were effectively pre-loaded into the first hours. No advertising bought that. It was collected over weeks, in advance, from people who had already decided.
 
+<figure class="chart">
+  <span class="chart-title">Pre-saves are day-one streams, banked early</span>
+  <span class="chart-sub">petal, release day</span>
+  <div class="bars">
+    <div class="bar-row">
+      <div class="bar-head"><span class="bar-name">Day-one Spotify streams</span><span class="bar-value">62.19M</span></div>
+      <div class="track"><div class="fill" style="width:100%"></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-head"><span class="bar-name">Of which pre-loaded as pre-saves</span><span class="bar-value">3.22M</span></div>
+      <div class="track"><div class="fill muted" style="width:5.2%"></div></div>
+    </div>
+  </div>
+  <p class="chart-note">The pre-save wall is only <b>5 percent of day one</b> by volume. It matters because of when it lands, not how big it is — it arrives in the first hours, which is what the recommendation systems read.</p>
+  <figcaption>109MUSIC · Source: In Music Blog, August 2026</figcaption>
+</figure>
+
 For an independent artist the arithmetic is smaller but identical. 200 pre-saves means 200 plays land in hour one instead of trickling across a fortnight, and hour one is when the systems are watching.
 
 ## Move 02 · The payoff is velocity, not volume

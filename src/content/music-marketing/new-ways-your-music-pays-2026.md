@@ -67,6 +67,27 @@ That last detail is the point. Almost every discovery surface in music now gates
 
 The part that matters more for musicians went unchanged: the fan funding tier still opens at 500 subscribers and 3,000 watch hours. That tier carries memberships and Super Thanks, which are direct payments from people who already like you.
 
+<figure class="chart">
+  <span class="chart-title">The YouTube gate that moved, and the one that did not</span>
+  <span class="chart-sub">Valid public watch hours required</span>
+  <div class="bars">
+    <div class="bar-row">
+      <div class="bar-head"><span class="bar-name">Fan funding · unchanged</span><span class="bar-value">3,000</span></div>
+      <div class="track"><div class="fill" style="width:37.5%"></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-head"><span class="bar-name">Ad revenue · until Feb 2027</span><span class="bar-value">4,000</span></div>
+      <div class="track"><div class="fill muted" style="width:50%"></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-head"><span class="bar-name">Ad revenue · from Feb 2027</span><span class="bar-value">8,000</span></div>
+      <div class="track"><div class="fill muted" style="width:100%"></div></div>
+    </div>
+  </div>
+  <p class="chart-note">The ad gate doubles. The fan funding gate, the one that pays you directly, <b>stays at 3,000 hours and 500 subscribers</b>.</p>
+  <figcaption>109MUSIC · Source: Hypebot, 11 August 2026</figcaption>
+</figure>
+
 **Your move.** Stop treating 4,000 hours as the finish line. At 500 subscribers you can already take money directly from fans, and direct fan payment beats ad revenue per listener at every scale an independent artist operates at.
 
 <aside class="pullquote">

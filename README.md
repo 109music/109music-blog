@@ -3,7 +3,7 @@
 Static publication for [@109music.co](https://www.instagram.com/109music.co/). Built with Astro,
 hosted free on GitHub Pages, deployed automatically by GitHub Actions on every push to `main`.
 
-Live: https://109music.github.io/109music-blog/
+Live: https://109music.co/
 
 ## Sections
 Sections handle navigation. Tags handle topic browsing. Do not blur the two.
@@ -35,7 +35,7 @@ Add a markdown file to the right folder and push. The frontmatter schema lives i
 
 ```bash
 npm install     # first time only
-npm run dev     # local preview at localhost:4321/109music-blog/
+npm run dev     # local preview at localhost:4321/
 npm run build   # static output in dist/
 ```
 

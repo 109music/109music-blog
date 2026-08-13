@@ -15,4 +15,4 @@ The detail that matters is the absence of a follower minimum. Most discovery sur
 
 Practical version: upload to SoundCloud with complete metadata, credits and artwork, and submit every Friday. The cost is a few minutes a week and there is no downside to being passed over.
 
-The Upload is one of four new payout and discovery lanes that opened this month. The rest, including Spotify fan remixes and YouTube's 500-subscriber tier, are in [4 new ways your music pays in 2026](/109music-blog/music-marketing/new-ways-your-music-pays-2026/).
+The Upload is one of four new payout and discovery lanes that opened this month. The rest, including Spotify fan remixes and YouTube's 500-subscriber tier, are in [4 new ways your music pays in 2026](/music-marketing/new-ways-your-music-pays-2026/).

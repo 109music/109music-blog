@@ -26,4 +26,4 @@ Allow: /
 User-agent: Applebot-Extended
 Allow: /
 
-Sitemap: https://109music.github.io/109music-blog/sitemap-index.xml
+Sitemap: https://109music.co/sitemap-index.xml

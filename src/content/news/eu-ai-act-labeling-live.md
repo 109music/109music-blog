@@ -15,4 +15,4 @@ For working musicians this cuts two ways. If you use generative tools, for artwo
 
 Platforms moved quickly behind it. Spotify announced its AI Persona badges nine days later, on 11 August. That sequence is worth noting: regulation set the deadline, and the platforms shipped inside two weeks.
 
-What this means for your next release, and the recommendation slots freed up by the cleanup, is broken down in [what Spotify's 75 million track purge means for you](/109music-blog/music-marketing/spotify-ai-purge-what-it-means/).
+What this means for your next release, and the recommendation slots freed up by the cleanup, is broken down in [what Spotify's 75 million track purge means for you](/music-marketing/spotify-ai-purge-what-it-means/).

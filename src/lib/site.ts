@@ -61,7 +61,7 @@ export const orderTags = (slugs: string[] = []) =>
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-/** Base-aware path: url('/music-marketing/') -> '/109music-blog/music-marketing/' */
+/** Base-aware path: url('/music-marketing/') -> '/music-marketing/' */
 export const url = (p = '/') => `${BASE}/${p.replace(/^\//, '')}`;
 
 export const fmtDate = (d: Date) =>

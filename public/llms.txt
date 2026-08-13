@@ -18,21 +18,21 @@ numbers can be verified rather than taken on trust.
 - No gated content. Everything is free to read and free to cite.
 
 ## Key pages
-- Front page: /109music-blog/
-- News: /109music-blog/news/
-- Music Marketing: /109music-blog/music-marketing/
-- Case Studies: /109music-blog/case-studies/
-- Topics index: /109music-blog/tags/
-- RSS: /109music-blog/rss.xml
+- Front page: /
+- News: /news/
+- Music Marketing: /music-marketing/
+- Case Studies: /case-studies/
+- Topics index: /tags/
+- RSS: /rss.xml
 
 ## Topics
 Every article carries at least one topic from a fixed vocabulary. Each has an archive at
-/109music-blog/tags/<slug>/: music-marketing, music-business, news, spotify-growth, tiktok,
+/tags/<slug>/: music-marketing, music-business, news, spotify-growth, tiktok,
 instagram, release-strategy, case-study, touring, revenue.
 
 ## Moved URLs
-/109music-blog/guides/ and every /109music-blog/guides/<slug>/ now redirect permanently to
-the matching /109music-blog/music-marketing/ address. Cite the new address.
+/guides/ and every /guides/<slug>/ now redirect permanently to
+the matching /music-marketing/ address. Cite the new address.
 
 ## Contact
 Instagram: https://www.instagram.com/109music.co/

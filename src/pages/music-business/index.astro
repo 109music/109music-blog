@@ -25,10 +25,11 @@ const sorted = all
 const present = orderTags([...new Set(sorted.flatMap(({ entry }) => entry.data.tags))]);
 ---
 <Base title={s.label} description={`${s.blurb} Music business coverage from 109MUSIC.`} activeSection={s.id}>
-  <div class="wrap">
+  <div class="slab slab--tight">
+   <div class="wrap">
     <section class="hero">
       <p class="kicker mono rise">109MUSIC · {s.label}</p>
-      <h1 class="display rise">Music<br /><span class="lav">Business</span></h1>
+      <h1 class="display rise">Music<br /><span class="lav">business</span></h1>
       <p class="sub rise">{s.blurb}</p>
       {present.length > 0 && (
         <nav class="chips" aria-label="Topics in Music Business" style="margin-top:28px">
@@ -36,7 +37,10 @@ const present = orderTags([...new Set(sorted.flatMap(({ entry }) => entry.data.t
         </nav>
       )}
     </section>
+   </div>
+  </div>
 
+  <div class="wrap">
     {sorted.length ? (
       <ul class="rows">
         {sorted.map(({ entry, collection }, i) => (

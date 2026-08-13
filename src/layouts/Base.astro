@@ -14,7 +14,7 @@ interface Props {
 const {
   title,
   description,
-  paper = false,
+  paper = true,
   ogType = 'website',
   schema = null,
   activeSection = '',
@@ -52,6 +52,8 @@ const fullTitle = title === SITE.name ? `${SITE.name} — ${SITE.tagline}` : `${
         href={url('/fonts/archivo-black-latin-400-normal.woff2')} />
   <link rel="preload" as="font" type="font/woff2" crossorigin
         href={url('/fonts/inter-latin-500-normal.woff2')} />
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+        href={url('/fonts/archivo-latin-wght-normal.woff2')} />
 
   {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
   <slot name="head" />
@@ -73,13 +75,15 @@ const fullTitle = title === SITE.name ? `${SITE.name} — ${SITE.tagline}` : `${
 
   <slot />
 
-  <div class="wrap">
+  <div class="slab slab--tight sitefoot">
+   <div class="wrap">
     <footer class="foot">
       <span class="mono">© {new Date().getFullYear()} 109MUSIC · Independent music marketing</span>
       <span class="mono">
         <a href={url('/rss.xml')}>RSS</a> · <a href={SITE.instagram} target="_blank" rel="noopener">@109music.co</a> · <a href={SITE.beacons} target="_blank" rel="noopener">Beacons</a>
       </span>
     </footer>
+   </div>
   </div>
 </body>
 </html>

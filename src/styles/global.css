@@ -24,7 +24,11 @@
   --on-bone-faint: rgba(10, 10, 10, 0.38);
   --on-bone-rule: rgba(10, 10, 10, 0.16);
 
-  --display: 'Archivo Black', 'Arial Black', sans-serif;
+  /* Brand voice: section titles, cover headlines, featured cards, UI. High weights,
+     uppercase, tight. Archivo Black stays on the logo only — same superfamily, so the
+     wordmark and the headlines are related by design rather than merely adjacent. */
+  --display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --logo: 'Archivo Black', 'Arial Black', sans-serif;
   --body: 'Inter', system-ui, sans-serif;
   --mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
 
@@ -37,6 +41,10 @@
 @font-face {
   font-family: 'Archivo Black'; font-style: normal; font-weight: 400; font-display: swap;
   src: url('/fonts/archivo-black-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Archivo'; font-style: normal; font-weight: 400 900; font-display: swap;
+  src: url('/fonts/archivo-latin-wght-normal.woff2') format('woff2-variations');
 }
 @font-face {
   font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap;
@@ -62,8 +70,8 @@ body {
   font-size: 17px;
   line-height: 1.6;
   letter-spacing: -0.005em;
-  background: var(--ink);
-  color: var(--on-dark);
+  background: var(--bone);
+  color: var(--ink);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
@@ -90,10 +98,10 @@ a { color: inherit; }
 /* ---------- Type ---------- */
 .display {
   font-family: var(--display);
-  font-weight: 400;
+  font-weight: 800;
   text-transform: uppercase;
-  line-height: 0.92;
-  letter-spacing: -0.028em;
+  line-height: 0.95;
+  letter-spacing: -0.022em;
   margin: 0;
 }
 .lav { color: var(--lav); }
@@ -128,7 +136,7 @@ a { color: inherit; }
 @media (min-width: 700px) { .chrome { padding: 22px 0; gap: 16px; } }
 .paper .chrome { border-color: var(--on-bone-rule); }
 .wordmark {
-  font-family: var(--display); font-size: 17px; letter-spacing: -0.02em;
+  font-family: var(--logo); font-size: 17px; letter-spacing: -0.02em;
   text-decoration: none; white-space: nowrap;
   transition: color .25s var(--ease);
 }
@@ -274,7 +282,7 @@ a { color: inherit; }
 .row > a:hover .plate img.grayscale { filter: grayscale(0) contrast(1); }
 /* Placeholder state: oversized index number, lavender wash on hover */
 .plate .plate-n {
-  font-family: var(--display); font-size: clamp(30px, 9vw, 58px); line-height: 0.8;
+  font-family: var(--display); font-size: clamp(32px, 9vw, 62px); line-height: 1.0;
   color: var(--on-dark-faint); padding: 10px 12px;
   transition: color .35s var(--ease), transform .35s var(--ease);
 }
@@ -288,7 +296,7 @@ a { color: inherit; }
 .plate.has-img::after { opacity: 1; }
 
 .row .ttl {
-  font-family: var(--display); text-transform: uppercase; line-height: 1.02;
+  font-family: var(--display); line-height: 1.02;
   font-size: clamp(19px, 5vw, 34px); letter-spacing: -0.02em;
   transition: color .25s var(--ease);
   overflow-wrap: anywhere;
@@ -362,7 +370,7 @@ a { color: inherit; }
 @media (min-width: 700px) { .prose > p:first-of-type { font-size: 1.26em; padding-left: 20px; } }
 
 .article h2 {
-  font-family: var(--display); text-transform: uppercase; letter-spacing: -0.02em;
+  font-family: var(--display); letter-spacing: -0.02em;
   font-size: clamp(22px, 5.6vw, 36px); line-height: 1.02;
   margin: 1.9em 0 0.6em; padding-top: 0.5em; border-top: 2px solid var(--lav);
   scroll-margin-top: 20px;
@@ -402,7 +410,7 @@ a { color: inherit; }
   border-top: 2px solid var(--lav); border-bottom: 2px solid var(--lav);
 }
 .pullquote p {
-  font-family: var(--display); text-transform: uppercase; letter-spacing: -0.022em;
+  font-family: var(--display); letter-spacing: -0.022em;
   font-size: clamp(20px, 5.4vw, 30px); line-height: 1.06;
   margin: 0.7em 0 0.5em;
 }
@@ -501,7 +509,7 @@ a { color: inherit; }
 }
 .cta .pill { margin-bottom: 16px; }
 .cta h2 {
-  font-family: var(--display); text-transform: uppercase; border: 0; padding: 0; margin: 0 0 12px;
+  font-family: var(--display); border: 0; padding: 0; margin: 0 0 12px;
   font-size: clamp(24px, 6.4vw, 42px); line-height: 1.0; letter-spacing: -0.024em;
 }
 @media (min-width: 700px) { .cta h2 { font-size: clamp(28px, 3.4vw, 42px); } }
@@ -548,7 +556,7 @@ a { color: inherit; }
 }
 .related .card a:hover .kick { color: var(--lav); }
 .related .card h3 {
-  font-family: var(--display); text-transform: uppercase; letter-spacing: -0.02em;
+  font-family: var(--display); letter-spacing: -0.02em;
   font-size: 19px; line-height: 1.06; margin: 0;
   transition: color .3s var(--ease);
 }
@@ -578,7 +586,7 @@ a { color: inherit; }
 }
 .tagcloud a:hover { background: var(--ink-soft); }
 .tagcloud .name {
-  font-family: var(--display); text-transform: uppercase; letter-spacing: -0.02em;
+  font-family: var(--display); letter-spacing: -0.02em;
   font-size: 20px; line-height: 1.05; transition: color .25s var(--ease);
 }
 .tagcloud a:hover .name { color: var(--lav); }
@@ -792,3 +800,214 @@ body:not(.paper) .chart .chart-note b { color: var(--on-dark); }
 .workband .btn { margin-top: 28px; background: var(--ink); color: var(--on-dark); }
 .workband .btn:hover { background: var(--ink-soft); color: var(--lav); }
 .workband-fine { margin: 16px 0 0; color: rgba(10, 10, 10, 0.55); }
+
+/* ============================================================================
+   WHITE-BASE SYSTEM (2026-08-13)
+   The page is bone. Black is not decoration — it arrives as full-bleed structural
+   slabs that alternate with the paper. Lavender is an accent: pills, rules, marks
+   and icons, and it is never allowed to fill a large surface.
+   Reference measured on suizaespanol.com: 71% light / 27% dark / 1.3% accent.
+   ========================================================================== */
+
+/* Full-bleed dark slab. Breaks the .wrap container so the black runs edge to edge. */
+.slab {
+  background: var(--ink); color: var(--on-dark);
+  padding: clamp(52px, 11vw, 148px) 0;
+}
+.slab--tight { padding: clamp(38px, 7vw, 92px) 0; }
+.slab .display, .slab h1, .slab h2, .slab h3 { color: var(--on-dark); }
+.slab p { color: var(--on-dark-mute); }
+.slab .mono { color: var(--on-dark-faint); }
+.slab .chip { border-color: var(--on-dark-rule); color: var(--on-dark-mute); }
+.slab .chip:hover { color: var(--ink); background: var(--lav); border-color: var(--lav); }
+.slab .lav { color: var(--lav); }
+
+/* Vertical rhythm. The reference runs 144–152px between sections on desktop; this
+   was the single biggest difference between the two sites. */
+.wrap > section { padding: clamp(48px, 10vw, 144px) 0; }
+.wrap > section:first-child { padding-top: clamp(34px, 6vw, 76px); }
+.wrap > section + section { border-top: 1px solid var(--on-bone-rule); }
+.sec-head { margin-bottom: 4px; }
+
+/* Sunken bone band, the third surface. Alternates with paper and ink. */
+.band-sunk { background: var(--bone-sunk); }
+.band-sunk > .wrap > section:first-child { padding-top: clamp(48px, 10vw, 144px); }
+
+/* Cards: 2px border, generous radius, never a shadow. */
+.plate, .leadcard, .chart, .embed, .card,
+.statgrid, .momentnav, .bridge, .proofgrid {
+  border-radius: 22px;
+}
+.leadcard, .chart, .bridge {
+  border-width: 2px; border-style: solid; box-shadow: none;
+}
+.statgrid, .momentnav, .proofgrid { overflow: hidden; }
+.plate { border-radius: 20px; overflow: hidden; }
+.hero-frame, .hero-frame img { border-radius: 22px; }
+
+/* Accent discipline. Lavender paints marks, not surfaces. On bone it is too light
+   for text, so type-level accents use the deep purple instead. */
+.sec-head a { color: var(--lav-deep); }
+.slab .sec-head a { color: var(--on-dark-mute); }
+.chart .fill { background: var(--lav-deep); }
+.chart .fill.muted { background: rgba(102, 56, 176, 0.28); }
+.momentnav a .n { color: var(--lav-deep); }
+.card .cl, .wire a:hover .wire-title { color: var(--lav-deep); }
+
+/* The commercial band was a full lavender fill, which alone blew the accent budget.
+   It is now a dark slab with the accent doing the pointing. */
+.workband {
+  margin-top: 0; background: transparent; color: var(--on-dark);
+  padding: 0; text-align: center;
+}
+.workband > .mono { color: var(--lav); }
+.workband h2 { color: var(--on-dark); }
+.workband-line { color: var(--on-dark-mute); }
+.workband .btn { background: var(--lav); color: var(--ink); }
+.workband .btn:hover { background: var(--white); color: var(--ink); }
+.workband-fine { color: var(--on-dark-faint); }
+
+/* Serif headlines need a little more air above than the grotesque did. */
+.sec-head h2 { font-size: clamp(28px, 4.6vw, 46px); }
+.article h2 { font-size: clamp(24px, 3.4vw, 36px); line-height: 1.08; }
+.masthead h1 { line-height: 1.0; }
+
+/* A slab supplies its own vertical rhythm; the section inside must not double it. */
+.slab .wrap > section { padding: 0; border-top: 0; }
+
+/* The generic section rhythm must not eat a card's own padding. */
+.wrap > section.bridge { padding: clamp(26px, 4vw, 44px); }
+.wrap > section.proof { padding-top: clamp(40px, 7vw, 96px); }
+
+/* Instrument Serif sets much wider than a condensed grotesque in caps. The old
+   display sizes were calibrated for Archivo Black; at those values the serif hero
+   swallowed the page and pushed the dark/light balance the wrong way round. */
+.hero h1 { font-size: clamp(40px, 7.6vw, 104px); }
+.masthead h1 { font-size: clamp(32px, 6vw, 68px); }
+@media (min-width: 700px) { .masthead h1 { line-height: 1.0; } }
+.leadtitle { font-size: clamp(26px, 4.2vw, 46px); }
+.hero .sub { font-size: clamp(16px, 1.4vw, 19px); max-width: 50ch; }
+
+/* ---------- Context-aware text tokens ----------
+   Flipping the base surface broke contrast in 16 places, because the palette had
+   one hard-coded direction: "on-dark" meant white, "on-bone" meant ink, and the
+   component decided which to use. After the flip the same component can sit on
+   either surface, so the SURFACE now decides, not the component.
+
+   Light is the default context. .slab and the dark islands re-declare the same
+   token names with their dark values, and every descendant follows automatically. */
+body {
+  --on-dark: var(--ink);
+  --on-dark-mute: rgba(10, 10, 10, 0.62);
+  --on-dark-faint: rgba(10, 10, 10, 0.56);
+  --on-dark-rule: rgba(10, 10, 10, 0.16);
+  --on-bone-mute: rgba(10, 10, 10, 0.62);
+  --on-bone-faint: rgba(10, 10, 10, 0.56);
+}
+.slab, .masthead, .keyfact, .cta, .stat, .statgrid > div.on-dark {
+  --on-dark: rgba(255, 255, 255, 0.94);
+  --on-dark-mute: rgba(255, 255, 255, 0.66);
+  --on-dark-faint: rgba(255, 255, 255, 0.60);
+  --on-dark-rule: rgba(255, 255, 255, 0.16);
+  --on-bone-mute: rgba(255, 255, 255, 0.66);
+  --on-bone-faint: rgba(255, 255, 255, 0.60);
+  --on-bone-rule: rgba(255, 255, 255, 0.16);
+}
+/* Components that hard-code ink as a TEXT colour need the same treatment when the
+   surface underneath them is ink. Background uses stay literal. */
+.slab .momentnav a, .slab .momentnav a .mono { color: var(--on-dark-mute); }
+.slab .momentnav a { background: var(--ink-soft); }
+.slab .momentnav { background: var(--on-dark-rule); border-color: var(--on-dark-rule); }
+.slab .momentnav a:hover { background: #1c1c1c; color: var(--on-dark); }
+.slab .empty { color: var(--on-dark-mute); }
+.leadmeta { color: var(--on-bone-faint); }
+
+/* Accent direction. Lavender is legible on ink and too pale on bone; deep purple is
+   the reverse. The surface picks, not the component. */
+.lav { color: var(--lav-deep); }
+.slab .lav, .masthead .lav, .keyfact .lav, .cta .lav,
+.slab .momentnav a .n, .slab .facts b { color: var(--lav); }
+.slab .btn { background: var(--lav); color: var(--ink); }
+
+/* Tag cards were dark tiles on a dark page. On the bone base they become paper
+   tiles with a rule, matching the card language everywhere else. */
+.tagcloud li { background: var(--bone); }
+.tagcloud a { color: var(--ink); }
+.tagcloud a:hover { background: var(--bone-sunk); }
+.tagcloud a:hover .name { color: var(--lav-deep); }
+
+/* Small mono labels needed one more step of contrast to clear AA at 9–12px. */
+body {
+  --on-dark-faint: rgba(10, 10, 10, 0.64);
+  --on-bone-faint: rgba(10, 10, 10, 0.64);
+}
+
+/* 19ch was tuned for Archivo Black, which is far narrower per character. The serif
+   needs a longer line or it strands single words on their own row. */
+.masthead h1 { max-width: 26ch; }
+.hero h1 { max-width: 20ch; }
+
+
+
+/* ---------- Voice split ----------
+   Archivo carries the brand: block headings, cover headlines, the featured card,
+   and interface labels. Inter carries everything that is read in a run: body copy,
+   deks, and the long lists where twenty titles stack up. The split is by JOB, not
+   by size — a section heading is brand voice at any size, a list item never is. */
+
+/* Brand voice — impact, caps, tight */
+.hero h1 { font-weight: 800; letter-spacing: -0.03em; line-height: 0.94; font-size: clamp(38px, 8vw, 96px); max-width: 17ch; }
+.masthead h1 { font-weight: 800; letter-spacing: -0.028em; line-height: 0.96; font-size: clamp(30px, 6vw, 66px); max-width: 20ch; }
+.sec-head h2, .momenthead h2 { font-weight: 800; letter-spacing: -0.024em; }
+.leadtitle { font-weight: 800; letter-spacing: -0.026em; line-height: 0.96; font-size: clamp(26px, 4.4vw, 48px); }
+.tagcloud .name { font-weight: 800; letter-spacing: -0.02em; text-transform: uppercase; font-size: 19px; line-height: 1.06; }
+.workband h2, .bridge h2, .chart .chart-title { font-weight: 800; letter-spacing: -0.022em; }
+
+/* Reading voice — Inter, sentence case, set to be scanned without fatigue */
+.row .ttl, .wire-title, .related .card h3, .card .ct {
+  font-family: var(--body);
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: -0.021em;
+}
+.row .ttl { font-size: clamp(18px, 4.5vw, 27px); line-height: 1.18; }
+@media (min-width: 700px) { .row .ttl { font-size: clamp(19px, 2.15vw, 27px); line-height: 1.16; } }
+.related .card h3 { font-size: 17.5px; line-height: 1.28; }
+.wire-title { font-size: 1.0em; line-height: 1.34; }
+.card .ct { font-size: 1.02em; line-height: 1.26; }
+
+/* Article body headings stay in the reading voice — they punctuate prose, they are
+   not brand furniture. */
+.article h2, .article h3 {
+  font-family: var(--body); font-weight: 700; text-transform: none;
+  letter-spacing: -0.022em; line-height: 1.16;
+}
+.article h2 { font-size: clamp(22px, 3vw, 31px); }
+
+/* ---------- Home hero (Archivo Black) ----------
+   Archivo Black earns its place here and nowhere else: one moment of impact per
+   page, not a site full of them. The statement underneath does the reference's job —
+   say what this is in a single line, before anyone scrolls. */
+.wordmark-face { font-family: var(--logo); font-weight: 400; letter-spacing: -0.032em; }
+.hero h1.wordmark-face { line-height: 0.9; font-size: clamp(40px, 8.4vw, 104px); max-width: 15ch; }
+.statement {
+  margin: 26px 0 0; max-width: 40ch;
+  font-size: clamp(18px, 2vw, 25px); font-weight: 600; line-height: 1.42;
+  color: var(--on-dark);
+}
+@media (min-width: 700px) { .statement { margin-top: 30px; } }
+
+/* Rows and the wire read on ink as well as on bone — the slab context already
+   remaps the text tokens, so only the surface-specific bits need saying. */
+.slab .rows .row { border-color: var(--on-dark-rule); }
+.slab .plate { background: var(--ink-soft); border-color: var(--on-dark-rule); }
+.slab .wire { border-color: var(--on-dark-rule); }
+.slab .wire li { border-color: var(--on-dark-rule); }
+.slab .wire a:hover .wire-title, .slab .row > a:hover .ttl { color: var(--lav); }
+.slab .sec-head a { color: var(--on-dark-mute); }
+.slab .sec-head a:hover { color: var(--lav); }
+.slab .sec-head { border-color: var(--on-dark-rule); }
+
+/* Key words carry the weight, as the reference does with its verbs. */
+.statement b { font-weight: 800; color: var(--on-dark); }
+.slab .statement { color: var(--on-dark-mute); }

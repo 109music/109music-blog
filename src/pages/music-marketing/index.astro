@@ -21,10 +21,11 @@ const present = orderTags([...new Set(entries.flatMap((e: any) => e.data.tags))]
 let n = 0;
 ---
 <Base title={s.label} description={`${s.blurb} Music marketing playbooks from 109MUSIC.`} activeSection={s.id}>
-  <div class="wrap">
+  <div class="slab slab--tight">
+   <div class="wrap">
     <section class="hero">
       <p class="kicker mono rise">109MUSIC · {s.label}</p>
-      <h1 class="display rise">Music<br /><span class="lav">Marketing</span></h1>
+      <h1 class="display rise">Music<br /><span class="lav">marketing</span></h1>
       <p class="sub rise">{s.blurb}</p>
 
       <nav class="momentnav" aria-label="Jump to a moment in the release">
@@ -42,7 +43,10 @@ let n = 0;
         </nav>
       )}
     </section>
+   </div>
+  </div>
 
+  <div class="wrap">
     {groups.map((g) => (
       <section class="momentblock" id={g.id}>
         <div class="momenthead">

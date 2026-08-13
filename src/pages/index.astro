@@ -59,15 +59,17 @@ const schema = {
 };
 ---
 <Base title={SITE.name} description={SITE.description} schema={schema}>
-  <div class="wrap">
 
-    <!-- 01 · Statement -->
-    <section class="hero home-hero">
+  <!-- 01 · Statement, full-bleed black -->
+  <div class="slab">
+    <div class="wrap">
+      <section class="hero home-hero">
       <p class="kicker mono rise">Independent music marketing · Published weekly</p>
-      <h1 class="display rise">MUSIC<br />MARKETING,<br /><span class="lav">BROKEN DOWN.</span></h1>
-      <p class="sub rise">
-        Release strategy, platform news and real rollout teardowns for independent artists.
-        Every number sourced. Every playbook runnable without a label budget.
+      <h1 class="display wordmark-face rise">Music<br />marketing,<br /><span class="lav">broken down.</span></h1>
+      {/* One-line statement, the reference's job: say what this is in a glance.
+          Two alternates are kept below so the choice is a one-line edit. */}
+      <p class="statement rise">
+        Real rollouts <b>taken apart</b>, with the numbers, so you can <b>run them yourself</b> — without a label.
       </p>
       <div class="hero-cta rise">
         <a class="btn" href={url('/music-marketing/')}>
@@ -76,10 +78,14 @@ const schema = {
         <a class="btn ghost" href={wa('home')} target="_blank" rel="noopener">
           <span>Work with us on WhatsApp</span><span class="arrow" aria-hidden="true">→</span>
         </a>
-      </div>
-    </section>
+        </div>
+      </section>
+    </div>
+  </div>
 
-    {/* 02 · Client results. Deliberately absent until real numbers exist — the layout
+  <div class="wrap">
+
+    {/* 02 · Client results — sits immediately under the hero on purpose. Deliberately absent until real numbers exist — the layout
         is built and reserved, but a visitor must never see a placeholder figure. */}
     {RESULTS_LIVE && RESULTS.length > 0 && (
       <section class="proof">
@@ -134,8 +140,12 @@ const schema = {
       </section>
     )}
 
-    <!-- 05 · News wire -->
-    {news.length > 0 && (
+  </div>
+
+  <!-- 05 · News wire, full-bleed black -->
+  {news.length > 0 && (
+    <div class="slab">
+      <div class="wrap">
       <section>
         <div class="sec-head">
           <h2 class="display">News</h2>
@@ -153,8 +163,11 @@ const schema = {
           ))}
         </ul>
       </section>
-    )}
+      </div>
+    </div>
+  )}
 
+  <div class="wrap">
     <!-- 06 · Playbooks -->
     {marketing.length > 0 && (
       <section>
@@ -220,8 +233,12 @@ const schema = {
       </section>
     )}
 
-    <!-- 10 · Work with us -->
-    <section class="workband">
+  </div>
+
+  <!-- 10 · Work with us, full-bleed black -->
+  <div class="slab">
+    <div class="wrap">
+      <section class="workband">
       <p class="mono">Bespoke work</p>
       <h2 class="display">We run this for artists, not just write about it.</h2>
       <p class="workband-line">
@@ -231,8 +248,8 @@ const schema = {
       <a class="btn" href={wa('home')} target="_blank" rel="noopener">
         <span>Message us on WhatsApp</span><span class="arrow" aria-hidden="true">→</span>
       </a>
-      <p class="workband-fine mono">Replies from a person, usually same day</p>
-    </section>
-
+        <p class="workband-fine mono">Replies from a person, usually same day</p>
+      </section>
+    </div>
   </div>
 </Base>

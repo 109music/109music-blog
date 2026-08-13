@@ -15,7 +15,8 @@ const present = orderTags([...new Set(sorted.flatMap((e) => e.data.tags))]);
 const words = label.split(' ');
 ---
 <Base title={label} description={`${blurb} ${label} from 109MUSIC.`} activeSection={id}>
-  <div class="wrap">
+  <div class="slab slab--tight">
+   <div class="wrap">
     <section class="hero">
       <p class="kicker mono rise">109MUSIC · {label}</p>
       <h1 class="display rise">
@@ -28,7 +29,10 @@ const words = label.split(' ');
         </nav>
       )}
     </section>
+   </div>
+  </div>
 
+  <div class="wrap">
     {sorted.length ? (
       <ul class="rows">
         {sorted.map((e, i) => (

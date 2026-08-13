@@ -1,6 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
-import { TAG_SLUGS } from './lib/site';
+import { TAG_SLUGS, MOMENT_IDS } from './lib/site';
 
 const source = z.object({
   name: z.string(),
@@ -26,6 +26,9 @@ const base = z.object({
   updated: z.coerce.date().optional(),
   // Controlled vocabulary only. An unlisted tag fails the build on purpose.
   tags: z.array(z.enum(TAG_SLUGS)).min(1),
+  /* Where in a release this belongs. Presentation only — never part of the URL, so an
+     article can be re-filed between moments without breaking a single link. */
+  moment: z.enum(MOMENT_IDS).nullable().default(null),
   hero: hero.nullable().default(null),
   // Beacons comment-keyword CTA (must already have a live automation) or a plain link CTA
   cta: z

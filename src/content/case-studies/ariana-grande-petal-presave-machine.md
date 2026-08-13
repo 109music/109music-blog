@@ -3,6 +3,7 @@ title: "3 million saves before day one: inside petal's rollout"
 dek: "Ariana Grande entered release day for petal with 3.22M pre-saves and opened with 62.19M Spotify streams, charting all 12 tracks inside 24 hours. The mechanics scale down to an independent release."
 date: 2026-08-12
 tags: ["case-study", "release-strategy", "spotify-growth"]
+moment: "pre-release"
 igEmbed: null
 cta:
   keyword: "CALL"

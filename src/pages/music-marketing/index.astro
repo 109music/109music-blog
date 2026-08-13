@@ -1,9 +1,85 @@
 ---
-import SectionIndex from '../../components/SectionIndex.astro';
+/* Music Marketing is organised by WHERE YOU ARE in a release, not by topic.
+   The moment is a frontmatter field, never part of the URL, so an article can be
+   re-filed between moments without breaking a link. */
+import Base from '../../layouts/Base.astro';
+import Row from '../../components/Row.astro';
 import { getCollection } from 'astro:content';
-import { sectionOf } from '../../lib/site';
+import { readingTime, url, orderTags, tagLabel, sectionOf, MOMENTS } from '../../lib/site';
 
 const s = sectionOf('music-marketing')!;
-const entries = await getCollection('music-marketing');
+const entries = (await getCollection('music-marketing'))
+  .filter((e: any) => !e.data.draft)
+  .sort((a: any, b: any) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const groups = MOMENTS.map((m) => ({
+  ...m,
+  items: entries.filter((e: any) => e.data.moment === m.id),
+}));
+const unfiled = entries.filter((e: any) => !e.data.moment);
+const present = orderTags([...new Set(entries.flatMap((e: any) => e.data.tags))]);
+let n = 0;
 ---
-<SectionIndex id={s.id} label={s.label} blurb={s.blurb} entries={entries} />
+<Base title={s.label} description={`${s.blurb} Music marketing playbooks from 109MUSIC.`} activeSection={s.id}>
+  <div class="wrap">
+    <section class="hero">
+      <p class="kicker mono rise">109MUSIC · {s.label}</p>
+      <h1 class="display rise">Music<br /><span class="lav">Marketing</span></h1>
+      <p class="sub rise">{s.blurb}</p>
+
+      <nav class="momentnav" aria-label="Jump to a moment in the release">
+        {groups.map((g) => (
+          <a href={`#${g.id}`} class={g.items.length ? '' : 'is-empty'}>
+            <span class="mono">{g.label}</span>
+            <span class="n">{g.items.length}</span>
+          </a>
+        ))}
+      </nav>
+
+      {present.length > 0 && (
+        <nav class="chips" aria-label="Topics in Music Marketing" style="margin-top:26px">
+          {present.map((t) => <a class="chip" href={url(`/tags/${t}/`)}>{tagLabel(t)}</a>)}
+        </nav>
+      )}
+    </section>
+
+    {groups.map((g) => (
+      <section class="momentblock" id={g.id}>
+        <div class="momenthead">
+          <h2 class="display">{g.label}</h2>
+          <p>{g.blurb}</p>
+        </div>
+        {g.items.length ? (
+          <ul class="rows">
+            {g.items.map((e: any) => (
+              <Row
+                n={++n}
+                href={`/music-marketing/${e.id}/`}
+                title={e.data.title}
+                dek={e.data.dek}
+                date={e.data.date}
+                label={s.label}
+                minutes={readingTime(e.body)}
+                hero={e.data.hero}
+              />
+            ))}
+          </ul>
+        ) : (
+          <p class="empty small">Nothing filed here yet.</p>
+        )}
+      </section>
+    ))}
+
+    {unfiled.length > 0 && (
+      <section class="momentblock">
+        <div class="momenthead"><h2 class="display">Everything else</h2></div>
+        <ul class="rows">
+          {unfiled.map((e: any) => (
+            <Row n={++n} href={`/music-marketing/${e.id}/`} title={e.data.title} dek={e.data.dek}
+                 date={e.data.date} label={s.label} minutes={readingTime(e.body)} hero={e.data.hero} />
+          ))}
+        </ul>
+      </section>
+    )}
+  </div>
+</Base>

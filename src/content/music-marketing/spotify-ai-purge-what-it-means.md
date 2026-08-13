@@ -3,6 +3,7 @@ title: "Spotify deleted 75 million tracks. What it means for you"
 dek: "Spotify removed about 75 million spam and AI-generated uploads in 12 months and begins badging AI acts in mid-September 2026. Badged profiles are excluded from personalised recommendations by default, which hands recommendation slots back to human catalogues."
 date: 2026-08-12
 tags: ["spotify-growth", "music-business"]
+moment: "pre-release"
 igEmbed: null
 cta:
   heading: "We track what the platforms change"

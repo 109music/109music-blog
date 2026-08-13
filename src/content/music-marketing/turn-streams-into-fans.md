@@ -3,6 +3,12 @@ title: "How to turn streams into fans"
 dek: "Monthly listeners stopped converting into ticket sales in 2026. Post Malone canceled a tour at 60.6M monthly listeners. Here is the three-move fix independent artists can run without a budget."
 date: 2026-08-12
 tags: ["music-marketing", "touring", "spotify-growth"]
+hero:
+  src: "/img/heroes/hero-streams-into-fans.webp"
+  alt: "Three figures on black: 60.6M Post Malone, 26M ZAYN, 16.5M Pussycat Dolls. Caption reads none of it sold the room."
+  credit: "109MUSIC original graphic"
+  treatment: "colour"
+moment: "always-on"
 igEmbed: null
 cta:
   heading: "Get the rest of the playbooks"
@@ -45,12 +51,6 @@ Those artists did not lose their audiences. They lost the assumption that an aud
   <p class="chart-note">Every one of these is a reach number most independent artists will never see, and none of them sold the room. <b>Reach is not the constraint.</b></p>
   <figcaption>109MUSIC · Source: Chartmetric, Blue Dot Fever, 10 August 2026</figcaption>
 </figure>
-
-<div class="statgrid three">
-  <div><span class="figure">60.6M</span><span class="label">Post Malone monthly listeners at cancellation</span></div>
-  <div><span class="figure">26M</span><span class="label">ZAYN monthly listeners at cancellation</span></div>
-  <div><span class="figure">16.5M</span><span class="label">Pussycat Dolls, comeback remix under 180k streams</span></div>
-</div>
 
 <div class="keyfact">
   <span class="mono">The number that matters</span>

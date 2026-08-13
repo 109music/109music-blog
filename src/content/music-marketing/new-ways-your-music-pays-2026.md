@@ -3,6 +3,7 @@ title: "4 new ways your music pays in 2026"
 dek: "Four revenue lanes opened for independent artists in one month: paid fan remixes on Spotify through the Merlin deal, TikTok LIVE gifts on original songs, SoundCloud's hand-picked The Upload, and YouTube fan funding that stays at 500 subscribers while ad thresholds double in 2027."
 date: 2026-08-12
 tags: ["music-business", "revenue", "tiktok"]
+moment: "always-on"
 igEmbed: null
 cta:
   keyword: "REVENUE"

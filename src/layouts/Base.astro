@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { SITE, SECTIONS, url } from '../lib/site';
+import { SITE, NAV, url } from '../lib/site';
 
 interface Props {
   title: string;
@@ -63,10 +63,9 @@ const fullTitle = title === SITE.name ? `${SITE.name} — ${SITE.tagline}` : `${
     <header class="chrome">
       <a class="wordmark" href={url('/')}>@109MUSIC.CO</a>
       <nav class="nav" aria-label="Sections">
-        {SECTIONS.map((s) => (
-          <a href={url(`/${s.id}/`)} aria-current={activeSection === s.id ? 'page' : undefined}>{s.label}</a>
+        {NAV.map((n) => (
+          <a href={url(n.href)} aria-current={activeSection === n.id ? 'page' : undefined}>{n.label}</a>
         ))}
-        <a href={url('/tags/')} aria-current={activeSection === 'tags' ? 'page' : undefined}>Topics</a>
         <a href={SITE.instagram} rel="me noopener" target="_blank">Instagram</a>
       </nav>
     </header>

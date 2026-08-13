@@ -3,6 +3,7 @@ title: "How to sell out your next show on 250 dollars"
 dek: "A three-step Instagram ad plan for independent artists: a lifetime budget of 100 to 250 dollars per show, launched two to three weeks out, targeted 10 to 60 miles around the venue, tracked through a pixel you control."
 date: 2026-08-12
 tags: ["touring", "instagram", "music-marketing"]
+moment: "release-week"
 igEmbed: null
 cta:
   keyword: "CALL"

@@ -506,16 +506,20 @@ a { color: inherit; }
 }
 @media (min-width: 700px) { .cta h2 { font-size: clamp(28px, 3.4vw, 42px); } }
 .cta p { margin: 0 0 22px; color: var(--on-dark-mute); max-width: 48ch; font-size: 0.98em; line-height: 1.6; }
-.cta .btn {
+/* Base button. Was scoped to .cta until the site grew past one CTA; promoted so
+   every surface gets the same object. .cta keeps its own hover colour below. */
+.btn {
   display: inline-flex; align-items: center; gap: 10px;
   background: var(--lav); color: var(--ink); text-decoration: none;
   font-family: var(--mono); font-size: 11.5px; font-weight: 700; letter-spacing: 0.16em;
-  padding: 15px 22px;
-  transition: background-color .25s var(--ease), gap .25s var(--ease), transform .25s var(--ease);
+  text-transform: uppercase; padding: 15px 22px; border: 0; cursor: pointer;
+  transition: background-color .25s var(--ease), gap .25s var(--ease),
+              color .25s var(--ease), transform .25s var(--ease);
 }
-.cta .btn .arrow { transition: transform .25s var(--ease); }
-.cta .btn:hover { background: var(--white); gap: 16px; }
-.cta .btn:hover .arrow { transform: translateX(2px); }
+.btn .arrow { transition: transform .25s var(--ease); }
+.btn:hover { gap: 16px; }
+.btn:hover .arrow { transform: translateX(2px); }
+.cta .btn:hover { background: var(--white); }
 .cta .fine {
   margin: 16px 0 0; font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em;
   text-transform: uppercase; color: var(--on-dark-faint);
@@ -667,3 +671,124 @@ body:not(.paper) .chart .fill { background: var(--lav); }
 body:not(.paper) .chart .fill.muted { background: rgba(197, 159, 253, 0.32); }
 body:not(.paper) .chart .chart-note { border-top-color: var(--on-dark-rule); }
 body:not(.paper) .chart .chart-note b { color: var(--on-dark); }
+
+/* ---------- Moment navigation (Music Marketing) ----------
+   The section is organised by where you are in a release. These are jump links to
+   blocks on the same page, not URLs — an article can be re-filed without a redirect. */
+.momentnav {
+  margin-top: 30px; display: grid; gap: 2px;
+  background: var(--on-dark-rule); border: 1px solid var(--on-dark-rule);
+}
+@media (min-width: 640px) { .momentnav { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1000px) { .momentnav { grid-template-columns: repeat(4, 1fr); } }
+.momentnav a {
+  background: var(--ink); text-decoration: none; padding: 16px 16px 14px;
+  display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
+  color: var(--on-dark-mute);
+  transition: background-color .25s var(--ease), color .25s var(--ease);
+}
+.momentnav a:hover { background: var(--ink-soft); color: var(--on-dark); }
+.momentnav a .n {
+  font-family: var(--display); font-size: 20px; color: var(--lav); line-height: 1;
+}
+.momentnav a.is-empty { opacity: 0.45; }
+.paper .momentnav { background: var(--on-bone-rule); border-color: var(--on-bone-rule); }
+.paper .momentnav a { background: var(--bone); color: var(--on-bone-mute); }
+.paper .momentnav a:hover { background: var(--bone-sunk); color: var(--ink); }
+
+.momentblock { margin-top: clamp(46px, 8vw, 86px); scroll-margin-top: 24px; }
+.momenthead {
+  display: flex; flex-direction: column; gap: 8px;
+  padding-bottom: 16px; border-bottom: 2px solid var(--lav); margin-bottom: 4px;
+}
+@media (min-width: 760px) {
+  .momenthead { flex-direction: row; align-items: baseline; justify-content: space-between; gap: 28px; }
+}
+.momenthead h2 { font-size: clamp(26px, 4.4vw, 40px); }
+.momenthead p { margin: 0; color: var(--on-dark-mute); font-size: 0.95em; max-width: 46ch; }
+.paper .momenthead p { color: var(--on-bone-mute); }
+.empty.small { font-size: 0.92em; opacity: 0.6; padding: 18px 0; }
+
+/* ---------- Home (Stage 3: full site) ----------
+   Dense editorial front page. Every block earns its place: a statement, a way in by
+   release moment, the wire, the two evergreen shelves, and one commercial band. */
+.home-hero { padding-bottom: clamp(30px, 5vw, 56px); }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+
+.btn.ghost { background: transparent; color: var(--on-dark); box-shadow: inset 0 0 0 1px var(--on-dark-rule); }
+.btn.ghost:hover { background: var(--lav); color: var(--ink); box-shadow: none; }
+.paper .btn.ghost { color: var(--ink); box-shadow: inset 0 0 0 1px var(--on-bone-rule); }
+
+.sec-intro { margin: 14px 0 0; color: var(--on-dark-mute); max-width: 54ch; }
+.paper .sec-intro { color: var(--on-bone-mute); }
+.startwhere .momentnav { margin-top: 26px; }
+
+/* Client results. Hidden until real numbers exist — see RESULTS_LIVE in site.ts. */
+.proof { margin-top: clamp(40px, 7vw, 78px); border-top: 2px solid var(--lav); padding-top: 26px; }
+.proof-kicker { color: var(--lav); margin: 0 0 20px; }
+.proofgrid { display: grid; gap: 2px; background: var(--on-dark-rule); border: 1px solid var(--on-dark-rule); grid-template-columns: 1fr; }
+@media (min-width: 700px) { .proofgrid { grid-template-columns: repeat(3, 1fr); } }
+.proofgrid > div { background: var(--ink); padding: 24px 20px; }
+.proofgrid .figure { display: block; font-family: var(--display); font-size: clamp(38px, 7vw, 60px); line-height: 0.9; letter-spacing: -0.03em; color: var(--lav); }
+.proofgrid .label { display: block; margin-top: 12px; font-size: 0.95em; line-height: 1.5; color: var(--on-dark); }
+.proofgrid .artist { display: block; margin-top: 10px; color: var(--on-dark-faint); }
+.proof-link { display: inline-block; margin-top: 18px; font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--lav); text-decoration: none; }
+.proof-link:hover { text-decoration: underline; }
+
+/* Lead story — one story gets the whole width and the biggest type on the page. */
+.leadcard {
+  display: block; text-decoration: none; margin-top: 20px; padding: clamp(24px, 4vw, 44px);
+  background: var(--ink-soft); border: 1px solid var(--on-dark-rule);
+  transition: border-color .3s var(--ease), transform .3s var(--ease);
+}
+.leadcard:hover { border-color: var(--lav); transform: translateY(-2px); }
+.paper .leadcard { background: var(--bone-sunk); border-color: var(--on-bone-rule); }
+.leadtitle { display: block; margin-top: 18px; font-size: clamp(28px, 5.6vw, 58px); }
+.leaddek { display: block; margin-top: 16px; max-width: 62ch; color: var(--on-dark-mute); line-height: 1.55; }
+.paper .leaddek { color: var(--on-bone-mute); }
+.leadmeta { display: block; margin-top: 20px; color: var(--on-dark-faint); }
+
+/* News wire — dense, dateline first, no images. Built to be scanned. */
+.wire { list-style: none; margin: 20px 0 0; padding: 0; border-top: 1px solid var(--on-dark-rule); }
+.paper .wire { border-color: var(--on-bone-rule); }
+.wire li { border-bottom: 1px solid var(--on-dark-rule); }
+.paper .wire li { border-color: var(--on-bone-rule); }
+.wire a {
+  display: grid; gap: 4px; padding: 18px 0; text-decoration: none;
+  transition: padding-left .3s var(--ease);
+}
+@media (min-width: 820px) {
+  .wire a { grid-template-columns: 150px 1fr; column-gap: 26px; align-items: baseline; }
+  .wire .wire-dek { grid-column: 2; }
+}
+.wire a:hover { padding-left: 10px; }
+.wire-date { color: var(--on-dark-faint); }
+.paper .wire-date { color: var(--on-bone-faint); }
+.wire-title { font-weight: 700; font-size: 1.06em; line-height: 1.35; letter-spacing: -0.01em; }
+.wire a:hover .wire-title { color: var(--lav); }
+.wire-dek { font-size: 0.93em; line-height: 1.5; color: var(--on-dark-mute); max-width: 68ch; }
+.paper .wire-dek { color: var(--on-bone-mute); }
+
+/* Music business bridge */
+.bridge {
+  margin-top: clamp(40px, 7vw, 78px); padding: clamp(24px, 4vw, 40px);
+  border: 1px solid var(--on-dark-rule); display: flex; flex-direction: column;
+  gap: 22px; align-items: flex-start;
+}
+@media (min-width: 800px) { .bridge { flex-direction: row; align-items: center; justify-content: space-between; gap: 40px; } }
+.paper .bridge { border-color: var(--on-bone-rule); }
+.bridge h2 { font-size: clamp(24px, 3.6vw, 34px); }
+.bridge p { margin: 12px 0 0; color: var(--on-dark-mute); max-width: 52ch; line-height: 1.55; }
+.paper .bridge p { color: var(--on-bone-mute); }
+
+/* Commercial band. The only hard sell on the page, and it sits at the bottom. */
+.workband {
+  margin-top: clamp(48px, 8vw, 96px); padding: clamp(30px, 5vw, 62px);
+  background: var(--lav); color: var(--ink); text-align: center;
+}
+.workband > .mono { margin: 0 0 14px; color: rgba(10, 10, 10, 0.62); }
+.workband h2 { font-size: clamp(26px, 5vw, 50px); max-width: 20ch; margin: 0 auto; }
+.workband-line { margin: 20px auto 0; max-width: 52ch; line-height: 1.6; font-weight: 600; }
+.workband .btn { margin-top: 28px; background: var(--ink); color: var(--on-dark); }
+.workband .btn:hover { background: var(--ink-soft); color: var(--lav); }
+.workband-fine { margin: 16px 0 0; color: rgba(10, 10, 10, 0.55); }

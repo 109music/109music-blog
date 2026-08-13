@@ -3,6 +3,7 @@ title: "Market your album like Charli: the no-dead-air rollout"
 dek: "A remix album bridged Brat to the next record, three songs dropped on consecutive days, a B-side surfaced on an alt account, and phone-locked shows kept footage scarce. Four rollout mechanics independent artists can run without the budget."
 date: 2026-08-12
 tags: ["case-study", "release-strategy", "music-marketing"]
+moment: "release-week"
 igEmbed: null
 cta:
   heading: "One rollout dissected every week"

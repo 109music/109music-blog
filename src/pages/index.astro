@@ -2,24 +2,40 @@
 import Base from '../layouts/Base.astro';
 import Row from '../components/Row.astro';
 import { getCollection } from 'astro:content';
-import { SITE, SECTIONS, TAGS, url, readingTime, labelOf } from '../lib/site';
+import {
+  SITE, SECTIONS, TAGS, MOMENTS, url, readingTime, labelOf, fmtDate,
+  wa, RESULTS_LIVE, RESULTS,
+} from '../lib/site';
 
 const live = (arr: any[]) =>
   arr.filter((e) => !e.data.draft).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-const buckets: { id: string; label: string; entries: any[] }[] = [];
+const bySection: Record<string, any[]> = {};
 const everything: any[] = [];
 for (const s of SECTIONS) {
   const entries = live(await getCollection(s.id as any));
+  bySection[s.id] = entries;
   everything.push(...entries);
-  buckets.push({ id: s.id, label: s.label, entries: entries.slice(0, 4) });
 }
+everything.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-const latest = [...everything].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())[0];
+const lead = everything[0];
+const news = bySection['news'] ?? [];
+const marketing = bySection['music-marketing'] ?? [];
+const cases = bySection['case-studies'] ?? [];
+
+/* Moment counts drive the "start where you are" grid. A moment with nothing in it
+   still renders — an empty shelf is honest, a hidden one is not. */
+const momentCounts = MOMENTS.map((m) => ({
+  ...m,
+  n: marketing.filter((e) => e.data.moment === m.id).length,
+}));
 
 const tagCounts = new Map<string, number>();
 for (const e of everything) for (const t of e.data.tags) tagCounts.set(t, (tagCounts.get(t) ?? 0) + 1);
 const topTags = TAGS.filter((t) => (tagCounts.get(t.slug) ?? 0) > 0);
+
+const businessCount = everything.filter((e) => e.data.tags.includes('music-business')).length;
 
 const schema = {
   '@context': 'https://schema.org',
@@ -44,65 +60,152 @@ const schema = {
 ---
 <Base title={SITE.name} description={SITE.description} schema={schema}>
   <div class="wrap">
-    <section class="hero">
+
+    <!-- 01 · Statement -->
+    <section class="hero home-hero">
       <p class="kicker mono rise">Independent music marketing · Published weekly</p>
       <h1 class="display rise">MUSIC<br />MARKETING,<br /><span class="lav">BROKEN DOWN.</span></h1>
       <p class="sub rise">
         Release strategy, platform news and real rollout teardowns for independent artists.
         Every number sourced. Every playbook runnable without a label budget.
       </p>
+      <div class="hero-cta rise">
+        <a class="btn" href={url('/music-marketing/')}>
+          <span>Start with the playbooks</span><span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="btn ghost" href={wa('home')} target="_blank" rel="noopener">
+          <span>Work with us on WhatsApp</span><span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
     </section>
 
-    {latest && (
-      <>
+    {/* 02 · Client results. Deliberately absent until real numbers exist — the layout
+        is built and reserved, but a visitor must never see a placeholder figure. */}
+    {RESULTS_LIVE && RESULTS.length > 0 && (
+      <section class="proof">
+        <p class="mono proof-kicker">What we have done for artists</p>
+        <div class="proofgrid">
+          {RESULTS.map((r) => (
+            <div>
+              <span class="figure">{r.figure}</span>
+              <span class="label">{r.label}</span>
+              <span class="artist mono">{r.artist}</span>
+            </div>
+          ))}
+        </div>
+        <a class="proof-link" href={wa('results')} target="_blank" rel="noopener">Get numbers like these →</a>
+      </section>
+    )}
+
+    <!-- 03 · Start where you are -->
+    <section class="startwhere">
+      <div class="sec-head">
+        <h2 class="display">Start where you are</h2>
+        <a href={url('/music-marketing/')}>All playbooks →</a>
+      </div>
+      <p class="sec-intro">
+        The work changes depending on how close the record is. Pick the moment you are in.
+      </p>
+      <div class="momentnav paper-safe">
+        {momentCounts.map((m) => (
+          <a href={url(`/music-marketing/#${m.id}`)} class={m.n ? '' : 'is-empty'}>
+            <span class="mono">{m.label}</span>
+            <span class="n">{m.n}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- 04 · Lead story -->
+    {lead && (
+      <section class="leadstory">
         <div class="sec-head">
           <h2 class="display">Latest</h2>
           <a href={url('/rss.xml')}>Subscribe via RSS</a>
         </div>
-        <ul class="rows">
-          <Row
-            n={1}
-            href={`/${latest.collection}/${latest.id}/`}
-            title={latest.data.title}
-            dek={latest.data.dek}
-            date={latest.data.date}
-            label={labelOf(latest.collection)}
-            minutes={readingTime(latest.body)}
-            hero={latest.data.hero}
-          />
-        </ul>
-      </>
+        <a class="leadcard" href={url(`/${lead.collection}/${lead.id}/`)}>
+          <span class="pill">{labelOf(lead.collection)}</span>
+          <span class="leadtitle display">{lead.data.title}</span>
+          <span class="leaddek">{lead.data.dek}</span>
+          <span class="leadmeta mono">
+            {fmtDate(lead.data.date)} · {readingTime(lead.body)} min read
+          </span>
+        </a>
+      </section>
     )}
 
-    {buckets.map((b) => (
-      <>
+    <!-- 05 · News wire -->
+    {news.length > 0 && (
+      <section>
         <div class="sec-head">
-          <h2 class="display">{b.label}</h2>
-          <a href={url(`/${b.id}/`)}>All {b.label} →</a>
+          <h2 class="display">News</h2>
+          <a href={url('/news/')}>All news →</a>
         </div>
-        {b.entries.length ? (
-          <ul class="rows">
-            {b.entries.map((e, i) => (
-              <Row
-                n={i + 1}
-                href={`/${b.id}/${e.id}/`}
-                title={e.data.title}
-                dek={e.data.dek}
-                date={e.data.date}
-                label={b.label}
-                minutes={readingTime(e.body)}
-                hero={e.data.hero}
-              />
-            ))}
-          </ul>
-        ) : (
-          <p class="empty">Nothing here yet.</p>
-        )}
-      </>
-    ))}
+        <ul class="wire">
+          {news.slice(0, 5).map((e) => (
+            <li>
+              <a href={url(`/news/${e.id}/`)}>
+                <span class="wire-date mono">{fmtDate(e.data.date)}</span>
+                <span class="wire-title">{e.data.title}</span>
+                <span class="wire-dek">{e.data.dek}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
 
+    <!-- 06 · Playbooks -->
+    {marketing.length > 0 && (
+      <section>
+        <div class="sec-head">
+          <h2 class="display">Music Marketing</h2>
+          <a href={url('/music-marketing/')}>All playbooks →</a>
+        </div>
+        <ul class="rows">
+          {marketing.slice(0, 4).map((e, i) => (
+            <Row n={i + 1} href={`/music-marketing/${e.id}/`} title={e.data.title} dek={e.data.dek}
+                 date={e.data.date} label="Music Marketing" minutes={readingTime(e.body)} hero={e.data.hero} />
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <!-- 07 · Case studies -->
+    {cases.length > 0 && (
+      <section>
+        <div class="sec-head">
+          <h2 class="display">Case Studies</h2>
+          <a href={url('/case-studies/')}>All case studies →</a>
+        </div>
+        <ul class="rows">
+          {cases.slice(0, 3).map((e, i) => (
+            <Row n={i + 1} href={`/case-studies/${e.id}/`} title={e.data.title} dek={e.data.dek}
+                 date={e.data.date} label="Case Studies" minutes={readingTime(e.body)} hero={e.data.hero} />
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <!-- 08 · Music business bridge -->
+    {businessCount > 0 && (
+      <section class="bridge">
+        <div>
+          <h2 class="display">The money side</h2>
+          <p>
+            Rights, payouts, platform rules and the arithmetic behind an independent career.
+            {' '}{businessCount} pieces filed under Music Business.
+          </p>
+        </div>
+        <a class="btn" href={url('/music-business/')}>
+          <span>Read Music Business</span><span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </section>
+    )}
+
+    <!-- 09 · Topics -->
     {topTags.length > 0 && (
-      <>
+      <section>
         <div class="sec-head">
           <h2 class="display">Topics</h2>
           <a href={url('/tags/')}>All topics →</a>
@@ -114,7 +217,22 @@ const schema = {
             </a>
           ))}
         </nav>
-      </>
+      </section>
     )}
+
+    <!-- 10 · Work with us -->
+    <section class="workband">
+      <p class="mono">Bespoke work</p>
+      <h2 class="display">We run this for artists, not just write about it.</h2>
+      <p class="workband-line">
+        Meta ads, release planning and playlisting for independent artists. Tell us what
+        you are putting out and we will tell you straight whether we can move it.
+      </p>
+      <a class="btn" href={wa('home')} target="_blank" rel="noopener">
+        <span>Message us on WhatsApp</span><span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <p class="workband-fine mono">Replies from a person, usually same day</p>
+    </section>
+
   </div>
 </Base>

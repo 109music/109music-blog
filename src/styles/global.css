@@ -1237,10 +1237,19 @@ body {
    -------------------------------------------------------------------------- */
 .navgroup { position: relative; display: inline-flex; }
 .navgroup-btn {
-  appearance: none; background: none; border: 0; padding: 0; cursor: pointer;
-  font: inherit; color: inherit; display: inline-flex; align-items: center; gap: 5px;
-  border-bottom: 2px solid transparent;
+  appearance: none; background: none; border: 0; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 5px;
+  border-bottom: 1px solid transparent;
+  /* NOT `font: inherit`. A <button> inherits from its CONTAINER, .nav, i.e. from the
+     body — Inter at 18px in sentence case — and never from its sibling <a> elements,
+     which are what carry the mono face. With `font: inherit` the dropdown trigger was
+     the one nav item in a different typeface on every page of the site. These four
+     declarations are `.nav a`, restated. Keep them in sync with it. */
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em;
+  text-transform: uppercase; font-weight: 500;
+  color: var(--on-dark-mute); padding: 3px 0;
 }
+@media (min-width: 700px) { .navgroup-btn { font-size: 12px; letter-spacing: 0.16em; padding: 4px 0; } }
 .navgroup-btn .caret { font-size: .7em; opacity: .6; transition: transform .18s var(--ease); }
 .navgroup:hover .navgroup-btn .caret,
 .navgroup:focus-within .navgroup-btn .caret { transform: rotate(180deg); }
@@ -1476,3 +1485,140 @@ body {
   box-shadow: inset 0 0 0 1px var(--on-dark-rule);
 }
 .slab .btn.ghost:hover { background: var(--lav); color: var(--ink); box-shadow: none; }
+
+/* ==========================================================================
+   PASE 2 — 2026-08-14 (tarde). Correcciones de auditoría + capa de imagen.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   A · JERARQUÍA DE LOS BLOQUES DE MOMENTO
+   `.sec-head h2, .momenthead h2` compartían una sola regla, así que el rótulo de
+   un momento ("Before the release") salía a 50px, el mismo tamaño que el título
+   de la sección entera que lo contiene. Un subnivel renderizando como nivel uno.
+   Sumado a 86px de margen por bloque, los cuatro momentos se comían 344px de
+   hueco y un bloque de 145px de alto llevaba 66px de rótulo.
+   Ahora el momento es lo que es: una etiqueta de grupo, no un titular.
+   -------------------------------------------------------------------------- */
+.momenthead h2 { font-size: clamp(20px, 2.4vw, 28px); letter-spacing: -.018em; }
+.momentblock { margin-top: clamp(30px, 4vw, 46px); }
+.momenthead { padding-bottom: 12px; gap: 6px; }
+.momenthead p { font-size: 0.86em; }
+
+/* --------------------------------------------------------------------------
+   B · TITULARES DE ARTÍCULO EN CAJA DE FRASE
+   Archivo 800 se queda: un titular de doce palabras en Archivo Black es
+   demasiado peso. Lo que se va son las mayúsculas. Era la mayor masa de caja
+   alta que quedaba en el sitio y ninguna de las dos referencias lo hace.
+   -------------------------------------------------------------------------- */
+.masthead h1 { text-transform: none; letter-spacing: -.024em; }
+.leadtitle { text-transform: none; letter-spacing: -.022em; }
+.searchttl { text-transform: none; }
+
+/* --------------------------------------------------------------------------
+   C · CAPA DE IMAGEN
+   Medido sobre auramusic.ai: su hero es un WebP con el oscurecimiento HORNEADO
+   en el archivo (luminancia media 15 arriba, 51 abajo; 15 a la izquierda donde
+   va el copy, 45 a la derecha donde está la luz) y CERO capas CSS encima. Los
+   blobs son cuatro divs con blur de 130-150px al 30-35% de opacidad. El campo
+   de puntos son 20 radiales de 1px repetidos en un tile de 900x200.
+
+   Nuestro hero es generado, no fotografiado: un analizador de espectro
+   desenfocado, 8,6 KB, sin licencia de por medio. Perfil medido con el mismo
+   método: 4,0 en la columna izquierda contra 54,0 en la derecha.
+   -------------------------------------------------------------------------- */
+
+/* El contenedor de efectos. NUNCA sobre .sitehead: recortaría el panel del
+   desplegable, que sobresale por debajo de la cabecera. */
+.band-fx { position: relative; overflow: hidden; isolation: isolate; }
+.band-fx > .wrap { position: relative; z-index: 2; }
+
+.herobg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 72% 50%; z-index: 0;
+}
+/* Velo superior. Nuestro asset se abre hacia la DERECHA, no hacia abajo como el
+   suyo, así que la primera línea del hero cae sobre la zona clara. 150px lo
+   resuelven sin volver a exportar el archivo. */
+.herobg-scrim {
+  position: absolute; left: 0; right: 0; top: 0; height: 150px; z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(10,10,10,.88) 0%, rgba(10,10,10,.45) 50%, transparent 100%);
+}
+
+/* Blobs ambientales. La receta de Aura, en nuestra paleta. El blur enorme es lo
+   que los convierte de mancha en luz: sin él son cuatro círculos de colores. */
+.ambient {
+  position: absolute; top: 0; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100vw; overflow: hidden; z-index: 0; pointer-events: none;
+}
+.ambient i { position: absolute; display: block; border-radius: 50%; }
+.ambient .a1 {
+  width: 600px; height: 600px; left: -170px; top: -160px;
+  opacity: .34; filter: blur(150px);
+  background: radial-gradient(circle, #EFE6FA 0%, #C9A9F2 40%, transparent 70%);
+}
+.ambient .a2 {
+  width: 520px; height: 520px; right: -150px; top: 90px;
+  opacity: .30; filter: blur(140px);
+  background: radial-gradient(circle, #F3EDE4 0%, #DCC2B4 42%, transparent 70%);
+}
+.ambient .a3 {
+  width: 560px; height: 560px; left: 40%; bottom: -240px;
+  opacity: .26; filter: blur(150px);
+  background: radial-gradient(circle, #EAE2F7 0%, #B79BE8 40%, transparent 70%);
+}
+@media (max-width: 700px) { .ambient .a2, .ambient .a3 { display: none; } }
+
+/* Campo de puntos sobre las bandas negras. CSS puro, cero bytes de imagen.
+   Evita que el negro se lea como un vacío plano. */
+.stars {
+  position: absolute; inset: 0; z-index: 0; opacity: .40; pointer-events: none;
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, #fff, transparent),
+    radial-gradient(1px 1px at 40px 70px, #fff, transparent),
+    radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+    radial-gradient(1px 1px at 130px 80px, #fff, transparent),
+    radial-gradient(1px 1px at 170px 20px, #fff, transparent),
+    radial-gradient(1px 1px at 220px 100px, #fff, transparent),
+    radial-gradient(1px 1px at 280px 55px, #fff, transparent),
+    radial-gradient(1px 1px at 330px 130px, #fff, transparent),
+    radial-gradient(1px 1px at 400px 25px, #fff, transparent),
+    radial-gradient(1px 1px at 460px 95px, #fff, transparent),
+    radial-gradient(1px 1px at 520px 150px, #fff, transparent),
+    radial-gradient(1px 1px at 600px 60px, #fff, transparent),
+    radial-gradient(1px 1px at 680px 120px, #fff, transparent),
+    radial-gradient(1px 1px at 760px 35px, #fff, transparent),
+    radial-gradient(1px 1px at 840px 175px, #fff, transparent);
+  background-size: 900px 200px; background-repeat: repeat;
+}
+
+/* Desvanecidos de borde en lo que scrollea de lado. La tabla comparativa es lo
+   único que scrollea hoy; el carril de resultados los heredará cuando exista.
+   El degradado se pinta en el color de la banda, así que las columnas se
+   disuelven en el fondo en vez de quedar cortadas a cuchillo. */
+.cmp-scroll { position: relative; }
+.cmp-scroll::before, .cmp-scroll::after {
+  content: ''; position: absolute; top: 0; bottom: 14px; width: 44px;
+  pointer-events: none; z-index: 3;
+}
+.cmp-scroll::before { left: 0; background: linear-gradient(to right, var(--bone), transparent); }
+.cmp-scroll::after { right: 0; background: linear-gradient(to left, var(--bone), transparent); }
+.surf-tint .cmp-scroll::before { background: linear-gradient(to right, var(--tint), transparent); }
+.surf-tint .cmp-scroll::after  { background: linear-gradient(to left, var(--tint), transparent); }
+.slab .cmp-scroll::before { background: linear-gradient(to right, var(--ink), transparent); }
+.slab .cmp-scroll::after  { background: linear-gradient(to left, var(--ink), transparent); }
+@media (min-width: 900px) { .cmp-scroll::before, .cmp-scroll::after { display: none; } }
+
+/* El botón fantasma gana cristal cuando hay fondo vivo detrás. */
+.band-fx .btn.ghost, .slab.band-fx .btn.ghost {
+  background: rgba(255,255,255,.07);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+
+/* Los bloques que reciben luz ambiente necesitan ser el ancestro posicionado, pero NO
+   pueden recortar: el pseudo-fondo a sangre de .surf-* es un box-shadow que se pinta
+   fuera de la caja. El recorte lo pone .ambient sobre sí misma. */
+.wrap > section.surf-bone,
+.wrap > section.surf-tint,
+.wrap > section.surf-sunk { position: relative; }
+.wrap > section > *:not(.ambient) { position: relative; z-index: 1; }

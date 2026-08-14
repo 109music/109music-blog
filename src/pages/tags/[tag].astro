@@ -50,14 +50,19 @@ const schema = {
 };
 ---
 <Base title={tag.label} description={description} activeSection="tags" schema={schema}>
-  <div class="wrap">
+  <div class="slab slab--tight">
+   <div class="wrap">
     <section class="hero">
       <p class="kicker mono rise"><a href={url('/tags/')} style="text-decoration:none">109MUSIC · Topics</a></p>
-      <h1 class="display rise">
+      <h1 class="display face rise">
         {words[0]}{words[1] && <><br /><span class="lav">{words.slice(1).join(' ')}</span></>}
       </h1>
       <p class="sub rise">{tag.blurb}</p>
     </section>
+   </div>
+  </div>
+
+  <div class="wrap">
 
     {entries.length ? (
       <ul class="rows">

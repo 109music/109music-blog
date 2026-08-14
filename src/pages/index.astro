@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Row from '../components/Row.astro';
 import ResultCard from '../components/ResultCard.astro';
 import SectionMarker from '../components/SectionMarker.astro';
+import Ambient from '../components/Ambient.astro';
 import { getCollection } from 'astro:content';
 import {
   SITE, SECTIONS, TAGS, MOMENTS, url, readingTime, labelOf, fmtDate,
@@ -77,7 +78,14 @@ const schema = {
       of brand, one line underneath that says what the place is for, nothing else above
       the fold. The keyword work moves to <title>, the schema and the section headings,
       because the h1 is now a brand name. */}
-  <div class="slab">
+  <div class="slab band-fx">
+    {/* Fondo generado por nosotros. El oscurecimiento va horneado en el .webp, como en
+        la referencia, así que no hace falta ninguna capa de opacidad encima: solo el
+        velo superior, porque nuestro asset se abre hacia la derecha y no hacia abajo. */}
+    <img class="herobg" src={url('/img/hero-spectrum.webp')} alt="" width="1920" height="1080"
+         fetchpriority="high" decoding="async" />
+    <span class="stars" aria-hidden="true"></span>
+    <span class="herobg-scrim" aria-hidden="true"></span>
     <div class="wrap">
       <section class="hero home-hero">
         <p class="kicker mono rise">Independent music marketing · Madrid</p>
@@ -107,6 +115,7 @@ const schema = {
         but a visitor must never see a placeholder number. */}
     {resultsLive && (
       <section class={surf()}>
+        <Ambient />
         <SectionMarker n={mark()} slug="client_results" />
         <div class="sec-head">
           <h2 class="display">Real artists. Real numbers.</h2>
@@ -123,6 +132,7 @@ const schema = {
 
     {/* 03 · Services */}
     <section class={surf()}>
+      <Ambient />
       <SectionMarker n={mark()} slug="what_we_run" />
       <div class="sec-head">
         <h2 class="display">Two things, done properly</h2>
@@ -167,6 +177,7 @@ const schema = {
         because the white column then matches the result cards, so the proof and the
         argument read as the same object. */}
       <section class={surf()}>
+        <Ambient />
         <SectionMarker n={mark()} slug="the_alternatives" />
         <div class="sec-head"><h2 class="display">What most artists try first</h2></div>
         <div class="cmp-scroll">
@@ -260,7 +271,8 @@ const schema = {
 
   {/* 07 · News wire, full-bleed black */}
   {news.length > 0 && (
-    <div class="slab">
+    <div class="slab band-fx">
+      <span class="stars" aria-hidden="true"></span>
       <div class="wrap">
         <section>
           <SectionMarker n={mark()} slug="the_wire" />
@@ -356,7 +368,8 @@ const schema = {
   </div>
 
   {/* 12 · Work with us, full-bleed black */}
-  <div class="slab">
+  <div class="slab band-fx">
+    <span class="stars" aria-hidden="true"></span>
     <div class="wrap">
       <section class="workband">
         <p class="mono">Bespoke work</p>

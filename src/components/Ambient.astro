@@ -1,0 +1,17 @@
+---
+/* Ambient light for a light band. Three soft radials at 26–34% opacity under a
+   130–150px blur, bleeding off the viewport edge.
+
+   Lifted from auramusic.ai, where it is the single best finish-per-byte decision on
+   the page: no image request, no licence, and it is what stops a large bone surface
+   from reading as blank paper. The blur is not a nicety — at 150px the radial stops
+   having a shape and becomes light. Without it these are three coloured circles.
+
+   The wrapper is viewport-wide and clips, so the blobs can sit at negative offsets and
+   still be cut cleanly at the screen edge. It must NOT be placed on the element that
+   carries the `.surf-*` full-bleed box-shadow: `overflow: hidden` there would clip the
+   band itself and the section would shrink back to container width. */
+---
+<span class="ambient" aria-hidden="true">
+  <i class="a1"></i><i class="a2"></i><i class="a3"></i>
+</span>

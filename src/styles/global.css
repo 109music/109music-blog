@@ -2438,4 +2438,12 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
 }
 .rcard-ctx { margin-top: 10px; font-size: 13px; line-height: 1.5; color: var(--on-bone-mute); }
 .rcard-unit { color: var(--ink); font-weight: 700; }
-.rcard-label, .rcard-rule { display: none; }
+/* La caratula vuelve a CUADRADA y a sangre contra el borde superior, como en la
+   referencia. La habia pasado a 4:3 porque a 1:1 se comia la cifra; con la cifra
+   ya acotada por el clamp, el cuadrado cabe y es el formato correcto: una
+   caratula es cuadrada. */
+.rcard-art { aspect-ratio: 1 / 1; }
+.rcard-label { display: block; margin-top: 6px; font-size: 13.5px; color: var(--on-bone-mute); }
+.rcard-rule { display: block; height: 1px; background: var(--on-bone-rule); margin: 16px 0 12px; }
+.rcard-ctx { margin-top: 0; font-size: 12.5px; line-height: 1.5; color: var(--on-bone-mute); }
+.rcard-unit { color: var(--ink); font-weight: 700; }

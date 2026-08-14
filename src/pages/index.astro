@@ -101,6 +101,14 @@ const schema = {
         <p class="sec-intro">
           Every figure measured against the week before the campaign started.
         </p>
+        {/* Sin esta linea el bloque se contradice con la comparativa, que promete
+            que publicamos el metodo: tres cifras anonimas leidas justo despues de
+            esa promesa la debilitan. Dicha en voz alta, el anonimato deja de ser
+            una carencia y pasa a ser la prueba de que pedimos permiso antes. */}
+        <p class="results-note mono">
+          Names withheld until each artist signs off. Every figure comes from a
+          dated platform screenshot.
+        </p>
         <div class="rcarousel">
           <div class="rcarousel-track">
             {RESULTS.map((r) => <ResultCard data={r} />)}
@@ -168,28 +176,42 @@ const schema = {
     <span class="stars" aria-hidden="true"></span>
     <div class="wrap">
       <section class="howwork">
-        <SectionMarker n={mark()} slug="how_we_work" />
-        <h2 class="display howwork-title">How a campaign<br />actually runs</h2>
+        <SectionMarker n={mark()} slug="our_process" />
+        <h2 class="display howwork-title">Our<br />process</h2>
+        {/* LA LINEA DE CONTEXTO. El proceso es generico a proposito, porque su
+            gracia es que el artista no elige de antemano, pero eso significa que
+            los tres primeros pasos son tramite y la mecanica no aparece hasta el
+            cuarto. Sin esta frase alguien puede leer el bloque entero sin saber
+            que lo que vendemos son anuncios. Hace tres cosas a la vez: nombra el
+            producto principal, coloca el playlisting como segundo, y mantiene el
+            mensaje de que no hay que elegir de antemano. */}
         <p class="howwork-lead">
-          You do not have to know which service you need before you talk to us.
-          <b>Working that out is the first thing we do</b>, and it is free.
+          <b>We run Meta ads for independent artists, and playlisting when the
+          record needs it.</b> You do not have to know which one you want. Working
+          that out is the first thing we do, and it costs nothing.
         </p>
 
-        {/* Los mockups son NUESTROS y estan generados: el mensaje real, la linea base
-            real, la forma del anuncio y la forma del informe. Cuando haya capturas
-            reales aprobadas por el cliente, se sustituyen y no se toca el layout. */}
+        {/* MOCKUP SOLO EN 04 Y 05. Los tres primeros pasos son una llamada, un PDF
+            de precios y una factura: no tienen nada que enseñar, y cualquier imagen
+            ahi seria relleno inventado. Con cinco mockups el bloque ademas sumaba
+            unos 1.000px a una pagina que ya es larga. Tres filas ligeras y luego
+            dos con peso da mejor ritmo, y pone el peso visual justo donde esta el
+            argumento. Los mockups son NUESTROS y estan generados; cuando lleguen
+            las capturas reales se sustituyen y no se toca el layout. */}
         <ol class="steps">
           {STEPS.map((s, i) => (
-            <li class="step">
+            <li class={s.shot ? 'step step--shot' : 'step'}>
               <span class="step-n mono">{String(i + 1).padStart(2, '0')}</span>
               <div class="step-body">
                 <h3 class="display">{s.h}</h3>
                 <p>{s.p}</p>
               </div>
-              <span class="step-shot">
-                <img src={url(`/img/steps/step-${i + 1}.webp`)} alt="" loading="lazy"
-                     decoding="async" width="440" height="640" />
-              </span>
+              {s.shot && (
+                <span class="step-shot">
+                  <img src={url(s.shot)} alt="" loading="lazy" decoding="async"
+                       width="440" height="640" />
+                </span>
+              )}
             </li>
           ))}
         </ol>

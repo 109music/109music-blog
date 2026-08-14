@@ -2079,3 +2079,28 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
 
 /* 5. Hover de la pastilla de seccion: relleno, no solo borde. */
 .pill-link:hover { background: var(--lav-deep); color: #fff; border-color: var(--lav-deep); }
+
+/* ==========================================================================
+   PASE 6 (2026-08-14) · el proceso real del dossier, cinco pasos
+   ========================================================================== */
+
+/* La nota de nombres retenidos bajo el titular de Real Results. */
+.results-note {
+  margin: 8px 0 0; font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--on-bone-faint); max-width: 62ch;
+}
+.slab .results-note { color: var(--on-dark-faint); }
+
+/* La columna del mockup se declara SOLO en .step--shot, por la misma razon que
+   la cuarta columna de la fila de listado: una pista declarada y vacia sigue
+   aportando su gap, y los tres primeros pasos abririan un hueco de 144px que no
+   hay nada que llene. Sin la clase, el paso ocupa dos columnas y el texto respira. */
+@media (min-width: 860px) {
+  .step { grid-template-columns: 74px minmax(0, 1fr); }
+  .step--shot { grid-template-columns: 74px minmax(0, 1fr) 144px; }
+  .step:not(.step--shot) .step-body > p { max-width: 76ch; }
+}
+
+/* Los pasos sin mockup son mas cortos a proposito: el ritmo del bloque es tres
+   filas ligeras y dos con peso, y el peso cae donde esta el argumento. */
+.step:not(.step--shot) { padding: clamp(20px, 2.4vw, 26px) 0; }

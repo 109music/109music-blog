@@ -58,6 +58,14 @@ export const SECTIONS = [
   {
     id: 'news',
     label: 'News',
+    /* El h1 de la pagina y la etiqueta de la cabecera NO tienen que coincidir.
+       "News" a secas no dice nada y no tiene fuerza como titular; "The Industry
+       Wire" si, y ademas dice de que industria hablamos. Un nombre de publicacion
+       puro (The Wire, The Signal) solo funciona cuando la publicacion ya es
+       conocida, y esta seccion tiene tres articulos: por eso gana el descriptivo.
+       "The Wire" a secas ademas choca con la revista britanica del mismo nombre.
+       La URL /news/ no se toca. */
+    heading: 'The Industry Wire',
     path: '/news/',
     blurb: 'What changed on the platforms, and what it costs you.',
   },
@@ -220,7 +228,7 @@ export const LEGACY_CASE_STUDY_SLUGS = [
    Stays OFF until real client numbers exist. The markup is built and the layout is
    reserved, but nothing renders publicly while this is false — the site must never
    show placeholder figures to a visitor. Flip to true when RESULTS has real data. */
-export const RESULTS_LIVE = false;
+export const RESULTS_LIVE = true;
 
 /* El CTA comercial es agendar una llamada, no comprar, y va por WhatsApp como el
    resto del sitio. Decidido el 14/08: el cuello de botella no es cuadrar agendas,
@@ -243,20 +251,36 @@ export const EXTRA_SERVICES = [
 
 export const STEPS = [
   {
-    h: 'You send the track',
-    p: 'A message with the release date and the link. You do not have to know which service you need. That is our job, and it is the first thing we work out.',
+    h: 'Discovery call',
+    p: 'Thirty minutes. We map the record, the goal and where you are right now. You leave knowing which service fits, and that read costs nothing whether you hire us or not.',
+    shot: null,
   },
   {
-    h: 'We set the baseline and pick the route',
-    p: 'Seven days of your current numbers, recorded before a single euro is spent, and a straight answer on what your record needs. Sometimes that is ads. Sometimes it is not.',
+    /* Renombrado desde "Services & pricing" del dossier. Aquel titulo describia
+       un capitulo del PDF, no un paso, y su copy estaba escrito para alguien que
+       tiene el dossier delante: en la web el visitante no lo tiene. */
+    h: 'What it costs',
+    p: 'The full price list, sent the same day. Every service and every tier written down, so you can decide without another call. Nothing is quoted case by case and nothing is hidden until you ask.',
+    shot: null,
   },
   {
-    h: 'The Meta ads run',
-    p: 'Campaigns built, targeted and optimised in-house, adjusted while they are live. The pixel sits on your account, not ours, so the audience stays yours when we are done.',
+    h: 'Selection and payment',
+    p: 'You pick what you want to run. We invoice, and the work starts the moment the payment clears. No retainer, no minimum term.',
+    shot: null,
   },
   {
-    h: 'You get the numbers',
-    p: 'Weekly reporting against that baseline, in plain language. The same figures that end up on the results page, if you let us print them.',
+    /* EL paso del bloque. El proceso es generico a proposito, porque su gracia es
+       que el artista no elige de antemano, pero alguien podia leerlo entero sin
+       enterarse de que lo que vendemos son anuncios. Aqui se nombra la mecanica:
+       Meta ads como motor, playlisting como acompañamiento. */
+    h: 'Strategy in motion',
+    p: 'Meta ads are the engine. Campaigns built, targeted and optimised in-house, run mostly to Spotify and adjusted while they are live. The pixel sits on your ad account, not ours, so the audience stays yours when we are done. Playlisting runs alongside when the record needs reach, pitched to real curators, never bought placements.',
+    shot: '/img/steps/step-3.webp',
+  },
+  {
+    h: 'Growth and optimisation',
+    p: 'We track against the numbers we recorded before spending anything, and adjust while the campaign is running. Weekly reporting, in plain language.',
+    shot: '/img/steps/step-4.webp',
   },
 ] as const;
 
@@ -295,9 +319,12 @@ export const RESULTS: ResultCard[] = [
     art: '/img/results/plate-2.webp',
   },
   {
-    artist: '109RECORDS playlists', track: 'Urban Spanish Essentials',
+    /* Etiquetada explicitamente como red PROPIA. Puesta entre resultados de
+       cliente sin decirlo, se leia como un resultado de cliente, y eso seria
+       estirar mas de lo que la prueba sostiene. */
+    artist: 'Our own playlist network', track: 'Urban Spanish Essentials',
     figure: '6,089', label: 'streams placed in 12 months',
-    context: 'one track, from our own editorial network, on a',
+    context: 'our network, not a client campaign, run on a',
     baseline: 'zero-paid-placement policy',
     art: '/img/results/plate-3.webp',
   },

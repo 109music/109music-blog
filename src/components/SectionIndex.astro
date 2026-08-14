@@ -16,6 +16,10 @@ import { readingTime, url, orderTags, tagLabel, wa, pathOf } from '../lib/site';
 interface Props {
   id: string;
   label: string;
+  /* El h1 de la pagina. Cuando no se pasa, cae a `label`. Existe porque la
+     etiqueta de la cabecera puede ser corta ("News") y el titular de la pagina
+     mas largo y con mas caracter ("The Industry Wire"): no tienen que coincidir. */
+  heading?: string;
   blurb: string;
   entries: any[];
   /** Optional second shelf, rendered on tint under its own heading. */
@@ -26,7 +30,7 @@ interface Props {
   listIntro?: string;
 }
 const {
-  id, label, blurb, entries, extra = null, crossLink = null,
+  id, label, heading, blurb, entries, extra = null, crossLink = null,
   listHeading = 'Everything filed here', listIntro = '',
 } = Astro.props;
 
@@ -36,9 +40,9 @@ const sorted = entries
 
 /* Topic shortcuts for this section only. Sections navigate, tags browse. */
 const present = orderTags([...new Set(sorted.flatMap((e) => e.data.tags))]);
-const words = label.split(' ');
+const words = (heading ?? label).split(' ');
 ---
-<Base title={label} description={`${blurb} ${label} from 109MUSIC.`} activeSection={id}>
+<Base title={heading ?? label} description={`${blurb} ${label} from 109MUSIC.`} activeSection={id}>
 
   <!-- 01 · hero, always dark, identical geometry on every section -->
   <div class="slab slab--tight">

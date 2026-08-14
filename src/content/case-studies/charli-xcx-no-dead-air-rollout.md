@@ -4,6 +4,13 @@ dek: "A remix album bridged Brat to the next record, three songs dropped on cons
 date: 2026-08-12
 tags: ["case-study", "release-strategy", "music-marketing"]
 moment: "release-week"
+hero:
+  src: "/img/articles/charli-hero.webp"
+  alt: "Four moves set as a typographic statement"
+  thumb: "/img/articles/charli-thumb.webp"
+  credit: "109MUSIC"
+  license: "Own work"
+  source: "own"
 igEmbed: null
 cta:
   heading: "One rollout dissected every week"

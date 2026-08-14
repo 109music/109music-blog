@@ -4,6 +4,13 @@ dek: "Ariana Grande entered release day for petal with 3.22M pre-saves and opene
 date: 2026-08-12
 tags: ["case-study", "release-strategy", "spotify-growth"]
 moment: "pre-release"
+hero:
+  src: "/img/articles/ariana-hero.webp"
+  alt: "3.22M pre-saves set as a typographic statement"
+  thumb: "/img/articles/ariana-thumb.webp"
+  credit: "109MUSIC"
+  license: "Own work"
+  source: "own"
 igEmbed: null
 cta:
   keyword: "CALL"

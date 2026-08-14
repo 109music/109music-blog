@@ -3,6 +3,13 @@ title: "EU AI Act labeling rules are now in force"
 dek: "Since 2 August 2026, AI-generated or AI-edited audio and video distributed in the EU must be labeled, with machine-readable markings required. The rules affect any artist using generative tools in their music or their content."
 date: 2026-08-10
 tags: ["news", "music-business"]
+hero:
+  src: "/img/articles/eu-ai-act-hero.webp"
+  alt: "A twelve-sided seal with a check mark inside"
+  thumb: "/img/articles/eu-ai-act-thumb.webp"
+  credit: "109MUSIC"
+  license: "Own work"
+  source: "own"
 igEmbed: null
 sources:
   - name: "European Commission: AI Act regulatory framework"

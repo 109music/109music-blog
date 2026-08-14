@@ -3,6 +3,13 @@ title: "SoundCloud's The Upload picks emerging tracks with no follower minimum"
 dek: "SoundCloud launched The Upload on 3 August 2026: a weekly human-curated discovery playlist with editorial commentary and no follower requirement, positioned as an answer to algorithmic fatigue."
 date: 2026-08-09
 tags: ["news", "music-business", "revenue"]
+hero:
+  src: "/img/articles/soundcloud-hero.webp"
+  alt: "A queue of marks with two picked out and flagged"
+  thumb: "/img/articles/soundcloud-thumb.webp"
+  credit: "109MUSIC"
+  license: "Own work"
+  source: "own"
 igEmbed: null
 sources:
   - name: "Hypebot: SoundCloud adds The Upload to combat algorithmic fatigue (3 Aug 2026)"

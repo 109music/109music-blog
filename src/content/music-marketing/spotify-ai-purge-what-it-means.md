@@ -4,6 +4,21 @@ dek: "Spotify removed about 75 million spam and AI-generated uploads in 12 month
 date: 2026-08-12
 tags: ["spotify-growth", "music-business"]
 moment: "pre-release"
+hero:
+  src: "/img/articles/spotify-purge-hero.webp"
+  alt: "Tiles going dark across a grid, most of a catalogue removed"
+  thumb: "/img/articles/spotify-purge-thumb.webp"
+  credit: "109MUSIC"
+  license: "Own work"
+  source: "own"
+figures:
+  - after: "what-actually-happened"
+    src: "/img/articles/spotify-purge-figure.webp"
+    alt: "A ring of marks around a filled centre, the AI badge"
+    caption: "Badged profiles are excluded from personalised recommendations by default. The label is the mechanism."
+    credit: "109MUSIC"
+    license: "Own work"
+    source: "own"
 igEmbed: null
 cta:
   heading: "We track what the platforms change"

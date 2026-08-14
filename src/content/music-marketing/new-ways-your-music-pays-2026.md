@@ -4,6 +4,21 @@ dek: "Four revenue lanes opened for independent artists in one month: paid fan r
 date: 2026-08-12
 tags: ["music-business", "revenue", "tiktok"]
 moment: "always-on"
+hero:
+  src: "/img/articles/new-ways-hero.webp"
+  alt: "Four broken lanes running left to right at different weights"
+  thumb: "/img/articles/new-ways-thumb.webp"
+  credit: "109MUSIC"
+  license: "Own work"
+  source: "own"
+figures:
+  - after: "what-these-four-have-in-common"
+    src: "/img/articles/new-ways-figure.webp"
+    alt: "Four bars of different lengths against a common track"
+    caption: "Each lane pays for depth rather than reach. None of them rewards a passive listener."
+    credit: "109MUSIC"
+    license: "Own work"
+    source: "own"
 igEmbed: null
 cta:
   keyword: "REVENUE"

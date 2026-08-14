@@ -3,6 +3,13 @@ title: "Global streams up 9.8%, but US growth is half that"
 dek: "Luminate's midyear 2026 report puts global on-demand streams up 9.8 percent to 2.8 trillion, while US growth reached only 4.8 percent. CD sales rose 16 percent and Spanish-language music now takes roughly 10 percent of US streams."
 date: 2026-08-11
 tags: ["news", "music-business"]
+hero:
+  src: "/img/articles/luminate-hero.webp"
+  alt: "A row of bars with two picked out in lavender"
+  thumb: "/img/articles/luminate-thumb.webp"
+  credit: "109MUSIC"
+  license: "Own work"
+  source: "own"
 igEmbed: null
 sources:
   - name: "Luminate: 2026 Midyear Music Report"

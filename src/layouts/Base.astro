@@ -11,6 +11,10 @@ interface Props {
   schema?: object | null;
   activeSection?: string;
   noindex?: boolean;
+  /* Absolute-from-root path to the share card, e.g. /img/og/news/slug.jpg.
+     Left empty every page falls back to the site card. */
+  image?: string;
+  imageAlt?: string;
 }
 const {
   title,
@@ -20,10 +24,20 @@ const {
   schema = null,
   activeSection = '',
   noindex = false,
+  image = '/img/og/default.jpg',
+  imageAlt = '',
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const fullTitle = title === SITE.name ? `${SITE.name} — ${SITE.tagline}` : `${title} | ${SITE.name}`;
+
+/* The share card is ALWAYS one of ours, never a sourced photograph. A Facebook or
+   WhatsApp preview cannot carry a credit line, so putting a Creative Commons photo
+   there would be redistributing it without attribution — the one thing the licence
+   actually asks for. A generated brand card sidesteps the question completely and
+   has the side benefit that everything shared looks like the same publication.
+   JPG rather than WebP: some scrapers still refuse WebP and fall back to nothing. */
+const ogImage = new URL(url(image), Astro.site).href;
 ---
 <!doctype html>
 <html lang={SITE.lang}>
@@ -43,7 +57,12 @@ const fullTitle = title === SITE.name ? `${SITE.name} — ${SITE.tagline}` : `${
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonical} />
   <meta property="og:locale" content="en_GB" />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  {imageAlt && <meta property="og:image:alt" content={imageAlt} />}
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content={ogImage} />
   <meta name="twitter:title" content={fullTitle} />
   <meta name="twitter:description" content={description} />
 
@@ -66,7 +85,10 @@ const fullTitle = title === SITE.name ? `${SITE.name} — ${SITE.tagline}` : `${
   <div class="slab sitehead">
    <div class="wrap">
     <header class="chrome">
-      <a class="wordmark" href={url('/')}>@109MUSIC.CO</a>
+      {/* El wordmark es la marca, no el handle. La arroba pertenece a Instagram y
+          en la web no significa nada: aquí ya estás EN 109music.co. La única arroba
+          correcta del sitio es la del pie, que enlaza literalmente a la cuenta. */}
+      <a class="wordmark" href={url('/')}>109MUSIC.CO</a>
       <nav class="nav" aria-label="Sections">
         {NAV.map((n: any) =>
           n.children ? (

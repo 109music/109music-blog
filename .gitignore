@@ -3,3 +3,19 @@ dist/
 .astro/
 .DS_Store
 *.log
+
+# ---------------------------------------------------------------------------
+# Artefactos de entrega. Nada de esto es el sitio: son los paquetes con los que
+# el codigo llega a la maquina de Blanca. Se versionaron por error hasta el
+# 14/08/2026 porque publish.bat hace `git add -A` y no habia nada que los
+# parase. Un zip dentro del repo no rompe el build, pero se sube entero en cada
+# push y ensucia el historial para siempre.
+# ---------------------------------------------------------------------------
+*.zip
+aplicar-*.bat
+fix-*.bat
+limpiar-*.bat
+_tmp_update/
+*-comparison.html
+*-mockup.html
+*-direction-*.html

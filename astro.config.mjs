@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import rehypeMedia from './src/lib/rehype-media.mjs';
 
 // 109MUSIC runs on its own apex domain. There is no repo subpath any more — the site
 // sits at the root, so `base` is '/' and every generated URL is clean.
@@ -25,6 +26,12 @@ export default defineConfig({
   // live destination that contains the retired `/case-studies/` as a substring, so a
   // naive includes() check would quietly drop the real pages from the sitemap and leave
   // the redirect stubs as the only thing Google was told about.
+  /* Body figures and brand charts are declared in frontmatter and injected after
+     the h2 they name. See src/lib/rehype-media.mjs for why this is a rehype pass
+     and not a component: .md bodies cannot carry a photo credit or a licence. */
+  markdown: {
+    rehypePlugins: [rehypeMedia],
+  },
   integrations: [
     sitemap({
       filter: (page) => {

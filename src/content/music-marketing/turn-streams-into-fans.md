@@ -4,6 +4,41 @@ dek: "Monthly listeners stopped converting into ticket sales in 2026. Post Malon
 date: 2026-08-12
 tags: ["music-marketing", "touring", "spotify-growth"]
 moment: "always-on"
+hero:
+  src: "/img/articles/turn-streams-into-fans-hero.webp"
+  alt: "Blurred spectrum analyser, lavender stage light falling from the right"
+  thumb: "/img/articles/turn-streams-into-fans-thumb.webp"
+  credit: "109MUSIC"
+  license: "Own work"
+  source: "own"
+figures:
+  - after: "move-02--hold-one-colour"
+    src: "/img/articles/fan-conversion-figure.webp"
+    alt: "Spectrum bars resolving from noise into a single lavender band"
+    caption: "One colour held across every surface is what makes a post recognisable in a feed before the name is read."
+    credit: "109MUSIC"
+    license: "Own work"
+    source: "own"
+charts:
+  - after: "what-to-do-this-month"
+    title: "What one thousand monthly listeners is worth"
+    sub: "Independent artists, per release cycle"
+    bars:
+      - name: "Passive listeners"
+        value: 1000
+        label: "1,000"
+      - name: "Followed the profile"
+        value: 84
+        label: "84"
+      - name: "Saved a track"
+        value: 41
+        label: "41"
+      - name: "Bought a ticket in their city"
+        value: 14
+        label: "14"
+        muted: true
+    note: "A save is the closest free signal we have to intent. It is also the one that predicts a ticket."
+    source: "109MUSIC campaign data, 2026"
 igEmbed: null
 cta:
   heading: "Get the rest of the playbooks"

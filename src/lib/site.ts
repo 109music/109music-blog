@@ -20,6 +20,13 @@ export const WA_MESSAGES = {
   results: 'Hola, he visto vuestros resultados y quiero saber mas',
   article: 'Hola, vengo de un articulo de 109MUSIC y quiero que llevéis mi lanzamiento',
   home: 'Hola, quiero que llevéis el marketing de mi musica',
+  /* Los tres CTA de la home nueva. Cada bloque manda un mensaje distinto para que
+     en la bandeja se vea DE DONDE viene la persona sin tener que preguntarlo: el
+     que llega del hero no sabe nada todavia, el que llega de "how we work" ya ha
+     leido los cuatro pasos y viene con la fecha en la cabeza. */
+  'hero-call': 'Hola, quiero agendar una llamada para hablar de mi lanzamiento',
+  'how-we-work': 'Hola, he leido como trabajáis y quiero agendar una llamada. Mi proxima fecha de lanzamiento es:',
+  'close-call': 'Hola, esto es lo que voy a sacar:',
 } as const;
 
 export type WaKey = keyof typeof WA_MESSAGES;
@@ -212,6 +219,35 @@ export const LEGACY_CASE_STUDY_SLUGS = [
    show placeholder figures to a visitor. Flip to true when RESULTS has real data. */
 export const RESULTS_LIVE = false;
 
+/* El CTA comercial es agendar una llamada, no comprar, y va por WhatsApp como el
+   resto del sitio. Decidido el 14/08: el cuello de botella no es cuadrar agendas,
+   es que entren consultas, y un calendario pide nombre, correo, huso horario y un
+   hueco de 30 minutos antes de que exista ninguna relacion. Ademas la audiencia
+   llega de Instagram, en el movil y en España: WhatsApp es su canal por defecto.
+   Cuando entren mas consultas de las que se pueden contestar, se cambia. */
+
+/* Los cuatro pasos. Nombran mecánica concreta (Meta ads, playlisting, píxel,
+   línea base) a propósito: la referencia de indepenjend cuenta su proceso en
+   genérico porque vende un servicio gestionado, y ahí es donde les ganamos. */
+export const STEPS = [
+  {
+    h: 'You send the track',
+    p: 'A WhatsApp message with the release date and the link. We tell you straight whether we can move it, and if we cannot, we say so.',
+  },
+  {
+    h: 'We set the baseline',
+    p: 'Seven days of your current numbers, recorded before a single euro is spent. Nothing we claim later means anything without this.',
+  },
+  {
+    h: 'Meta ads and playlisting run',
+    p: 'Campaigns built, targeted and optimised in-house, and your track pitched to real curators. The pixel sits on your account, not ours, so the audience stays yours when we are done.',
+  },
+  {
+    h: 'You get the numbers',
+    p: 'Weekly reporting against that baseline, in plain language. The same figures that end up on the results page, if you let us print them.',
+  },
+] as const;
+
 /* One card per client campaign. `figure` is the single big number; `context` is the
    sentence that carries the BASELINE, and without it the figure means nothing — a
    "+400%" on twelve daily streams is not a result. See the intake template for the
@@ -227,10 +263,30 @@ export type ResultCard = {
   art?: string | null;
 };
 
+/* MUESTRA. Cifras reales y verificadas contra capturas fechadas, sin nombre porque
+   todavía no hay permiso por escrito, y sin inversión porque no existe la captura de
+   Meta de esas campañas. NO se publican: RESULTS_LIVE sigue en false. Están aquí para
+   poder juzgar la forma del bloque. Ver claude/client-cases-inventory.md. */
 export const RESULTS: ResultCard[] = [
-  // {
-  //   artist: '', track: '', figure: '+312%', label: 'in daily Spotify streams',
-  //   context: '18,400 streams during the campaign, from a', baseline: '590/day baseline',
-  //   art: null,
-  // },
+  {
+    artist: 'Spanish urban artist', track: 'Single, 2025',
+    figure: '+1,819%', label: 'in Spotify streams',
+    context: '26,919 streams over 91 days, from an',
+    baseline: '11,969 all-time baseline',
+    art: '/img/results/plate-1.webp',
+  },
+  {
+    artist: 'Spanish urban artist', track: 'Single, 2024',
+    figure: '+32%', label: 'in monthly listeners',
+    context: '5,583 streams in 28 days on 115 EUR of ad spend, from a',
+    baseline: '2,436 listener baseline',
+    art: '/img/results/plate-2.webp',
+  },
+  {
+    artist: '109RECORDS playlists', track: 'Urban Spanish Essentials',
+    figure: '6,089', label: 'streams placed in 12 months',
+    context: 'one track, from our own editorial network, on a',
+    baseline: 'zero-paid-placement policy',
+    art: '/img/results/plate-3.webp',
+  },
 ];

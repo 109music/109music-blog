@@ -15,7 +15,16 @@ const { entry, sectionId, sectionLabel } = Astro.props;
 const d = entry.data;
 const minutes = readingTime(entry.body);
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
-const heroGray = d.hero?.treatment !== 'colour';
+/* No filter on the web. `hero.treatment` is still accepted by the schema so the
+   nine pre-existing articles validate, and is deliberately not read: an untouched
+   photo is not a derivative work, which is what keeps the licence chain simple.
+   Grayscale survives only in the Instagram carousels. */
+
+/* The share card is always ours. Convention over configuration: the generator
+   writes /img/og/<section>/<slug>.jpg for every article, and `og` in frontmatter
+   only exists to override a card that came out wrong. */
+const slug = entry.id.replace(/\.md$/, '').split('/').pop();
+const ogImage = d.og ?? `/img/og/${sectionId}/${slug}.jpg`;
 
 const schema: any = {
   '@context': 'https://schema.org',
@@ -60,6 +69,8 @@ if (d.faq?.length) {
   ogType="article"
   schema={graph.length === 1 ? graph[0] : graph}
   activeSection={sectionId}
+  image={ogImage}
+  imageAlt={d.title}
 >
   <ReadingProgress slot="progress" />
 
@@ -78,17 +89,23 @@ if (d.faq?.length) {
     </div>
   </div>
 
-  {/* Reserved full-width hero. Stage 2 supplies `hero` in frontmatter; nothing renders until then. */}
+  {/* The hero. Nothing renders without `hero` in the frontmatter, and nothing is
+      reserved either: the body simply rises against the masthead, which is how the
+      nine articles written before any imagery existed still read correctly. An
+      empty frame would be worse than no frame. */}
   {d.hero && (
     <div class="wrap">
       <figure class="hero-frame">
-        <img src={url(d.hero.src)} alt={d.hero.alt} class={heroGray ? 'grayscale' : ''} fetchpriority="high" decoding="async" />
+        <img src={url(d.hero.src)} alt={d.hero.alt} width="1600" height="900"
+             fetchpriority="high" decoding="async" />
       </figure>
-      {d.hero.credit && (
+      {(d.hero.credit || d.hero.license) && (
         <p class="hero-credit mono">
           {d.hero.creditUrl
-            ? <a href={d.hero.creditUrl} target="_blank" rel="noopener">{d.hero.credit}</a>
+            ? <a href={d.hero.creditUrl} target="_blank" rel="noopener nofollow">{d.hero.credit}</a>
             : d.hero.credit}
+          {d.hero.credit && d.hero.license && ' · '}
+          {d.hero.license}
         </p>
       )}
     </div>

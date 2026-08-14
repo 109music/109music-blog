@@ -7,15 +7,68 @@ const source = z.object({
   url: z.string().url(),
 });
 
-/* Hero imagery lands in Stage 2. The field exists now so the index and article
-   layouts already reserve the geometry, and Stage 2 is a data change, not a rebuild. */
+/* Hero imagery. The field predates Stage 2; what Stage 2 adds is `thumb`, the
+   square crop the listing row uses, and the licence trail.
+
+   TREATMENT, decided 2026-08-14: on the WEB photos run untouched. No filter, no
+   grayscale. An unmodified photo is not a derivative work, so a Creative Commons
+   file needs crediting and nothing else. The grayscale rule survives ONLY in the
+   Instagram carousels, which are a separate pipeline with separate sourcing.
+   `treatment` therefore stays in the schema so the nine existing articles keep
+   validating, and is no longer read by any layout. */
 const hero = z.object({
   src: z.string(),
   alt: z.string(),
+  /* Square crop for the 96px listing thumbnail. Falls back to `src`. Set it when
+     the 16:9 hero loses its subject in a centre crop. */
+  thumb: z.string().optional(),
   credit: z.string().optional(),
   creditUrl: z.string().url().optional(),
-  // 'colour' opts one article out of the default grayscale treatment.
-  treatment: z.enum(['grayscale', 'colour']).default('grayscale'),
+  /* Licence exactly as the source states it, e.g. "CC BY-SA 4.0". Rendered under
+     the photo. An image whose licence cannot be identified does not ship. */
+  license: z.string().optional(),
+  source: z.enum(['wikimedia', 'presskit', 'own']).optional(),
+  // Accepted for backwards compatibility. Not read: the web applies no filter.
+  treatment: z.enum(['grayscale', 'colour']).default('colour'),
+});
+
+/* A figure placed inside the body. Declared here rather than written into the
+   markdown on purpose: the articles are .md, not .mdx, so a body image cannot
+   carry a credit or a licence, and those are the two things that cannot be lost.
+   `after` is the id of the h2 it follows — the id Astro already generates from
+   the heading text. The automation pipeline only ever appends to this array; the
+   body it writes stays plain markdown. */
+const figure = z.object({
+  after: z.string(),
+  src: z.string(),
+  alt: z.string(),
+  caption: z.string().optional(),
+  credit: z.string().optional(),
+  creditUrl: z.string().url().optional(),
+  license: z.string().optional(),
+  source: z.enum(['wikimedia', 'presskit', 'own']).optional(),
+});
+
+/* A brand data chart, same placement mechanism. Our own numbers, drawn with the
+   `.chart` component that has been in the CSS since Stage 1. Zero licensing, and
+   it fills a page as well as a photograph does. */
+const chart = z.object({
+  after: z.string(),
+  title: z.string(),
+  sub: z.string().optional(),
+  bars: z
+    .array(
+      z.object({
+        name: z.string(),
+        // Relative bar length, 0-100 after normalising against the largest bar.
+        value: z.number(),
+        label: z.string(),
+        muted: z.boolean().default(false),
+      })
+    )
+    .min(2),
+  note: z.string().optional(),
+  source: z.string().optional(),
 });
 
 const base = z.object({
@@ -44,6 +97,15 @@ const base = z.object({
   igEmbed: z.string().nullable().default(null),
   sources: z.array(source).default([]),
   faq: z.array(z.object({ q: z.string(), a: z.string() })).default([]),
+  /* Body imagery and charts. Both default to empty, so every article written
+     before 2026-08-14 validates untouched. */
+  figures: z.array(figure).default([]),
+  charts: z.array(chart).default([]),
+  /* Open Graph override. Left empty the build uses the generated brand card at
+     /img/og/<section>/<slug>.jpg. A sourced photo is never used as the OG image:
+     a share card cannot carry the credit line, so putting a CC photo there would
+     redistribute it without attribution. */
+  og: z.string().optional(),
   draft: z.boolean().default(false),
 });
 

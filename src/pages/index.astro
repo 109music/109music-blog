@@ -1,17 +1,23 @@
 ---
-/* THE HOME PAGE, rebuilt 2026-08-14 around one sentence:
-   "your number one source to market your music."
+/* LA HOME, rediseñada 2026-08-14 (pase 4).
 
-   The front page exists to sell, not to display the catalogue. Everything that was a
-   shelf — the moment jumper, the news wire, the marketing shelf, the case-studies
-   shelf, the business bridge, the topic cloud — is gone from here and lives inside
-   Learn and its sections. What is left is five blocks.
+   Siete bloques, en el orden que fija la conversión y no el catálogo:
+   hero · resultados · lo que ofrecemos · cómo trabajamos · aprende gratis ·
+   lo que ya has probado · cierre.
 
-   The thesis resolves the question we kept going round on, which was where the
-   editorial half belongs. It is not a second front door and it is not a lower
-   priority: it is one of the three things we offer, sitting in the same shelf as the
-   paid work. An artist can learn it free or hand it over, and both routes are ours.
-   That is what "all in one" has to look like structurally, not just in a strapline. */
+   Dos cambios de sistema entran aquí:
+
+   1. SE ACABÓ EL TERCER NIVEL DE SUPERFICIE. El tinte existía para que dos bandas
+      claras seguidas no se leyeran igual. Con los listados sobre negro ese trabajo
+      ya lo hace el contraste, así que la separación pasa a ser AIRE: dos bloques
+      claros consecutivos abren más padding entre ellos (.surf-bone + .surf-bone).
+      Dos superficies, negro y hueso, y nada intermedio.
+
+   2. EL BLOQUE EDITORIAL ES UN ESCAPARATE, NO UN ARCHIVO. Tres artículos como
+      máximo y tres enlaces de sección encima. Los enlaces son <a> reales, no
+      filtros en cliente: con tres artículos un filtro no revela nada, y un enlace
+      reparte autoridad hacia News, Music Marketing y Business. Coste en JS: cero.
+*/
 import Base from '../layouts/Base.astro';
 import Row from '../components/Row.astro';
 import ResultCard from '../components/ResultCard.astro';
@@ -19,51 +25,34 @@ import SectionMarker from '../components/SectionMarker.astro';
 import Ambient from '../components/Ambient.astro';
 import { getCollection } from 'astro:content';
 import {
-  SITE, SECTIONS, url, readingTime, labelOf, wa, pathOf, RESULTS_LIVE, RESULTS,
+  SITE, SECTIONS, STEPS, url, readingTime, labelOf, wa, pathOf,
+  RESULTS_LIVE, RESULTS,
 } from '../lib/site';
 
 const live = (arr: any[]) =>
   arr.filter((e) => !e.data.draft).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-/* Latest reads across EVERY collection on purpose. It is now the only editorial block
-   on the home, so it is also the only place News, Case Studies and Business content
-   can surface here — a single-collection feed would have quietly orphaned three
-   sections the moment the shelves came out. */
 const everything: any[] = [];
 for (const s of SECTIONS) {
   for (const e of live(await getCollection(s.id as any))) everything.push(e);
 }
 everything.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-const latest = everything.slice(0, 6);
+const latest = everything.slice(0, 3);
 
 const resultsLive = RESULTS_LIVE && RESULTS.length > 0;
 
-/* Light bands alternate from a counter so toggling the results block cannot leave two
-   identical surfaces touching. */
-let surfN = 0;
-const surf = () => (surfN++ % 2 === 0 ? 'surf-bone' : 'surf-tint');
+/* Los marcadores numerados cuentan desde una sola fuente: si un bloque se apaga con
+   una bandera, la numeración no se queda con un hueco. */
 let markN = 0;
 const mark = () => ++markN;
 
 const schema = {
   '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'Organization',
-      name: SITE.name,
-      url: new URL(url('/'), Astro.site).href,
-      description: SITE.description,
-      sameAs: [SITE.instagram, SITE.beacons],
-    },
-    {
-      '@type': 'WebSite',
-      name: SITE.name,
-      url: new URL(url('/'), Astro.site).href,
-      description: SITE.description,
-      inLanguage: 'en',
-      publisher: { '@type': 'Organization', name: SITE.name },
-    },
-  ],
+  '@type': 'Organization',
+  name: SITE.author,
+  url: new URL(url('/'), Astro.site).href,
+  description: SITE.description,
+  sameAs: [SITE.instagram, SITE.beacons].filter(Boolean),
 };
 ---
 <Base title={SITE.name} description={SITE.description} schema={schema}>
@@ -75,7 +64,7 @@ const schema = {
     <span class="stars" aria-hidden="true"></span>
     <span class="herobg-scrim" aria-hidden="true"></span>
     <div class="wrap">
-      <section class="hero home-hero">
+      <section class="hero">
         <p class="kicker mono rise">Independent music marketing · Madrid</p>
         <h1 class="display face rise brandline">109MUSIC.CO</h1>
         <p class="statement rise">
@@ -83,8 +72,8 @@ const schema = {
           playbooks, or <b>hand us the campaign</b> and we run it for you.
         </p>
         <div class="hero-cta rise">
-          <a class="btn" href={wa('home')} target="_blank" rel="noopener">
-            <span>Talk to us on WhatsApp</span><span class="arrow" aria-hidden="true">→</span>
+          <a class="btn" href={wa('hero-call')} target="_blank" rel="noopener">
+            <span>Book a call</span><span class="arrow" aria-hidden="true">→</span>
           </a>
           <a class="btn ghost" href={url('/music-marketing/')}>
             <span>Start with the playbooks</span><span class="arrow" aria-hidden="true">→</span>
@@ -96,12 +85,15 @@ const schema = {
 
   <div class="wrap">
 
-    {/* 02 · Client results. Behind RESULTS_LIVE until real figures exist — a visitor
-        must never see an invented number on this page. */}
+    {/* 02 · Real results. La tarjeta es la de Aura porque resuelve el problema que
+        tenemos: una cifra grande por tarjeta y una línea de contexto que lleva la
+        base de partida. Un "+400%" sobre doce streams diarios no es un resultado.
+        En carrusel horizontal, con desvanecidos en los bordes para que las tarjetas
+        se disuelvan en el fondo en vez de quedar cortadas. */}
     {resultsLive && (
-      <section class={surf()}>
+      <section class="surf-bone">
         <Ambient />
-        <SectionMarker n={mark()} slug="client_results" />
+        <SectionMarker n={mark()} slug="real_results" />
         <div class="sec-head">
           <h2 class="display">Real artists. Real numbers.</h2>
           <a href={url('/results/')}>All results →</a>
@@ -109,84 +101,120 @@ const schema = {
         <p class="sec-intro">
           Every figure measured against the week before the campaign started.
         </p>
-        <div class="rcard-grid">
-          {RESULTS.slice(0, 4).map((r) => <ResultCard data={r} />)}
+        <div class="rcarousel">
+          <div class="rcarousel-track">
+            {RESULTS.map((r) => <ResultCard data={r} />)}
+          </div>
         </div>
       </section>
     )}
 
-    {/* 03 · What we got for you. Three routes, one shelf. The free one sits first and
-        at the same weight as the paid ones, which is the whole argument: the writing
-        is not a lead magnet bolted onto an agency, it is proof that the agency knows
-        what it is doing. */}
-    <section class={surf()}>
+    {/* 03 · What we offer. Tarjeta = icono, título, UNA línea, botón. Nada de
+        párrafos: este bloque orienta, no convence. Convencer es trabajo de la
+        página de destino. La ruta gratis va primera y al mismo peso que las de
+        pago, que es el argumento entero de la casa. */}
+    <section class="surf-bone">
       <Ambient />
-      <SectionMarker n={mark()} slug="what_we_got_for_you" />
-      <div class="sec-head">
-        <h2 class="display">What we got for you</h2>
-      </div>
-      <p class="sec-intro">
-        Whether you run it yourself or we run it, it is the same method. The difference
-        is who does the work.
-      </p>
+      <SectionMarker n={mark()} slug="what_we_offer" />
+      <div class="sec-head"><h2 class="display">What we offer</h2></div>
 
       <div class="offergrid">
         <div class="offer">
-          <p class="offer-tag mono">Free · Do it yourself</p>
+          <span class="offer-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M5 6h9a4 4 0 0 1 4 4v16a3 3 0 0 0-3-3H5z"/>
+              <path d="M27 6h-9a4 4 0 0 0-4 4v16a3 3 0 0 1 3-3h10z"/>
+            </svg>
+          </span>
+          <p class="offer-tag mono">Free</p>
           <h3 class="display">The playbooks</h3>
-          <p>
-            Everything we run for clients, written down with the real budgets, radiuses
-            and thresholds. Organised by how close your record is, not by topic.
-          </p>
-          <ul class="ticks">
-            <li>Release and tour playbooks</li>
-            <li>Platform changes and what they cost you</li>
-            <li>Famous rollouts taken apart</li>
-          </ul>
+          <p>Everything we run for clients, written down with the real numbers.</p>
           <a class="offer-cta mono" href={url('/music-marketing/')}>Read the playbooks →</a>
         </div>
 
         <div class="offer offer--lead">
-          <p class="offer-tag mono">Paid · We run it</p>
+          <span class="offer-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6">
+              <circle cx="16" cy="16" r="11"/><circle cx="16" cy="16" r="5.5"/>
+              <path d="M16 2v5M16 25v5M2 16h5M25 16h5"/>
+            </svg>
+          </span>
+          <p class="offer-tag mono">We run it</p>
           <h3 class="display">Meta ads &amp; playlisting</h3>
-          <p>
-            A person builds, watches and adjusts your campaign. Not a dashboard, not a
-            preset. You get the reporting in plain language and you keep the pixel.
-          </p>
-          <ul class="ticks">
-            <li>Release and tour campaigns on Meta</li>
-            <li>Curator pitching, one track at a time</li>
-            <li>Weekly reporting, no retainer lock-in</li>
-          </ul>
+          <p>A person builds, watches and adjusts your campaign. You keep the pixel.</p>
           <a class="offer-cta mono" href={url('/services/')}>See how we work →</a>
         </div>
 
         <div class="offer">
+          <span class="offer-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6">
+              <rect x="4" y="5" width="24" height="22"/><path d="M4 12h24M12 12v15"/>
+            </svg>
+          </span>
           <p class="offer-tag mono">Tools</p>
-          <h3 class="display">Templates &amp; track submission</h3>
-          <p>
-            The spreadsheets, checklists and templates we use internally, plus a way to
-            put a single track in front of real curators for a fixed price.
-          </p>
-          <ul class="ticks">
-            <li>Release planning templates</li>
-            <li>Budget and break-even sheets</li>
-            <li>Submit your track · 5 EUR</li>
-          </ul>
+          <h3 class="display">Templates &amp; submission</h3>
+          <p>The sheets we use internally, and one track in front of real curators.</p>
           <a class="offer-cta mono" href={url('/resources/')}>Browse the resources →</a>
         </div>
       </div>
     </section>
+  </div>
 
-    {/* 04 · Latest, across every collection */}
+  {/* 04 · How we work. Sobre negro: es el bloque que vende y el negro es el
+      mecanismo de énfasis del sistema, así que la jerarquía no cuesta ni un punto
+      de tamaño de fuente. Cuatro pasos numerados en filas, no en carrusel: un
+      proceso se lee de arriba abajo y un carrusel esconde la mitad. */}
+  <div class="slab band-fx">
+    <span class="stars" aria-hidden="true"></span>
+    <div class="wrap">
+      <section class="howwork">
+        <SectionMarker n={mark()} slug="how_we_work" />
+        <div class="sec-head"><h2 class="display">How a campaign actually runs</h2></div>
+        <ol class="steps">
+          {STEPS.map((s, i) => (
+            <li class="step">
+              <span class="step-n mono">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="display">{s.h}</h3>
+              <p>{s.p}</p>
+            </li>
+          ))}
+        </ol>
+        <div class="steps-cta">
+          <a class="btn" href={wa('how-we-work')} target="_blank" rel="noopener">
+            <span>Book a call</span><span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <p class="mono">A WhatsApp message, then a call. We tell you if we can move it before you spend anything.</p>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    {/* 05 · Learn it free. "Latest" sonaba a blog y escondía lo único que hace
+        distinta a esta casa: que el método está publicado y no cuesta nada. El
+        título paga la promesa que hace el hero, literalmente con las mismas
+        palabras. Tres artículos, tope. */}
+    {/* Sin <Ambient /> aqui: el lavado lila que sobraba en este bloque no era solo
+        el tinte, era tambien el blob ambiental. Un listado de lectura no necesita
+        atmosfera; la necesitan los bloques que venden. */}
     {latest.length > 0 && (
-      <section class={surf()}>
-        <Ambient />
-        <SectionMarker n={mark()} slug="latest" />
+      <section class="surf-bone">
+        <SectionMarker n={mark()} slug="learn_it_free" />
         <div class="sec-head">
-          <h2 class="display">Latest</h2>
+          <h2 class="display">Learn it free</h2>
           <a href={url('/rss.xml')}>Subscribe via RSS →</a>
         </div>
+        <p class="sec-intro">
+          Everything we run for clients, written down. No signup, no gate.
+        </p>
+        {/* Enlaces reales a cada sección, no filtros. Cero JavaScript y reparten
+            autoridad hacia las tres secciones. */}
+        <nav class="pills" aria-label="Browse by section">
+          <a class="pill-link mono" href={url('/news/')}>News</a>
+          <a class="pill-link mono" href={url('/music-marketing/')}>Music Marketing</a>
+          <a class="pill-link mono" href={url('/business/')}>Business</a>
+        </nav>
         <ul class="rows">
           {latest.map((e) => (
             <Row
@@ -196,6 +224,7 @@ const schema = {
               date={e.data.date}
               label={labelOf(e.collection)}
               minutes={readingTime(e.body)}
+              hero={e.data.hero}
               showLabel={true}
             />
           ))}
@@ -203,15 +232,13 @@ const schema = {
       </section>
     )}
 
-    {/* 05 · The alternatives, last. It is the closing argument, not the opening one:
-        it only lands once someone has seen the numbers and the offer. */}
-    <section class={surf()}>
-      <Ambient />
+    {/* 06 · Lo que ya has probado. Va al final a propósito: es manejo de
+        objeciones, y las objeciones se tratan justo antes de pedir la acción, no
+        al entrar. Cuatro filas, no cinco. La última es la única que nuestra
+        competencia no puede escribir. */}
+    <section class="surf-bone">
       <SectionMarker n={mark()} slug="the_alternatives" />
       <div class="sec-head"><h2 class="display">What most artists try first</h2></div>
-      <p class="sec-intro">
-        Four ways to spend money on a release. Three of them we would talk you out of.
-      </p>
       <div class="cmp-scroll">
         <table class="cmp">
           <thead>
@@ -246,24 +273,24 @@ const schema = {
               <td class="cmp-us">You, always</td>
             </tr>
             <tr>
-              <th class="cmp-lab" scope="row">Risk to the release</th>
-              <td>Bot flags and playlist removal</td>
-              <td>Slow to react mid-campaign</td>
-              <td>Budget burnt learning</td>
-              <td class="cmp-us">We publish our method — read it before you pay</td>
+              <th class="cmp-lab" scope="row">Can you check the method</th>
+              <td>No</td>
+              <td>No</td>
+              <td>Only your own</td>
+              <td class="cmp-us">Yes. We publish it before you pay</td>
             </tr>
           </tbody>
         </table>
       </div>
       <p class="cmp-foot mono">
         The last row is the whole argument. Everything under
-        {' '}<a href={url('/music-marketing/')}>the playbooks</a> is what we run for
-        clients, written down.
+        <a href={url('/music-marketing/')}>the playbooks</a> is what we run for clients,
+        written down.
       </p>
     </section>
   </div>
 
-  {/* 06 · Close */}
+  {/* 07 · Cierre */}
   <div class="slab band-fx">
     <span class="stars" aria-hidden="true"></span>
     <div class="wrap">
@@ -274,9 +301,14 @@ const schema = {
           We will tell you straight whether we can move it, and what it would cost.
           If the honest answer is that you should run it yourself, we will say that too.
         </p>
-        <a class="btn" href={wa('home')} target="_blank" rel="noopener">
-          <span>Message us on WhatsApp</span><span class="arrow" aria-hidden="true">→</span>
-        </a>
+        <div class="hero-cta">
+          <a class="btn" href={wa('close-call')} target="_blank" rel="noopener">
+            <span>Book a call</span><span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="btn ghost" href={url('/submit-your-track/')}>
+            <span>Or submit a single track · 5 EUR</span><span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
         <p class="workband-fine mono">Replies from a person, usually same day</p>
       </section>
     </div>

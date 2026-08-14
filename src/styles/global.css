@@ -1737,3 +1737,219 @@ body {
   color: var(--lav-deep); text-decoration: none;
 }
 .offer-cta:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+/* ==========================================================================
+   PASE 3b · LA CAPA DE IMAGEN (2026-08-14)
+   Tres piezas: la miniatura cuadrada de la fila de listado, la figura dentro
+   del cuerpo del artículo con su crédito, y el hero de artículo sin filtro.
+
+   REGLA DE TRATAMIENTO, cerrada hoy: en la web las fotos van tal cual. Sin
+   filtro, sin gris, sin capa de opacidad. Una foto sin modificar no es obra
+   derivada, así que una Creative Commons solo pide crédito. El gris se queda
+   SOLO en los carruseles de Instagram. Web y carrusel son pipelines separados
+   también en esto, y las fotos de los carruseles no cruzan a la web.
+   ========================================================================== */
+
+/* --- A · La miniatura de la fila -----------------------------------------
+   La cuarta columna se declara SOLO en .has-thumb. Una pista declarada y vacía
+   sigue aportando sus 26px de column-gap, así que una fila sin imagen llevaría
+   un agujero visible. Sin la clase, la fila conserva la plantilla de tres
+   columnas exacta del pase 3. Meter imágenes es un cambio de datos.
+   El plate de 172px NO vuelve. Ver Row.astro. */
+.row-thumb { display: block; line-height: 0; }
+.row-thumb img {
+  display: block; width: 100%; height: auto; aspect-ratio: 1 / 1;
+  object-fit: cover; background: var(--on-bone-rule);
+  /* Sin filtro. Deliberado, no un olvido. */
+  filter: none;
+  transition: transform .4s var(--ease);
+}
+.slab .row-thumb img { background: var(--on-dark-rule); }
+.row > a:hover .row-thumb img { transform: scale(1.03); }
+
+@media (min-width: 820px) {
+  .row > a.has-thumb {
+    grid-template-columns: 150px minmax(0, 1fr) 72px 96px;
+    align-items: start;
+  }
+  /* La fecha y los minutos se alinean con la primera línea del titular, que es
+     lo que hacía `align-items: baseline` antes de que la miniatura obligase a
+     `start` para no estirar el cuadrado a la altura de la fila. */
+  .row > a.has-thumb .row-date,
+  .row > a.has-thumb .row-min { padding-top: 3px; }
+  .row .row-thumb { grid-column: 4; grid-row: 1; }
+}
+
+/* Móvil: se queda, a 56px, a la derecha del titular. No se esconde. El listado
+   es el scroll más largo del sitio y el móvil es donde cae el tráfico que viene
+   de Instagram: esconder ahí la imagen vacía de sentido el trabajo de producirla.
+   La fecha sigue arriba a ancho completo; la miniatura se alinea con el titular. */
+@media (max-width: 819px) {
+  .row > a.has-thumb {
+    grid-template-columns: minmax(0, 1fr) 56px;
+    column-gap: 16px;
+  }
+  .row > a.has-thumb .row-date { grid-column: 1 / -1; }
+  .row > a.has-thumb .row-main { grid-column: 1; }
+  .row > a.has-thumb .row-thumb { grid-column: 2; align-self: start; }
+}
+
+/* --- B · Figura dentro del cuerpo ---------------------------------------- */
+.article .media { margin: clamp(28px, 4vw, 42px) 0; }
+.body-figure { margin: 0; line-height: 0; }
+.body-figure img {
+  display: block; width: 100%; height: auto; aspect-ratio: 16 / 9;
+  object-fit: cover; background: var(--on-bone-rule); filter: none;
+}
+.article .fig-caption {
+  margin: 12px 0 0; font-size: 15px; line-height: 1.5; color: var(--on-bone-mute);
+}
+/* El crédito es el precio de la licencia, así que se ve. Pequeño y apagado, pero
+   nunca escondido: es lo que pide una CC BY y es lo que nos deja usarla. */
+.article .fig-credit, .hero-credit {
+  margin: 8px 0 0; font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--on-bone-faint);
+}
+.article .fig-credit a, .hero-credit a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.article .fig-credit a:hover, .hero-credit a:hover { color: var(--lav-deep); }
+
+/* --- C · El hero de artículo, sin filtro --------------------------------- */
+.hero-frame { margin: 0; line-height: 0; }
+.hero-frame img {
+  display: block; width: 100%; height: auto; aspect-ratio: 16 / 9;
+  object-fit: cover; filter: none;
+}
+
+/* --- D · El gráfico inyectado hereda .chart, que ya existía desde la fase 1.
+   Lo único que faltaba era la barra con anchura en línea, que pone el plugin. */
+.article .chart { margin: clamp(28px, 4vw, 42px) 0; }
+
+/* ==========================================================================
+   PASE 4 · LA HOME REDISEÑADA (2026-08-14)
+   ========================================================================== */
+
+/* --- A · FUERA EL TERCER NIVEL DE SUPERFICIE ------------------------------
+   El tinte se introdujo para que dos bandas claras seguidas no se leyeran
+   iguales. Con los listados sobre negro ese trabajo ya lo hace el contraste,
+   así que la separación pasa a ser AIRE. Dos superficies: negro y hueso.
+   Se neutraliza en vez de borrarse para que ninguna plantilla vieja abra un
+   bloque de otro color mientras se migran las secciones. */
+.wrap > section.surf-tint {
+  background: var(--bone);
+  box-shadow: -100vw 0 0 var(--bone), 100vw 0 0 var(--bone);
+}
+.surf-tint .leadcard, .surf-tint .chart, .surf-tint .plate { background: var(--white); }
+.surf-tint .cmp-scroll::before { background: linear-gradient(to right, var(--bone), transparent); }
+.surf-tint .cmp-scroll::after  { background: linear-gradient(to left,  var(--bone), transparent); }
+
+/* ATMOSFERA SOLO SOBRE NEGRO (decidido el 14/08).
+   El rectangulo lila que sobraba no era solo el tinte: el blob ambiental es un
+   radial lavanda de 520px con blur(150px), y sobre hueso tiñe la banda entera.
+   Quitar el tinte y dejar el blob habria sido reintroducir la tercera superficie
+   por la puerta de atras. Sobre negro se queda, que es donde es la mejor pieza
+   del sistema por relacion acabado/coste. En claro la textura la dan el filete y
+   el aire. `.ambient` sigue en el arbol para no tocar 11 plantillas. */
+.wrap > section .ambient { display: none; }
+
+/* El aire hace de separador. Dos bloques claros consecutivos abren el doble de
+   hueco arriba: es lo que antes hacía el cambio de color. */
+.wrap > section.surf-bone + section.surf-bone,
+.wrap > section.surf-bone + section.surf-tint {
+  padding-top: clamp(72px, 10vw, 132px);
+}
+
+/* --- B · CARRUSEL DE RESULTADOS -------------------------------------------
+   Tarjetas en fila con scroll horizontal y ajuste por tarjeta. Los desvanecidos
+   de borde son lo que hace que las tarjetas se disuelvan en el fondo en vez de
+   quedar cortadas por la mitad. Detalle pequeño, muy visible. */
+.rcarousel { position: relative; margin-top: 26px; }
+/* Solo el desvanecido DERECHO. Sin JavaScript no se puede saber si el carrusel
+   esta desplazado, y un velo fijo a la izquierda apaga la primera tarjeta sin que
+   haya nada que desvanecer. A la derecha si hay contenido que sigue. */
+.rcarousel::after {
+  content: ''; position: absolute; top: 0; bottom: 14px; right: 0; width: 56px; z-index: 2;
+  pointer-events: none; background: linear-gradient(to left, var(--bone), transparent);
+}
+.rcarousel-track {
+  display: grid; grid-auto-flow: column; grid-auto-columns: minmax(268px, 300px);
+  gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory;
+  padding: 2px 56px 14px 0; margin-right: -56px;
+  scrollbar-width: thin;
+}
+.rcarousel-track > * { scroll-snap-align: start; }
+
+/* --- C · WHAT WE OFFER, con icono y una sola línea ------------------------
+   El bloque orienta, no convence. Convencer es trabajo de la página de destino,
+   y un párrafo aquí solo consigue que no se lea ninguno de los tres. */
+.offergrid { display: grid; gap: 16px; margin-top: 26px; }
+@media (min-width: 860px) { .offergrid { grid-template-columns: repeat(3, 1fr); } }
+.offer {
+  background: var(--white); border: 1px solid var(--on-bone-rule);
+  padding: clamp(22px, 2.6vw, 30px);
+  display: flex; flex-direction: column; gap: 10px;
+  transition: border-color .4s var(--ease), transform .4s var(--ease);
+}
+.offer:hover { transform: translateY(-2px); }
+.offer--lead { border-color: var(--lav-deep); }
+.offer-icon { display: block; width: 30px; height: 30px; color: var(--lav-deep); }
+.offer-icon svg { width: 100%; height: 100%; stroke-linecap: square; stroke-linejoin: miter; }
+.offer-tag { font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--on-bone-faint); }
+.offer h3 { font-size: clamp(19px, 2vw, 23px); margin: 0; }
+.offer > p { font-size: 15px; line-height: 1.55; color: var(--on-bone-mute); margin: 0; flex: 1; }
+.offer-cta {
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--lav-deep); text-decoration: none; margin-top: 4px;
+}
+.offer-cta:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+/* --- D · HOW WE WORK ------------------------------------------------------
+   Cuatro pasos en filas, no en carrusel. Un proceso se lee de arriba abajo y un
+   carrusel esconde la mitad de lo que has escrito. */
+.howwork { padding: clamp(56px, 8vw, 104px) 0; }
+.steps { list-style: none; margin: 26px 0 0; padding: 0; border-top: 1px solid var(--on-dark-rule); }
+.step {
+  display: grid; gap: 6px 26px; padding: 24px 0;
+  border-bottom: 1px solid var(--on-dark-rule);
+  grid-template-columns: 46px minmax(0, 1fr); align-items: start;
+  transition: background .4s var(--ease);
+}
+@media (min-width: 860px) {
+  .step { grid-template-columns: 74px 1fr 1.55fr; gap: 0 32px; align-items: baseline; }
+  .step > p { grid-column: 3; }
+}
+.step:hover { background: rgba(197, 159, 253, .04); }
+.step-n { font-size: 12px; letter-spacing: .14em; color: var(--lav); font-variant-numeric: tabular-nums; }
+.step h3 {
+  margin: 0; font-size: clamp(17px, 1.8vw, 21px); text-transform: uppercase;
+  letter-spacing: -.01em; color: var(--on-dark);
+}
+.step > p { margin: 0; grid-column: 1 / -1; font-size: 15px; line-height: 1.6; color: var(--on-dark-mute); }
+.steps-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 22px; margin-top: 30px; }
+.steps-cta p { margin: 0; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--on-dark-faint); }
+
+/* --- E · PASTILLAS DE SECCIÓN --------------------------------------------
+   Son <a> reales, no filtros. Con tres artículos un filtro no revela nada, y un
+   enlace reparte autoridad hacia las tres secciones. Coste en JS: cero bytes. */
+.pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0 4px; }
+.pill-link {
+  display: inline-block; padding: 7px 13px; font-size: 10.5px; letter-spacing: .14em;
+  text-transform: uppercase; text-decoration: none;
+  color: var(--on-bone-mute); border: 1px solid var(--on-bone-rule);
+  transition: color .3s var(--ease), border-color .3s var(--ease);
+}
+.pill-link:hover { color: var(--lav-deep); border-color: var(--lav-deep); }
+
+.cmp-foot { margin-top: 16px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--on-bone-faint); }
+.cmp-foot a { color: inherit; }
+
+/* La caratula de la tarjeta de resultado no puede comerse la tarjeta. Aura la pone
+   cuadrada a sangre, pero su tarjeta es mas alta que la nuestra; a 4:3 la cifra
+   sigue siendo lo primero que se lee, que es el punto entero del componente.
+   Y el plate de reserva tiene que VERSE: un cuadrado negro vacio parece un fallo
+   de carga, no una decision. */
+.rcard-art { aspect-ratio: 4 / 3; object-fit: cover; }
+.rcard-art--plate {
+  display: grid; place-items: center; background: var(--ink);
+  font-family: var(--display); font-weight: 800; font-size: 34px;
+  letter-spacing: -.02em; color: var(--lav);
+}

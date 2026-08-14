@@ -2266,7 +2266,9 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
    cierra, recibe foco y responde a Enter y Espacio por si mismo, y los lectores
    de pantalla lo anuncian como lo que es. Cero JavaScript. */
 .navwrap { position: static; }
-.navtoggle { display: none; }
+/* En escritorio el boton no existe y `.nav` es la barra de siempre. Ni el boton
+   ni el panel dependen de ningun estado del navegador. */
+.navtoggle { display: none; background: none; font: inherit; cursor: pointer; }
 
 @media (max-width: 899px) {
   .chrome { position: relative; }
@@ -2281,36 +2283,53 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
   .navtoggle-word { font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; }
   .navtoggle-bars { display: grid; gap: 3px; width: 15px; }
   .navtoggle-bars i { display: block; height: 1.5px; background: currentColor; transition: transform .22s var(--ease), opacity .22s var(--ease); }
-  .navwrap[open] .navtoggle-bars i:nth-child(1) { transform: translateY(4.5px) rotate(45deg); }
-  .navwrap[open] .navtoggle-bars i:nth-child(2) { opacity: 0; }
-  .navwrap[open] .navtoggle-bars i:nth-child(3) { transform: translateY(-4.5px) rotate(-45deg); }
+  .navwrap[data-open] .navtoggle-bars i:nth-child(1) { transform: translateY(4.5px) rotate(45deg); }
+  .navwrap[data-open] .navtoggle-bars i:nth-child(2) { opacity: 0; }
+  .navwrap[data-open] .navtoggle-bars i:nth-child(3) { transform: translateY(-4.5px) rotate(-45deg); }
 
   /* El panel cae bajo la cabecera, a ancho completo, en columna. Nada se envuelve
      y nada desborda: por eso la barra deja de empujar la pagina de lado. */
+  /* Sin JS el panel se ve, que es el fallo seguro. Con JS se colapsa hasta que
+     se pulsa. Nunca al reves: una barra que depende de que un script arranque es
+     una barra que a veces no existe. */
+  .navwrap[data-js]:not([data-open]) > .nav { display: none; }
   .navwrap > .nav {
     position: absolute; left: 0; right: 0; top: calc(100% + 14px);
     flex-direction: column; align-items: stretch; gap: 0;
     background: var(--ink); border-top: 1px solid var(--on-dark-rule);
-    padding: 6px 0 14px; z-index: 60;
+    padding: 4px 0 10px; z-index: 60;
+    flex-wrap: wrap; row-gap: 0; column-gap: 10px;
   }
+  /* Alturas apretadas a proposito: el panel entero tiene que caber en una
+     pantalla de 844px SIN scroll interno, con los cinco destinos, el buscador y
+     el boton. Medido, no estimado. */
   .navwrap > .nav > a,
   .navwrap > .nav .navgroup-btn {
     display: block; width: 100%; text-align: left;
-    padding: 14px 2px; border-bottom: 1px solid var(--on-dark-rule);
+    padding: 10px 2px; border-bottom: 1px solid var(--on-dark-rule);
+    font-size: 12px;
   }
   /* Learn NO se aplana: sus hijos se indentan y siguen leyendose como hijos. */
   .navwrap > .nav .navgroup { display: block; }
   .navwrap > .nav .navpanel {
     position: static; display: block; opacity: 1; visibility: visible;
     transform: none; box-shadow: none; background: transparent;
-    border: 0; padding: 2px 0 6px 18px; min-width: 0;
-    border-left: 1px solid var(--lav-deep); margin: 8px 0 8px 2px;
+    border: 0; padding: 0 0 2px 14px; min-width: 0;
+    border-left: 1px solid var(--lav-deep); margin: 4px 0 6px 2px;
   }
   .navwrap > .nav .navpanel-head { display: none; }
-  .navwrap > .nav .navpanel a { padding: 10px 0; border: 0; }
+  .navwrap > .nav .navpanel a { padding: 7px 0; border: 0; font-size: 11.5px; }
   .navwrap > .nav .np-blurb { display: none; }
-  .navwrap > .nav .navcta { margin-top: 14px; text-align: center; border-bottom: 0; }
-  .navwrap > .nav .searchbtn { align-self: flex-start; margin: 12px 0 0; }
+  /* Buscador y CTA comparten fila: dos elementos apilados costaban 60px de alto
+     y ninguno de los dos necesita el ancho entero. */
+  .navwrap > .nav .navcta { flex: 1; margin: 0; text-align: center; border-bottom: 0; }
+  .navwrap > .nav .searchbtn { flex: 0 0 auto; margin: 0; }
+  .navwrap > .nav { padding-bottom: 10px; }
+  .navwrap > .nav > .searchbtn { order: 98; }
+  .navwrap > .nav > .navcta { order: 99; }
+  .navwrap > .nav::after {
+    content: ''; order: 97; display: block; height: 10px; width: 100%;
+  }
 }
 
 /* --- 03 · EL BLOQUE DE CIERRE --------------------------------------------- */

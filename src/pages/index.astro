@@ -110,7 +110,10 @@ const schema = {
           dated platform screenshot.
         </p>
         <div class="rcarousel">
-          <div class="rcarousel-track">
+          {/* tabindex hace que el scroller reciba foco y las flechas del teclado
+              funcionen sin una sola linea de JavaScript. */}
+          <div class="rcarousel-track" tabindex="0" role="group"
+               aria-label="Client results, scroll horizontally">
             {RESULTS.map((r) => <ResultCard data={r} />)}
           </div>
         </div>

@@ -2104,3 +2104,102 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
 /* Los pasos sin mockup son mas cortos a proposito: el ritmo del bloque es tres
    filas ligeras y dos con peso, y el peso cae donde esta el argumento. */
 .step:not(.step--shot) { padding: clamp(20px, 2.4vw, 26px) 0; }
+
+/* ==========================================================================
+   PASE 7 (2026-08-14) · COVERFLOW SIN JAVASCRIPT
+   El carrusel de resultados se ladea con animaciones dirigidas por scroll de
+   CSS. Cero bytes de JavaScript: la home sigue en 3.448.
+
+   POR QUE NO EL COMPONENTE DE REACT. Medido: portarlo a JS puro son 2.012 bytes
+   minificados (el port esta guardado en el proyecto) y una isla de React son
+   unos 45 KB gzip, 47 veces el presupuesto de JS de la home entera. Pero la
+   razon de fondo no es el peso. Este bloque existe para PROBAR, y coverflow
+   enseña los metadatos de UNA tarjeta cada vez: cambiaria tres artistas con tres
+   cifras simultaneas por una cifra y una invitacion a arrastrar. La
+   simultaneidad ES la evidencia.
+
+   LOS DOS REGIMENES, y por que hacen falta los dos.
+   `animation-timeline: view(inline)` mide la posicion de cada tarjeta DENTRO del
+   scroller. Con tres tarjetas de 300px en un contenedor de 1200 no hay desborde,
+   asi que no hay recorrido que medir y la animacion se queda congelada en su
+   punto medio: las tres planas. Comprobado, no supuesto. Por eso:
+     · Ancho (>=1000px): las tres caben. Ladeo ESTATICO, la de los lados girada
+       hacia dentro. Es la postura de coverflow en reposo, sin animacion.
+     · Estrecho (<1000px): el scroller si desborda, y ahi entra la animacion
+       dirigida por scroll, que ladea en vivo mientras se arrastra.
+
+   POR QUE 16 GRADOS Y NO 44. El componente original usa 44. A ese angulo las dos
+   tarjetas de los lados dejan de ser legibles, y eso contradice el argumento
+   entero del bloque. El ladeo aporta profundidad, no protagonismo: en cuanto
+   estorba la lectura de una cifra, sobra.
+   -------------------------------------------------------------------------- */
+.rcarousel-track {
+  perspective: 1050px;   /* lente mas corta: mas escorzo sin subir el angulo */
+  scroll-behavior: smooth;
+  scroll-padding-inline: calc(50% - 150px);
+  padding-block: 12px;                 /* que el naipe ladeado no se recorte */
+}
+.rcarousel-track > .rcard {
+  transform-style: preserve-3d;
+  transition: transform .5s var(--ease), opacity .5s var(--ease);
+}
+
+/* --- Regimen ancho: las tres caben, ladeo estatico ----------------------- */
+@media (min-width: 1000px) {
+  .rcarousel-track > .rcard:first-child {
+    transform: rotateY(16deg) translateZ(-52px) scale(.966);
+    transform-origin: right center;
+  }
+  .rcarousel-track > .rcard:last-child {
+    transform: rotateY(-16deg) translateZ(-52px) scale(.966);
+    transform-origin: left center;
+  }
+  /* Al pasar por encima, la tarjeta se endereza. Es la unica interaccion que
+     necesita: si vas a leer la cifra, la quieres de frente. */
+  .rcarousel-track > .rcard:hover {
+    transform: rotateY(0deg) translateZ(0) scale(1);
+  }
+}
+
+/* --- Regimen estrecho: el scroller desborda, ladeo en vivo ---------------
+   Los @keyframes van al nivel superior a proposito. Anidados dentro de
+   @supports dentro de @media, Chrome descartaba la regla entera: la animacion
+   no llegaba a aplicarse (animation-name resolvia a `none`). Comprobado.
+   El @supports envuelve al @media, no al reves, por la misma razon. */
+@keyframes rcard-coverflow {
+  0%   { transform: rotateY(18deg)  translateZ(-58px) scale(.962); opacity: .86; }
+  50%  { transform: rotateY(0deg)   translateZ(0)     scale(1);    opacity: 1; }
+  100% { transform: rotateY(-18deg) translateZ(-58px) scale(.962); opacity: .86; }
+}
+@supports (animation-timeline: view(inline)) {
+  @media (max-width: 999px) {
+    /* LONGHANDS, no el atajo. Lightning CSS (el minificador de Astro) pliega
+       `animation-timeline` dentro del atajo `animation` y emite
+       `animation: linear both rcard-coverflow view(inline)`. Chrome no acepta un
+       timeline dentro del atajo, descarta la declaracion entera, y la animacion
+       no llega a existir: animation-name resolvia a `none` en produccion aunque
+       en el CSS fuente estuviera perfecta. Comprobado sobre el build, no sobre
+       el fuente. Si alguien vuelve a poner el atajo aqui, esto se rompe en
+       silencio y solo se nota mirando el CSS emitido. */
+    .rcarousel-track > .rcard {
+      animation-name: rcard-coverflow;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-duration: 1ms;
+      animation-timeline: view(inline);
+      animation-range: cover 0% cover 100%;
+      transition: none;
+      will-change: transform;
+    }
+  }
+}
+
+/* Sin movimiento, sin ladeo. Plana y legible. */
+@media (prefers-reduced-motion: reduce) {
+  .rcarousel-track { scroll-behavior: auto; }
+  .rcarousel-track > .rcard,
+  .rcarousel-track > .rcard:first-child,
+  .rcarousel-track > .rcard:last-child {
+    animation: none; transform: none; opacity: 1; transition: none;
+  }
+}

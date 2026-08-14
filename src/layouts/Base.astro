@@ -79,6 +79,10 @@ const ogImage = new URL(url(image), Astro.site).href;
   <slot name="head" />
 </head>
 <body class={paper ? 'paper' : ''}>
+  {/* Enlace de salto. Sin el, quien navega con teclado se come SIETE tabuladores
+      de cabecera en cada pagina antes de llegar al contenido. Solo se ve cuando
+      recibe foco. */}
+  <a class="skiplink" href="#content">Skip to content</a>
   <Search />
   <slot name="progress" />
 
@@ -89,6 +93,16 @@ const ogImage = new URL(url(image), Astro.site).href;
           en la web no significa nada: aquí ya estás EN 109music.co. La única arroba
           correcta del sitio es la del pie, que enlaza literalmente a la cuenta. */}
       <a class="wordmark" href={url('/')}>109MUSIC.CO</a>
+      {/* MENU MOVIL, con <details>. Cero JavaScript: el elemento ya abre, cierra,
+          recibe foco y responde a Enter y Espacio por si mismo, y lo anuncian los
+          lectores de pantalla. Un checkbox oculto habria hecho lo mismo mintiendo
+          sobre la semantica. En escritorio el <summary> se esconde y el panel se
+          muestra siempre, asi que la barra de siempre no cambia. */}
+      <details class="navwrap">
+        <summary class="navtoggle" aria-label="Menu">
+          <span class="navtoggle-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="navtoggle-word mono">Menu</span>
+        </summary>
       <nav class="nav" aria-label="Sections">
         {NAV.map((n: any) =>
           n.children ? (
@@ -126,16 +140,21 @@ const ogImage = new URL(url(image), Astro.site).href;
         </button>
         <a class="navcta" href={url(NAV_CTA.href)}>{NAV_CTA.label} <span aria-hidden="true">→</span></a>
       </nav>
+      </details>
     </header>
    </div>
   </div>
 
-  <slot />
+  {/* <main> no existia en el sitio. Es la referencia semantica mas basica que hay
+      y sin ella un lector de pantalla no tiene forma de saltar a lo importante. */}
+  <main id="content">
+    <slot />
+  </main>
 
   <div class="slab slab--tight sitefoot">
    <div class="wrap">
     <footer class="foot">
-      <span class="mono">© {new Date().getFullYear()} 109MUSIC · Independent music marketing</span>
+      <span class="mono">© {new Date().getFullYear()} 109MUSIC</span>
       <span class="mono">
         {FOOT_NAV.map((f) => (<><a href={url(f.href)}>{f.label}</a> · </>))}<a href={SITE.instagram} target="_blank" rel="noopener">@109music.co</a> · <a href={SITE.beacons} target="_blank" rel="noopener">Beacons</a>
       </span>

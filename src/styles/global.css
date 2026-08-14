@@ -29,8 +29,8 @@
      wordmark and the headlines are related by design rather than merely adjacent. */
   --display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
   --logo: 'Archivo Black', 'Arial Black', sans-serif;
-  --body: 'Inter', system-ui, sans-serif;
-  --mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  --body: 'Geist', system-ui, sans-serif;
+  --mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --measure: 68ch;
   --gutter: clamp(20px, 5vw, 64px);
@@ -38,6 +38,12 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Las cuatro fuentes van SUBSETEADAS a latino basico mas la puntuacion que el
+   sitio usa de verdad. Los originales completos pesaban 123,6 KB entre cinco
+   archivos; esto pesa 80,8 KB entre cuatro, un 35% menos, y encima incorpora una
+   mono que antes no se autoalojaba. Si alguien sustituye uno de estos archivos
+   por el original de la fundicion, el peso se dispara sin que nada se rompa, que
+   es la peor forma de regresion. */
 @font-face {
   font-family: 'Archivo Black'; font-style: normal; font-weight: 400; font-display: swap;
   src: url('/fonts/archivo-black-latin-400-normal.woff2') format('woff2');
@@ -46,17 +52,22 @@
   font-family: 'Archivo'; font-style: normal; font-weight: 400 900; font-display: swap;
   src: url('/fonts/archivo-latin-wght-normal.woff2') format('woff2-variations');
 }
+/* Geist sustituye a Inter. UNA variable en vez de TRES estaticas: da todos los
+   pesos y pesa la mitad. El checklist de los 10K nombra a Inter explicitamente, y
+   tiene razon pero no por la razon que da: el problema no es la calidad, es que
+   es la fuente por defecto del software del mundo y por eso no comunica nada. */
 @font-face {
-  font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap;
-  src: url('/fonts/inter-latin-500-normal.woff2') format('woff2');
+  font-family: 'Geist'; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url('/fonts/geist-latin-wght-normal.woff2') format('woff2-variations');
 }
+/* Geist Mono sustituye a la PILA DEL SISTEMA, y este es el cambio que mas se
+   nota aunque parezca el menor. Hasta hoy los kickers, fechas, pastillas y
+   marcadores se renderizaban en SF Mono en Mac, Consolas en Windows y DejaVu en
+   Linux: la voz de interfaz del sitio dependia de la maquina del visitante. Era
+   lo unico del sistema tipografico que no controlabamos, y esta en cada pagina. */
 @font-face {
-  font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap;
-  src: url('/fonts/inter-latin-600-normal.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap;
-  src: url('/fonts/inter-latin-700-normal.woff2') format('woff2');
+  font-family: 'Geist Mono'; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url('/fonts/geist-mono-latin-wght-normal.woff2') format('woff2-variations');
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -904,7 +915,7 @@ body {
   --on-bone-mute: rgba(10, 10, 10, 0.62);
   --on-bone-faint: rgba(10, 10, 10, 0.56);
 }
-.slab, .masthead, .keyfact, .cta, .stat, .statgrid > div.on-dark {
+.slab, .masthead, .keyfact, .cta, .stat, .rnote, .statgrid > div.on-dark {
   --on-dark: rgba(255, 255, 255, 0.94);
   --on-dark-mute: rgba(255, 255, 255, 0.66);
   --on-dark-faint: rgba(255, 255, 255, 0.60);
@@ -2139,24 +2150,29 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
   scroll-padding-inline: calc(50% - 150px);
   padding-block: 12px;                 /* que el naipe ladeado no se recorte */
 }
-.rcarousel-track > .rcard {
+.rcarousel-track > .rcard,
+.rcarousel-track > .rnote {
   transform-style: preserve-3d;
   transition: transform .5s var(--ease), opacity .5s var(--ease);
 }
 
 /* --- Regimen ancho: las tres caben, ladeo estatico ----------------------- */
 @media (min-width: 1000px) {
-  .rcarousel-track > .rcard:first-child {
+  /* Anclado a la 1 y la 3, NO a first/last: desde que hay tarjetas de nota
+     detras, `:last-child` es la sexta y esta fuera de pantalla. Las tres que se
+     ven al cargar son las tres cifras, y son las que forman el coverflow. */
+  .rcarousel-track > :nth-child(1) {
     transform: rotateY(16deg) translateZ(-52px) scale(.966);
     transform-origin: right center;
   }
-  .rcarousel-track > .rcard:last-child {
+  .rcarousel-track > :nth-child(3) {
     transform: rotateY(-16deg) translateZ(-52px) scale(.966);
     transform-origin: left center;
   }
+  .rcarousel-track > :nth-child(n+4) { transform: none; }
   /* Al pasar por encima, la tarjeta se endereza. Es la unica interaccion que
      necesita: si vas a leer la cifra, la quieres de frente. */
-  .rcarousel-track > .rcard:hover {
+  .rcarousel-track > :hover {
     transform: rotateY(0deg) translateZ(0) scale(1);
   }
 }
@@ -2181,7 +2197,8 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
        en el CSS fuente estuviera perfecta. Comprobado sobre el build, no sobre
        el fuente. Si alguien vuelve a poner el atajo aqui, esto se rompe en
        silencio y solo se nota mirando el CSS emitido. */
-    .rcarousel-track > .rcard {
+    .rcarousel-track > .rcard,
+    .rcarousel-track > .rnote {
       animation-name: rcard-coverflow;
       animation-timing-function: linear;
       animation-fill-mode: both;
@@ -2197,9 +2214,192 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
 /* Sin movimiento, sin ladeo. Plana y legible. */
 @media (prefers-reduced-motion: reduce) {
   .rcarousel-track { scroll-behavior: auto; }
-  .rcarousel-track > .rcard,
-  .rcarousel-track > .rcard:first-child,
-  .rcarousel-track > .rcard:last-child {
-    animation: none; transform: none; opacity: 1; transition: none;
-  }
+  .rcarousel-track > * { animation: none; transform: none; opacity: 1; transition: none; }
 }
+
+/* --- La tarjeta de nota. Sin cifra, sin caratula, sin artista. --------------
+   `.rnote` esta dado de alta en la lista de superficies oscuras de arriba, y eso
+   NO es un detalle. Los tokens de texto son sensibles al CONTEXTO, no al
+   componente: sobre hueso, `body` redeclara `--on-dark-mute` con un valor oscuro,
+   asi que una tarjeta de tinta que no redeclare los tokens pinta texto negro
+   sobre negro. Paso exactamente eso al montarla, y es la regla 1 de las que estan
+   apuntadas en el design system. Si alguien saca `.rnote` de esa lista, el texto
+   de estas tarjetas desaparece sin previo aviso. */
+.rnote {
+  background: var(--ink); color: var(--on-dark);
+  border: 1px solid rgba(255, 255, 255, .14);
+  padding: clamp(22px, 2.4vw, 28px);
+  display: flex; flex-direction: column; gap: 12px;
+  scroll-snap-align: start;
+}
+.rnote-kicker { font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--lav); margin: 0; }
+.rnote-line { margin: 0; font-size: 15px; line-height: 1.55; color: var(--on-dark-mute); }
+.rnote-cta {
+  margin-top: auto; font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--lav); text-decoration: none;
+}
+.rnote-cta:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+/* ==========================================================================
+   PASE 8 (2026-08-14) · el lote de la auditoria
+   ========================================================================== */
+
+/* --- 02 · ENLACE DE SALTO -------------------------------------------------
+   Fuera de pantalla hasta que recibe foco. Sin el, quien navega con teclado se
+   come siete tabuladores de cabecera en CADA pagina antes de llegar al texto. */
+.skiplink {
+  position: absolute; left: 8px; top: -60px; z-index: 999;
+  background: var(--lav-deep); color: #fff; padding: 12px 18px;
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  text-decoration: none; transition: top .18s var(--ease);
+}
+.skiplink:focus { top: 8px; }
+
+/* --- 01 · MENU MOVIL DE VERDAD -------------------------------------------
+   El problema medido: a 390px la barra de escritorio se envolvia en tres lineas,
+   187px de alto, "MUSIC MARKETING" cortada por el borde y 36px de desbordamiento
+   horizontal, o sea que la pagina se arrastraba de lado. Y el desplegable Learn
+   se aplanaba, asi que sus cuatro hijos aparecian sueltos y la jerarquia de
+   navegacion desaparecia. Era el criterio 07 entero suspendido.
+
+   Se resuelve con <details>, no con un checkbox oculto: el elemento ya abre,
+   cierra, recibe foco y responde a Enter y Espacio por si mismo, y los lectores
+   de pantalla lo anuncian como lo que es. Cero JavaScript. */
+.navwrap { position: static; }
+.navtoggle { display: none; }
+
+@media (max-width: 899px) {
+  .chrome { position: relative; }
+  .navwrap { margin-left: auto; }
+  .navtoggle {
+    display: inline-flex; align-items: center; gap: 9px;
+    list-style: none; cursor: pointer;
+    padding: 9px 13px; border: 1px solid var(--on-dark-rule);
+    color: var(--on-dark); user-select: none;
+  }
+  .navtoggle::-webkit-details-marker { display: none; }
+  .navtoggle-word { font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; }
+  .navtoggle-bars { display: grid; gap: 3px; width: 15px; }
+  .navtoggle-bars i { display: block; height: 1.5px; background: currentColor; transition: transform .22s var(--ease), opacity .22s var(--ease); }
+  .navwrap[open] .navtoggle-bars i:nth-child(1) { transform: translateY(4.5px) rotate(45deg); }
+  .navwrap[open] .navtoggle-bars i:nth-child(2) { opacity: 0; }
+  .navwrap[open] .navtoggle-bars i:nth-child(3) { transform: translateY(-4.5px) rotate(-45deg); }
+
+  /* El panel cae bajo la cabecera, a ancho completo, en columna. Nada se envuelve
+     y nada desborda: por eso la barra deja de empujar la pagina de lado. */
+  .navwrap > .nav {
+    position: absolute; left: 0; right: 0; top: calc(100% + 14px);
+    flex-direction: column; align-items: stretch; gap: 0;
+    background: var(--ink); border-top: 1px solid var(--on-dark-rule);
+    padding: 6px 0 14px; z-index: 60;
+  }
+  .navwrap > .nav > a,
+  .navwrap > .nav .navgroup-btn {
+    display: block; width: 100%; text-align: left;
+    padding: 14px 2px; border-bottom: 1px solid var(--on-dark-rule);
+  }
+  /* Learn NO se aplana: sus hijos se indentan y siguen leyendose como hijos. */
+  .navwrap > .nav .navgroup { display: block; }
+  .navwrap > .nav .navpanel {
+    position: static; display: block; opacity: 1; visibility: visible;
+    transform: none; box-shadow: none; background: transparent;
+    border: 0; padding: 2px 0 6px 18px; min-width: 0;
+    border-left: 1px solid var(--lav-deep); margin: 8px 0 8px 2px;
+  }
+  .navwrap > .nav .navpanel-head { display: none; }
+  .navwrap > .nav .navpanel a { padding: 10px 0; border: 0; }
+  .navwrap > .nav .np-blurb { display: none; }
+  .navwrap > .nav .navcta { margin-top: 14px; text-align: center; border-bottom: 0; }
+  .navwrap > .nav .searchbtn { align-self: flex-start; margin: 12px 0 0; }
+}
+
+/* --- 03 · EL BLOQUE DE CIERRE --------------------------------------------- */
+/* 1. Centrar la fila de botones. `hero-cta` no lleva justify-content, asi que
+      alinea a la izquierda; en el hero es correcto, en una banda centrada no. */
+.hero-cta--center { justify-content: center; }
+/* 2. Igualar los botones. Medidos: 159px contra 343px, mas del doble. */
+.hero-cta--center .btn { flex: 0 1 auto; min-width: 250px; justify-content: center; }
+/* 3. La linea fina deja de ser lavanda y deja de estar pegada. Competia con el
+      boton primario, que es del mismo color, y llevaba margin-top: 0. Literal. */
+.workband-fine { margin-top: 18px; color: var(--on-dark-faint); }
+/* 4. El filete corto bajo el h2, que todas las demas secciones ya tienen y este
+      bloque no. Era literalmente la pieza de acabado que le faltaba. */
+.workband h2::after {
+  content: ''; display: block; width: 46px; height: 2px;
+  background: var(--lav); margin: 16px auto 0;
+}
+
+/* --- 08 · rcard habla el idioma del resto del sitio -----------------------
+   Tenia esquinas redondeadas y sombra suave; el resto del sitio son filetes de
+   1px y esquinas vivas. Dos idiomas en la misma pagina, y como el bloque de
+   resultados es lo primero que se ve, mandaba la excepcion. */
+.rcard { border-radius: 0; box-shadow: none; border: 1px solid var(--on-bone-rule); }
+.rnote { border-radius: 0; }
+
+/* --- 06 · la unica transicion cara ---------------------------------------
+   `gap` estaba en la lista de propiedades con transicion, y animar gap fuerza
+   recalculo de layout en cada fotograma. Las demas son solo compositor. */
+.btn, .navcta, .offer-cta, .rnote-cta { transition-property: background-color, border-color, color, transform, opacity; }
+
+/* --- 07 · LA COMPARATIVA, fichas apiladas en movil ------------------------
+   Era `display: table` con min-width 720px en los dos tamaños: scroll horizontal
+   dentro de un contenedor, o sea la solucion de escritorio comprimida, que es
+   literalmente lo que el criterio prohibe. En movil cada fila pasa a ser una
+   ficha con su rotulo delante de cada dato. */
+@media (max-width: 720px) {
+  .cmp-scroll { overflow: visible; margin: 0; padding: 0; }
+  .cmp-scroll::before, .cmp-scroll::after { display: none; }
+  .cmp, .cmp tbody, .cmp tr, .cmp td, .cmp th { display: block; width: auto; min-width: 0; }
+  .cmp thead { display: none; }
+  .cmp tbody tr {
+    border: 1px solid var(--on-bone-rule); margin-top: 14px; padding: 4px 16px 12px;
+  }
+  .cmp tbody tr:last-child { border-color: var(--lav-deep); }
+  .cmp .cmp-lab { width: auto; padding: 14px 0 8px; border-bottom: 1px solid var(--on-bone-rule); }
+  .cmp td { padding: 11px 0; border-bottom: 1px solid var(--on-bone-rule); }
+  .cmp td::before {
+    content: attr(data-label); display: block; margin-bottom: 3px;
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--on-bone-faint);
+  }
+  .cmp tbody tr td:last-child { border-bottom: 0; }
+  .cmp tbody td.cmp-us { box-shadow: none; background: var(--white); margin: 0 -16px -12px; padding: 11px 16px 14px; }
+}
+
+/* --- El desbordamiento horizontal de movil: NO era la barra ---------------
+   Con la barra arreglada seguian saliendo 36px de desbordamiento. El culpable
+   es `.rcarousel-track`, que lleva `margin-right: -56px` y `padding-right: 56px`
+   para que el desvanecido caiga justo en el borde del contenedor. En escritorio
+   sobra sitio; a 390px eso empuja la pagina de lado. Habria publicado el arreglo
+   del menu diciendo que quitaba el desbordamiento, y no era verdad. */
+@media (max-width: 899px) {
+  .rcarousel-track { margin-right: 0; padding-right: 16px; }
+  .rcarousel::after { width: 32px; }
+}
+
+/* --- El cierre: un selector haciendo doble trabajo ------------------------
+   `.workband > .mono` (0-2-0) estaba pensado para el kicker de ENCIMA del h2
+   ("Bespoke work"), pero `.workband-fine` tambien es un `.mono` hijo directo,
+   asi que se llevaba el mismo `margin: 0 0 14px` y el mismo lavanda. De ahi
+   venian las dos cosas a la vez: pegada al boton y compitiendo en color con el
+   boton primario. Dos elementos que necesitan tratamiento opuesto cayendo en el
+   mismo selector. */
+.workband > .mono:not(.workband-fine) { margin: 0 0 14px; }
+.workband > .mono.workband-fine { margin: 18px 0 0; color: var(--on-dark-faint); }
+
+/* --- Services: precio por servicio y el segundo nivel --------------------- */
+.svc-price {
+  margin: 14px 0 20px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--lav-deep);
+}
+.aroundlist { list-style: none; margin: 22px 0 0; padding: 0; border-top: 1px solid var(--on-bone-rule); }
+.aroundlist li {
+  display: grid; gap: 5px; padding: 20px 0; border-bottom: 1px solid var(--on-bone-rule);
+}
+@media (min-width: 860px) {
+  .aroundlist li { grid-template-columns: 200px minmax(0, 1fr) 190px; gap: 0 30px; align-items: baseline; }
+}
+.around-name { font-family: var(--body); font-weight: 700; font-size: 17px; color: var(--ink); }
+.around-line { font-size: 15px; line-height: 1.55; color: var(--on-bone-mute); }
+.around-price { font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--lav-deep); }
+@media (min-width: 860px) { .around-price { text-align: right; } }

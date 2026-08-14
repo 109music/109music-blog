@@ -21,12 +21,13 @@
 import Base from '../layouts/Base.astro';
 import Row from '../components/Row.astro';
 import ResultCard from '../components/ResultCard.astro';
+import ResultNote from '../components/ResultNote.astro';
 import SectionMarker from '../components/SectionMarker.astro';
 import Ambient from '../components/Ambient.astro';
 import { getCollection } from 'astro:content';
 import {
-  SITE, SECTIONS, STEPS, EXTRA_SERVICES, url, readingTime, labelOf, wa, pathOf,
-  RESULTS_LIVE, RESULTS,
+  SITE, SECTIONS, STEPS, url, readingTime, labelOf, wa, pathOf,
+  RESULTS_LIVE, RESULTS, RESULT_NOTES,
 } from '../lib/site';
 
 const live = (arr: any[]) =>
@@ -65,7 +66,6 @@ const schema = {
     <span class="herobg-scrim" aria-hidden="true"></span>
     <div class="wrap">
       <section class="hero">
-        <p class="kicker mono rise">Independent music marketing · Madrid</p>
         <h1 class="display face rise brandline">109MUSIC.CO</h1>
         <p class="statement rise">
           Your number one source to market your music. <b>Read how it works</b>,
@@ -115,6 +115,10 @@ const schema = {
           <div class="rcarousel-track" tabindex="0" role="group"
                aria-label="Client results, scroll horizontally">
             {RESULTS.map((r) => <ResultCard data={r} />)}
+            {/* Las notas van SIEMPRE detras de los resultados reales, nunca
+                intercaladas: en escritorio las tres primeras tarjetas visibles
+                tienen que ser las tres cifras, que es el argumento del bloque. */}
+            {RESULT_NOTES.map((nte) => <ResultNote data={nte} />)}
           </div>
         </div>
       </section>
@@ -189,9 +193,10 @@ const schema = {
             producto principal, coloca el playlisting como segundo, y mantiene el
             mensaje de que no hay que elegir de antemano. */}
         <p class="howwork-lead">
-          <b>We run Meta ads for independent artists, and playlisting when the
-          record needs it.</b> You do not have to know which one you want. Working
-          that out is the first thing we do, and it costs nothing.
+          <b>We run Meta ads and playlisting for independent artists.</b> Ads put
+          your track in front of the exact listeners who should hear it.
+          Playlisting puts it where people find music they were not looking for.
+          You do not have to know which one you need.
         </p>
 
         {/* MOCKUP SOLO EN 04 Y 05. Los tres primeros pasos son una llamada, un PDF
@@ -219,15 +224,9 @@ const schema = {
           ))}
         </ol>
 
-        <div class="extras">
-          <p class="extras-lab mono">Added when the record needs it, not before</p>
-          <ul>
-            {EXTRA_SERVICES.map((x) => (
-              <li><b>{x.label}</b> {x.line}</li>
-            ))}
-          </ul>
-        </div>
-
+        {/* Los tres servicios de alrededor se fueron a /services/ el 14/08. El
+            proceso termina y la peticion llega inmediatamente, sin una estanteria
+            en medio, que es mejor bloque. */}
         <div class="steps-cta">
           <a class="btn" href={wa('how-we-work')} target="_blank" rel="noopener">
             <span>Book a call</span><span class="arrow" aria-hidden="true">→</span>
@@ -303,31 +302,31 @@ const schema = {
           <tbody>
             <tr>
               <th class="cmp-lab" scope="row">What you get</th>
-              <td>Streams from accounts that never come back</td>
-              <td>A deck, monthly</td>
-              <td>Reach, if the targeting is right</td>
-              <td class="cmp-us">Listeners who save and follow</td>
+              <td data-label="Paid playlist placements">Streams from accounts that never come back</td>
+              <td data-label="Agency retainer">A deck, monthly</td>
+              <td data-label="Running ads yourself">Reach, if the targeting is right</td>
+              <td data-label="109MUSIC" class="cmp-us">Listeners who save and follow</td>
             </tr>
             <tr>
               <th class="cmp-lab" scope="row">What it costs</th>
-              <td>Per placement, with no floor</td>
-              <td>Monthly retainer, three-month minimum</td>
-              <td>Ad spend plus your own week</td>
-              <td class="cmp-us">Ad spend plus one flat fee</td>
+              <td data-label="Paid playlist placements">Per placement, with no floor</td>
+              <td data-label="Agency retainer">Monthly retainer, three-month minimum</td>
+              <td data-label="Running ads yourself">Ad spend plus your own week</td>
+              <td data-label="109MUSIC" class="cmp-us">Ad spend plus one flat fee</td>
             </tr>
             <tr>
               <th class="cmp-lab" scope="row">Who keeps the pixel</th>
-              <td>Not applicable</td>
-              <td>Usually the agency</td>
-              <td>You</td>
-              <td class="cmp-us">You, always</td>
+              <td data-label="Paid playlist placements">Not applicable</td>
+              <td data-label="Agency retainer">Usually the agency</td>
+              <td data-label="Running ads yourself">You</td>
+              <td data-label="109MUSIC" class="cmp-us">You, always</td>
             </tr>
             <tr>
               <th class="cmp-lab" scope="row">Can you check the method</th>
-              <td>No</td>
-              <td>No</td>
-              <td>Only your own</td>
-              <td class="cmp-us">Yes. We publish it before you pay</td>
+              <td data-label="Paid playlist placements">No</td>
+              <td data-label="Agency retainer">No</td>
+              <td data-label="Running ads yourself">Only your own</td>
+              <td data-label="109MUSIC" class="cmp-us">Yes. We publish it before you pay</td>
             </tr>
           </tbody>
         </table>
@@ -351,12 +350,18 @@ const schema = {
           We will tell you straight whether we can move it, and what it would cost.
           If the honest answer is that you should run it yourself, we will say that too.
         </p>
-        <div class="hero-cta">
+        {/* `hero-cta` es un contenedor flex SIN justify-content, o sea que alinea
+            a la izquierda. En el hero eso es correcto porque el hero esta alineado
+            a la izquierda. Aqui la banda es text-align:center, y text-align no
+            afecta a los hijos de un flex: los botones se quedaban 279px a la
+            izquierda del centro mientras el texto centraba. Medido, no percibido.
+            El modificador centra sin tocar el hero. */}
+        <div class="hero-cta hero-cta--center">
           <a class="btn" href={wa('close-call')} target="_blank" rel="noopener">
             <span>Book a call</span><span class="arrow" aria-hidden="true">→</span>
           </a>
           <a class="btn ghost" href={url('/submit-your-track/')}>
-            <span>Or submit a single track · 5 EUR</span><span class="arrow" aria-hidden="true">→</span>
+            <span>Submit a track · 5 EUR</span><span class="arrow" aria-hidden="true">→</span>
           </a>
         </div>
         <p class="workband-fine mono">Replies from a person, usually same day</p>

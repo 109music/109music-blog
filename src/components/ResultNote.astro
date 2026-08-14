@@ -1,0 +1,22 @@
+---
+/* Tarjeta sin cifra. Comparte el footprint de ResultCard para que la geometria
+   del carrusel sea identica, pero NO comparte su anatomia: no hay caratula, no
+   hay artista, no hay tema, y sobre todo no hay cifra grande. La cifra es lo que
+   hace que una tarjeta se lea como un resultado; sin ella no hay ambiguedad
+   posible, que es el requisito. Fondo de tinta para que se distinga de un golpe
+   de las tarjetas blancas de resultado. */
+import { wa } from '../lib/site';
+import type { ResultNote } from '../lib/site';
+
+interface Props { data: ResultNote }
+const { data } = Astro.props;
+---
+<article class="rnote">
+  <p class="rnote-kicker mono">{data.kicker}</p>
+  <p class="rnote-line">{data.line}</p>
+  {data.cta && (
+    <a class="rnote-cta mono" href={wa(data.cta.href as any)} target="_blank" rel="noopener">
+      {data.cta.label} <span aria-hidden="true">→</span>
+    </a>
+  )}
+</article>

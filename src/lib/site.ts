@@ -63,9 +63,11 @@ export const SECTIONS = [
        Wire" si, y ademas dice de que industria hablamos. Un nombre de publicacion
        puro (The Wire, The Signal) solo funciona cuando la publicacion ya es
        conocida, y esta seccion tiene tres articulos: por eso gana el descriptivo.
-       "The Wire" a secas ademas choca con la revista britanica del mismo nombre.
-       La URL /news/ no se toca. */
-    heading: 'The Industry Wire',
+       Y el h1 CONTIENE la etiqueta: la cabecera dice News, el titulo dice INDUSTRY
+       NEWS. Asi no contradice, matiza. Un h1 que renombra la etiqueta hace que el
+       visitante dude de si ha llegado donde queria, y ese coste es mayor que el
+       caracter que gana el titulo. La URL /news/ no se toca. */
+    heading: 'Industry News',
     path: '/news/',
     blurb: 'What changed on the platforms, and what it costs you.',
   },
@@ -240,13 +242,15 @@ export const RESULTS_LIVE = true;
 /* Los cuatro pasos. Nombran mecánica concreta (Meta ads, playlisting, píxel,
    línea base) a propósito: la referencia de indepenjend cuenta su proceso en
    genérico porque vende un servicio gestionado, y ahí es donde les ganamos. */
-/* Servicios que se anaden al proceso segun lo que necesite el disco, no antes.
-   El playlisting salio del paso 03 el 14/08: mezclarlo con los anuncios daba a
-   entender que van juntos siempre, y la promesa del bloque es la contraria. */
-export const EXTRA_SERVICES = [
-  { label: 'Playlist pitching', line: 'Your track in front of real curators. No bots, no bought placements.' },
-  { label: 'Creative for the ads', line: 'We cut the video and write the copy when you do not have it.' },
-  { label: 'Release planning', line: 'The calendar, the assets and the order things go out in.' },
+/* Estos tres salieron de Our Process el 14/08 y viven ahora en /services/. El
+   rotulo que llevaban, "Added when the record needs it, not before", decia
+   literalmente que sobran, que es lo contrario de venderlos. Y "Playlist
+   pitching" era el mismo servicio que Playlisting duplicado, asi que se fue.
+   Consultations estaba en el dossier a 100 EUR la hora y no estaba en la web. */
+export const SERVICES_AROUND = [
+  { label: 'Creative for the ads', line: 'We cut the video and write the copy when you do not have it.', price: 'Quoted per campaign' },
+  { label: 'Release planning', line: 'The calendar, the assets and the order things go out in.', price: 'Quoted per release' },
+  { label: 'Consultations', line: 'Private 1:1 sessions on your career, your organic social, or auditing the campaigns you run yourself.', price: '100 EUR per hour' },
 ] as const;
 
 export const STEPS = [
@@ -274,7 +278,7 @@ export const STEPS = [
        enterarse de que lo que vendemos son anuncios. Aqui se nombra la mecanica:
        Meta ads como motor, playlisting como acompañamiento. */
     h: 'Strategy in motion',
-    p: 'Meta ads are the engine. Campaigns built, targeted and optimised in-house, run mostly to Spotify and adjusted while they are live. The pixel sits on your ad account, not ours, so the audience stays yours when we are done. Playlisting runs alongside when the record needs reach, pitched to real curators, never bought placements.',
+    p: 'Two engines, and they do different jobs. Meta ads are built, targeted and optimised in-house, run mostly to Spotify: reach you control, with the pixel on your ad account and not ours. Playlisting is pitched to real curators, never bought placements: discovery, listeners who were not looking for you. Most records want both.',
     shot: '/img/steps/step-3.webp',
   },
   {
@@ -298,6 +302,45 @@ export type ResultCard = {
   baseline: string;
   art?: string | null;
 };
+
+/* Tarjetas SIN CIFRA que van detras de los resultados reales.
+
+   POR QUE EXISTEN, y por que no son relleno. Con solo tres tarjetas el carrusel
+   tenia 490px de desplazamiento en movil, y la animacion dirigida por scroll
+   necesita recorrido: cada naipe apenas recorria un tercio de su rango, y el
+   ladeo salia a tirones. Con seis el recorrido pasa a ~1.600px y el movimiento
+   se vuelve continuo.
+
+   PERO NO SE INVENTA NADA. Ninguna lleva artista, tema ni cifra: la cifra grande
+   es lo que hace que una tarjeta se lea como un resultado, y sin ella no hay
+   forma de confundirlas. Y en vez de decir "proximo caso", que se leeria como un
+   hueco esperando a llenarse, cada una dice algo verdadero que ese bloque
+   necesita decir de todos modos: como se miden las cifras, por que no hay
+   nombres, y que se puede hacer para aparecer ahi.
+
+   SUSTITUIRLAS ES UN CAMBIO DE DATOS: se añade el caso real a RESULTS y se borra
+   una entrada de aqui. Dos lineas, sin tocar plantilla ni CSS. */
+export type ResultNote = {
+  kicker: string;
+  line: string;
+  cta?: { label: string; href: string };
+};
+
+export const RESULT_NOTES: ResultNote[] = [
+  {
+    kicker: 'How these are measured',
+    line: 'Every figure comes from a dated platform screenshot, taken before the campaign and after it. Nothing is estimated and nothing is modelled.',
+  },
+  {
+    kicker: 'Why there are no names',
+    line: 'An artist name appears here once they have signed off in writing, and not before. That is why these read as "Spanish urban artist".',
+  },
+  {
+    kicker: 'The next one',
+    line: 'We publish every campaign we run, baseline included. Tell us what you are putting out and yours could be the next card.',
+    cta: { label: 'Tell us what you are putting out', href: 'close-call' },
+  },
+];
 
 /* MUESTRA. Cifras reales y verificadas contra capturas fechadas, sin nombre porque
    todavía no hay permiso por escrito, y sin inversión porque no existe la captura de

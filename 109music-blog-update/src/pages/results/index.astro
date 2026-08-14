@@ -1,0 +1,138 @@
+---
+/* RESULTS — the commercial proof page, and the first thing in the header.
+   Distinct from Case Studies in every way that matters: these are OUR campaigns, with
+   numbers we measured, for artists who gave permission. Case Studies are other people's
+   rollouts reconstructed from public information. The two never share a word.
+
+   Nothing renders publicly until RESULTS_LIVE is true and RESULTS has real data. Until
+   then the page tells the truth instead of showing invented figures. */
+import Base from '../../layouts/Base.astro';
+import ResultCard from '../../components/ResultCard.astro';
+import SectionMarker from '../../components/SectionMarker.astro';
+import { url, wa, RESULTS_LIVE, RESULTS } from '../../lib/site';
+
+const live = RESULTS_LIVE && RESULTS.length > 0;
+const description =
+  'Real campaign numbers from 109MUSIC: streams added, followers gained and the baseline each one started from.';
+---
+<Base title="Results" description={description} activeSection="results">
+
+  <div class="slab slab--tight">
+   <div class="wrap">
+    <section class="hero">
+      <p class="kicker mono rise">109MUSIC · Client results</p>
+      <h1 class="display face rise">Real artists.<br /><span class="lav">Real numbers.</span></h1>
+      <p class="sub rise">
+        Every figure below is a campaign we ran, measured against the week before it
+        started. No rounding up, no screenshots without a baseline.
+      </p>
+      <div class="hero-cta rise">
+        <a class="btn" href={wa('results')} target="_blank" rel="noopener">
+          <span>Get numbers like these</span><span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+   </div>
+  </div>
+
+  <div class="wrap">
+    <section class="surf-bone">
+      <SectionMarker n={1} slug="client_results" />
+      {live ? (
+        <>
+          <div class="sec-head"><h2 class="display">Campaigns we have run</h2></div>
+          <div class="rcard-grid">
+            {RESULTS.map((r) => <ResultCard data={r} />)}
+          </div>
+        </>
+      ) : (
+        <>
+          <div class="sec-head"><h2 class="display">Not published yet</h2></div>
+          <p class="sec-intro">
+            We are collecting written permission from the artists before any of this goes
+            public, and we are not putting a number on this page that we cannot show the
+            baseline for. If you want to see the work in the meantime, ask and we will
+            walk you through a campaign directly.
+          </p>
+          <a class="btn" href={wa('results')} target="_blank" rel="noopener" style="margin-top:20px">
+            <span>Ask to see a campaign</span><span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </>
+      )}
+    </section>
+
+    <!-- what the alternatives cost, on tint -->
+    <section class="surf-tint">
+      <SectionMarker n={2} slug="the_alternatives" />
+      <div class="sec-head"><h2 class="display">What most artists try first</h2></div>
+      <p class="sec-intro">
+        Four ways to spend money on a release. Three of them we would talk you out of,
+        and the last row is the one only we can write.
+      </p>
+      <div class="cmp-scroll">
+      <table class="cmp">
+        <thead>
+          <tr>
+            <th class="cmp-lab"><span class="visually-hidden">Comparison</span></th>
+            <th>Paid playlist placements</th>
+            <th>Agency retainer</th>
+            <th>Running ads yourself</th>
+            <th class="cmp-us">109MUSIC</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th class="cmp-lab" scope="row">What you get</th>
+            <td>Streams from accounts that never come back</td>
+            <td>A deck, monthly</td>
+            <td>Reach, if the targeting is right</td>
+            <td class="cmp-us">Listeners who save and follow</td>
+          </tr>
+          <tr>
+            <th class="cmp-lab" scope="row">What it costs</th>
+            <td>Per placement, with no floor</td>
+            <td>Monthly retainer, three-month minimum</td>
+            <td>Ad spend plus your own week</td>
+            <td class="cmp-us">Ad spend plus one flat fee</td>
+          </tr>
+          <tr>
+            <th class="cmp-lab" scope="row">Who keeps the pixel</th>
+            <td>Not applicable</td>
+            <td>Usually the agency</td>
+            <td>You</td>
+            <td class="cmp-us">You, always</td>
+          </tr>
+          <tr>
+            <th class="cmp-lab" scope="row">Risk to the release</th>
+            <td>Bot flags and playlist removal</td>
+            <td>Slow to react mid-campaign</td>
+            <td>Budget burnt learning</td>
+            <td class="cmp-us">We publish our method — read it before you pay</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="cmp-foot mono">
+        The last row is the whole argument. Everything under
+        <a href={url('/music-marketing/')}>Music Marketing</a> is what we run for clients,
+        written down.
+      </p>
+    </section>
+  </div>
+
+  <div class="slab slab--tight">
+    <div class="wrap">
+      <section class="workband">
+        <p class="mono">Bespoke work</p>
+        <h2 class="display face">Tell us what you are putting out.</h2>
+        <p class="workband-line">
+          We will tell you straight whether we can move it, and what it would cost.
+        </p>
+        <a class="btn" href={wa('results')} target="_blank" rel="noopener">
+          <span>Message us on WhatsApp</span><span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <p class="workband-fine mono">Replies from a person, usually same day</p>
+      </section>
+    </div>
+  </div>
+</Base>

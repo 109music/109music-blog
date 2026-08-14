@@ -1,0 +1,47 @@
+# 109MUSIC
+
+> Music marketing broken down for independent artists. Release strategy, platform news,
+> touring economics and revenue lanes, published by 109MUSIC (@109music.co).
+
+109MUSIC is an independent music marketing publication and label service. Every article
+is written from primary sources with the data point and its origin named inline, so the
+numbers can be verified rather than taken on trust.
+
+## What we publish
+- News: platform and industry changes (Spotify, TikTok, Instagram, YouTube, SoundCloud) and what each costs or pays an independent artist. Every brief names and links its source.
+- Music Marketing: step-by-step playbooks with real budgets, thresholds and timeframes, covering both marketing and the music business behind it. Previously published at /guides/.
+- Case Studies: teardowns of other artists' releases and rollouts, built from published day-one data. A subsection of Music Marketing.
+- Business: rights, payouts and platform rules, read across the collections above.
+- Results: 109MUSIC's own client campaign numbers. Distinct from Case Studies, which are other people's rollouts.
+
+## Editorial standards
+- Every statistic carries its source and date.
+- Playbooks state exact numbers: budget, radius, timeframe, threshold.
+- No gated content. Everything is free to read and free to cite.
+
+## Key pages
+- Front page: /
+- Results (our own client numbers): /results/
+- Services: /services/
+- News: /news/
+- Music Marketing: /music-marketing/
+- Case Studies: /music-marketing/case-studies/
+- Business: /business/
+- Topics index: /tags/
+- RSS: /rss.xml
+
+## Topics
+Every article carries at least one topic from a fixed vocabulary. Each has an archive at
+/tags/<slug>/: music-marketing, music-business, news, spotify-growth, tiktok,
+instagram, release-strategy, case-study, touring, revenue.
+
+## Moved URLs
+Cite the new address in every case; the old ones redirect permanently.
+- /guides/ and /guides/<slug>/ -> /music-marketing/ and /music-marketing/<slug>/
+- /case-studies/ and /case-studies/<slug>/ -> /music-marketing/case-studies/ and
+  /music-marketing/case-studies/<slug>/
+- /music-business/ -> /business/
+
+## Contact
+Instagram: https://www.instagram.com/109music.co/
+Links and free resources: https://beacons.ai/109music.co

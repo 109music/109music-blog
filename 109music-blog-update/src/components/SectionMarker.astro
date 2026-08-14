@@ -1,0 +1,16 @@
+---
+/* Numbered block marker, lifted from the reference and re-cut for our type system.
+
+   Aura signals every block change with a small mono label carrying an index
+   (`01 the_ad_engine`). It costs almost no area, it reads as machinery rather than
+   decoration, and it gives the lavender somewhere structural to live instead of only
+   appearing on hover. That is the whole point of this component: it is the cheapest
+   place to spend accent budget and it does real navigational work.
+
+   The index takes the accent, the slug takes the muted tone. On a dark surface the
+   accent is --lav; on light it is --lav-deep, which the surface tokens handle. */
+interface Props { n: number; slug: string }
+const { n, slug } = Astro.props;
+const pad = String(n).padStart(2, '0');
+---
+<p class="marker mono" aria-hidden="true"><span class="idx">{pad}</span> {slug}</p>

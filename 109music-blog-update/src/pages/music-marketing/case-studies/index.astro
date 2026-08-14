@@ -1,0 +1,22 @@
+---
+/* Moved 2026-08-14 from /case-studies/ to /music-marketing/case-studies/.
+   It is a subsection of Music Marketing now, not a top-level destination, because
+   the header had to make room for RESULTS — and because a visitor reading "Case
+   Studies" in a masthead next to "Results" cannot tell which one is our own work.
+   Old URLs redirect permanently from src/pages/case-studies/. */
+import SectionIndex from '../../../components/SectionIndex.astro';
+import { getCollection } from 'astro:content';
+import { sectionOf } from '../../../lib/site';
+
+const s = sectionOf('case-studies')!;
+const entries = await getCollection('case-studies');
+---
+<SectionIndex
+  id={s.id}
+  label={s.label}
+  blurb={s.blurb}
+  entries={entries}
+  crossLink={{ href: '/results/', label: 'These are not our clients. Our own numbers are under Results' }}
+  listHeading="Rollouts, taken apart"
+  listIntro="Every one of these is somebody else's campaign, reconstructed from what was public. We do it to show the structure, because the structure is the part you can afford."
+/>

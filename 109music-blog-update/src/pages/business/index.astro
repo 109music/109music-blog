@@ -1,0 +1,51 @@
+---
+/* Business is a NAVIGATION section that reads across the editorial collections.
+   It owns no articles of its own: every piece keeps the URL of the collection it was
+   published in, so nothing moves and no link ever breaks.
+
+   Renamed 2026-08-14 from Music Business. /music-business/ redirects here permanently. */
+import SectionIndex from '../../components/SectionIndex.astro';
+import { getCollection } from 'astro:content';
+import { readingTime, labelOf, sectionOf, pathOf } from '../../lib/site';
+
+const s = sectionOf('business')!;
+
+const COLLECTIONS = ['news', 'music-marketing', 'case-studies'] as const;
+const all = (
+  await Promise.all(
+    COLLECTIONS.map(async (c) =>
+      (await getCollection(c)).map((e: any) => ({ entry: e, collection: c })),
+    ),
+  )
+).flat();
+
+const tagged = all
+  .filter(({ entry }) => !entry.data.draft && entry.data.tags.includes('music-business'))
+  .sort((a, b) => b.entry.data.date.valueOf() - a.entry.data.date.valueOf());
+
+/* Two blocks, derived — no extra frontmatter, no second home for any article.
+   Evergreen = the pieces that explain how the business works and do not expire.
+   Business news = the same subject arriving as a dated event, which News also carries. */
+const decorate = ({ entry, collection }: any) => ({
+  ...entry,
+  href: pathOf(collection, entry.id),
+  label: labelOf(collection),
+  body: entry.body,
+});
+
+const evergreen = tagged.filter(({ collection }) => collection !== 'news').map(decorate);
+const businessNews = tagged.filter(({ collection }) => collection === 'news').map(decorate);
+---
+<SectionIndex
+  id={s.id}
+  label={s.label}
+  blurb={s.blurb}
+  entries={evergreen}
+  listHeading="How it works"
+  listIntro="The pieces that explain the machinery. These do not expire."
+  extra={{
+    heading: 'Business news',
+    intro: 'The same subject as it happens. These also appear in News, in date order.',
+    items: businessNews,
+  }}
+/>

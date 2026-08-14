@@ -1,0 +1,124 @@
+---
+import '../styles/global.css';
+import { SITE, NAV, NAV_PARENT, NAV_CTA, FOOT_NAV, url } from '../lib/site';
+import Search from '../components/Search.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  paper?: boolean;
+  ogType?: string;
+  schema?: object | null;
+  activeSection?: string;
+  noindex?: boolean;
+}
+const {
+  title,
+  description,
+  paper = true,
+  ogType = 'website',
+  schema = null,
+  activeSection = '',
+  noindex = false,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const fullTitle = title === SITE.name ? `${SITE.name} — ${SITE.tagline}` : `${title} | ${SITE.name}`;
+---
+<!doctype html>
+<html lang={SITE.lang}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <meta name="author" content={SITE.author} />
+  <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-snippet:-1, max-image-preview:large'} />
+  <meta name="theme-color" content={paper ? '#F4F3EF' : '#0A0A0A'} />
+
+  <meta property="og:type" content={ogType} />
+  <meta property="og:site_name" content={SITE.name} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:locale" content="en_GB" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+
+  <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
+  <link rel="alternate" type="application/rss+xml" title={`${SITE.name} — all articles`} href={url('/rss.xml')} />
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+        href={url('/fonts/archivo-black-latin-400-normal.woff2')} />
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+        href={url('/fonts/inter-latin-500-normal.woff2')} />
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+        href={url('/fonts/archivo-latin-wght-normal.woff2')} />
+
+  {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
+  <slot name="head" />
+</head>
+<body class={paper ? 'paper' : ''}>
+  <Search />
+  <slot name="progress" />
+
+  <div class="slab sitehead">
+   <div class="wrap">
+    <header class="chrome">
+      <a class="wordmark" href={url('/')}>@109MUSIC.CO</a>
+      <nav class="nav" aria-label="Sections">
+        {NAV.map((n: any) =>
+          n.children ? (
+            /* Grouped, not hidden. Every child is a real anchor in the DOM on every
+               page, so the group costs nothing in crawlability. The panel opens on
+               hover AND on focus-within, so it works from the keyboard with no JS.
+               Below 900px the panel is displayed inline and the group flattens. */
+            <div class="navgroup" data-nav-group>
+              <button
+                type="button"
+                class="navgroup-btn"
+                aria-expanded="false"
+                aria-controls="nav-learn"
+                aria-current={NAV_PARENT[activeSection] === n.id ? 'true' : undefined}
+              >{n.label} <span class="caret" aria-hidden="true">▾</span></button>
+              <div class="navpanel" id="nav-learn">
+                <p class="navpanel-head mono">Everything we publish</p>
+                {n.children.map((c: any) => (
+                  <a href={url(c.href)} aria-current={activeSection === c.id ? 'page' : undefined}>
+                    <span class="np-label">{c.label}</span>
+                    <span class="np-blurb">{c.blurb}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <a href={url(n.href)} aria-current={activeSection === n.id ? 'page' : undefined}>{n.label}</a>
+          ),
+        )}
+        <button class="searchbtn" type="button" data-search-open aria-label="Search" aria-haspopup="dialog">
+          <svg viewBox="0 0 20 20" aria-hidden="true" width="15" height="15">
+            <circle cx="9" cy="9" r="6.2" fill="none" stroke="currentColor" stroke-width="2"/>
+            <path d="M13.6 13.6 L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <a class="navcta" href={url(NAV_CTA.href)}>{NAV_CTA.label} <span aria-hidden="true">→</span></a>
+      </nav>
+    </header>
+   </div>
+  </div>
+
+  <slot />
+
+  <div class="slab slab--tight sitefoot">
+   <div class="wrap">
+    <footer class="foot">
+      <span class="mono">© {new Date().getFullYear()} 109MUSIC · Independent music marketing</span>
+      <span class="mono">
+        {FOOT_NAV.map((f) => (<><a href={url(f.href)}>{f.label}</a> · </>))}<a href={SITE.instagram} target="_blank" rel="noopener">@109music.co</a> · <a href={SITE.beacons} target="_blank" rel="noopener">Beacons</a>
+      </span>
+    </footer>
+   </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,145 @@
+---
+/* Music Marketing is organised by WHERE YOU ARE in a release, not by topic.
+   The moment is a frontmatter field, never part of the URL, so an article can be
+   re-filed between moments without breaking a link.
+
+   Case Studies became a subsection of this page on 2026-08-14. It keeps its own
+   collection and its own index at /music-marketing/case-studies/; this page links
+   down to it rather than absorbing it, because the two read differently. */
+import Base from '../../layouts/Base.astro';
+import Row from '../../components/Row.astro';
+import SectionMarker from '../../components/SectionMarker.astro';
+import { getCollection } from 'astro:content';
+import { readingTime, url, orderTags, tagLabel, sectionOf, MOMENTS, wa, pathOf } from '../../lib/site';
+
+const s = sectionOf('music-marketing')!;
+const cs = sectionOf('case-studies')!;
+
+const entries = (await getCollection('music-marketing'))
+  .filter((e: any) => !e.data.draft)
+  .sort((a: any, b: any) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const cases = (await getCollection('case-studies'))
+  .filter((e: any) => !e.data.draft)
+  .sort((a: any, b: any) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const groups = MOMENTS.map((m) => ({
+  ...m,
+  items: entries.filter((e: any) => e.data.moment === m.id),
+}));
+const unfiled = entries.filter((e: any) => !e.data.moment);
+const present = orderTags([...new Set(entries.flatMap((e: any) => e.data.tags))]);
+let n = 0;
+---
+<Base title={s.label} description={`${s.blurb} Music marketing playbooks from 109MUSIC.`} activeSection={s.id}>
+
+  <!-- 01 · hero, dark, same geometry as every other section -->
+  <div class="slab slab--tight">
+   <div class="wrap">
+    <section class="hero">
+      <p class="kicker mono rise">109MUSIC · {s.label}</p>
+      <h1 class="display face rise">Music<br /><span class="lav">marketing</span></h1>
+      <p class="sub rise">{s.blurb}</p>
+
+      <nav class="momentnav" aria-label="Jump to a moment in the release">
+        {groups.map((g) => (
+          <a href={`#${g.id}`} class={g.items.length ? '' : 'is-empty'}>
+            <span class="mono">{g.label}</span>
+            <span class="n">{g.items.length}</span>
+          </a>
+        ))}
+      </nav>
+
+      {present.length > 0 && (
+        <nav class="chips" aria-label="Topics in Music Marketing" style="margin-top:26px">
+          {present.map((t) => <a class="chip" href={url(`/tags/${t}/`)}>{tagLabel(t)}</a>)}
+        </nav>
+      )}
+    </section>
+   </div>
+  </div>
+
+  <div class="wrap">
+    <!-- 02 · the playbooks, by moment, on bone -->
+    <section class="surf-bone">
+      <SectionMarker n={1} slug="by_release_moment" />
+      {groups.map((g) => (
+        <div class="momentblock" id={g.id}>
+          <div class="momenthead">
+            <h2 class="display">{g.label}</h2>
+            <p>{g.blurb}</p>
+          </div>
+          {g.items.length ? (
+            <ul class="rows">
+              {g.items.map((e: any) => (
+                <Row
+                  n={++n}
+                  href={pathOf('music-marketing', e.id)}
+                  title={e.data.title}
+                  dek={e.data.dek}
+                  date={e.data.date}
+                  label={s.label}
+                  minutes={readingTime(e.body)}
+                  hero={e.data.hero}
+                />
+              ))}
+            </ul>
+          ) : (
+            <p class="empty small">Nothing filed here yet.</p>
+          )}
+        </div>
+      ))}
+
+      {unfiled.length > 0 && (
+        <div class="momentblock">
+          <div class="momenthead"><h2 class="display">Everything else</h2></div>
+          <ul class="rows">
+            {unfiled.map((e: any) => (
+              <Row n={++n} href={pathOf('music-marketing', e.id)} title={e.data.title} dek={e.data.dek}
+                   date={e.data.date} label={s.label} minutes={readingTime(e.body)} hero={e.data.hero} />
+            ))}
+          </ul>
+        </div>
+      )}
+    </section>
+
+    <!-- 03 · case studies, the subsection, on tint -->
+    <section class="surf-tint">
+      <SectionMarker n={2} slug="case_studies" />
+      <div class="sec-head">
+        <h2 class="display">{cs.label}</h2>
+        <a href={url('/music-marketing/case-studies/')}>All case studies →</a>
+      </div>
+      <p class="sec-intro">
+        {cs.blurb} These are not our clients — our own campaign numbers live under
+        {' '}<a href={url('/results/')}>Results</a>.
+      </p>
+      {cases.length ? (
+        <ul class="rows">
+          {cases.slice(0, 4).map((e: any, i: number) => (
+            <Row n={i + 1} href={pathOf('case-studies', e.id)} title={e.data.title}
+                 dek={e.data.dek} date={e.data.date} label={cs.label}
+                 minutes={readingTime(e.body)} hero={e.data.hero} />
+          ))}
+        </ul>
+      ) : (<p class="empty">Nothing filed here yet.</p>)}
+    </section>
+  </div>
+
+  <div class="slab slab--tight">
+    <div class="wrap">
+      <section class="workband">
+        <p class="mono">Bespoke work</p>
+        <h2 class="display face">We run this for artists, not just write about it.</h2>
+        <p class="workband-line">
+          Everything on this page is what we do for clients. If you would rather we ran it,
+          tell us what you are putting out.
+        </p>
+        <a class="btn" href={wa('article')} target="_blank" rel="noopener">
+          <span>Message us on WhatsApp</span><span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <p class="workband-fine mono">Replies from a person, usually same day</p>
+      </section>
+    </div>
+  </div>
+</Base>

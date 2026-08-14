@@ -1,0 +1,16 @@
+---
+import SectionIndex from '../../components/SectionIndex.astro';
+import { getCollection } from 'astro:content';
+import { sectionOf } from '../../lib/site';
+
+const s = sectionOf('news')!;
+const entries = await getCollection('news');
+---
+<SectionIndex
+  id={s.id}
+  label={s.label}
+  blurb={s.blurb}
+  entries={entries}
+  listHeading="The wire"
+  listIntro="Platform changes, payout changes and rule changes, in date order. What it is, and what it costs you."
+/>

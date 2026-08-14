@@ -1,0 +1,35 @@
+---
+/* Client result card. The one element lifted wholesale from auramusic.ai, because it
+   is the best solution to the problem we actually have.
+
+   The anatomy, measured off the reference:
+     artist   12px, uppercase, tracking, muted        (interface voice)
+     track    14px semibold, near-black               (reading voice)
+     FIGURE   large, tight tracking, single number    (the whole point)
+     label    14px muted, one line                    (what the number counts)
+     ─────    hairline
+     context  12px muted, carries the BASELINE
+
+   Two rules that are not decoration. First: one number per card. A card with three
+   numbers has none. Second: the context line must contain the starting point, because
+   a percentage without a baseline is not evidence — "+400%" on twelve daily streams is
+   a rounding error wearing a suit. The intake template enforces both upstream. */
+import { url } from '../lib/site';
+import type { ResultCard } from '../lib/site';
+
+interface Props { data: ResultCard }
+const { data } = Astro.props;
+---
+<article class="rcard">
+  {data.art
+    ? <img class="rcard-art" src={url(data.art)} alt={`${data.track} by ${data.artist}`} loading="lazy" decoding="async" width="320" height="320" />
+    : <span class="rcard-art rcard-art--plate" aria-hidden="true">109</span>}
+  <div class="rcard-body">
+    <p class="rcard-artist">{data.artist}</p>
+    <p class="rcard-track">{data.track}</p>
+    <span class="rcard-figure">{data.figure}</span>
+    <p class="rcard-label">{data.label}</p>
+    <span class="rcard-rule" aria-hidden="true"></span>
+    <p class="rcard-ctx">{data.context} <b>{data.baseline}</b>.</p>
+  </div>
+</article>

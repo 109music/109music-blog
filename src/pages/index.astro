@@ -98,17 +98,18 @@ const schema = {
           <h2 class="display">Real artists. Real numbers.</h2>
           <a href={url('/results/')}>All results →</a>
         </div>
+        {/* Reescrita: con un lanzamiento desde cero, "the week before the campaign
+            started" dejaba de ser cierto. La segunda frase convierte ese caso en el
+            mas limpio en vez de en la excepcion. */}
         <p class="sec-intro">
-          Every figure measured against the week before the campaign started.
+          Every figure is measured against a starting point we recorded before
+          spending anything. For a new release, that starting point is zero.
         </p>
         {/* Sin esta linea el bloque se contradice con la comparativa, que promete
             que publicamos el metodo: tres cifras anonimas leidas justo despues de
             esa promesa la debilitan. Dicha en voz alta, el anonimato deja de ser
             una carencia y pasa a ser la prueba de que pedimos permiso antes. */}
-        <p class="results-note mono">
-          Names withheld until each artist signs off. Every figure comes from a
-          dated platform screenshot.
-        </p>
+
         <div class="rcarousel">
           {/* tabindex hace que el scroller reciba foco y las flechas del teclado
               funcionen sin una sola linea de JavaScript. */}

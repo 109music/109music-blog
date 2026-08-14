@@ -4,6 +4,21 @@ dek: "A three-step Instagram ad plan for independent artists: a lifetime budget 
 date: 2026-08-12
 tags: ["touring", "instagram", "music-marketing"]
 moment: "release-week"
+hero:
+  src: "/img/articles/sell-out-hero.webp"
+  alt: "Concentric rings radiating from a single lavender point, the ad radius around a venue"
+  thumb: "/img/articles/sell-out-thumb.webp"
+  credit: "109MUSIC"
+  license: "Own work"
+  source: "own"
+figures:
+  - after: "step-02--spend-on-a-timer-not-a-drip"
+    src: "/img/articles/sell-out-figure.webp"
+    alt: "A flat run of low bars followed by a sharp rise, spend held back then released"
+    caption: "A drip spends the same money and never builds the pressure that sells a ticket. The burst is the point."
+    credit: "109MUSIC"
+    license: "Own work"
+    source: "own"
 igEmbed: null
 cta:
   keyword: "CALL"

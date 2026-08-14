@@ -84,3 +84,21 @@ For each image, this file must record: Commons file page URL · exact file name 
 `upload.wikimedia.org` URL · original pixel dimensions · exact licence tag · author credit
 string exactly as stated · the attribution line rendered under the photo · framing
 (face / upper body preferred over distant live shots).
+
+## Web (109music.co) — registro de imagen por artículo
+
+Distinto del `image-credits.md` de cada batch de Instagram. **Las fotos de los
+carruseles están vetadas para la web**: vienen de medios y casi todas son Getty.
+
+Regla de tratamiento: en la web las fotos van sin filtro. Sin modificar no son
+obra derivada, así que una Creative Commons solo pide crédito. El gris se queda
+solo en los carruseles.
+
+| Artículo | Recurso | Fuente | Autor | Licencia |
+|---|---|---|---|---|
+| how-to-sell-out-your-next-show | hero 1600×900 | Generada por nosotros | 109MUSIC | Own work |
+| how-to-sell-out-your-next-show | figura de cuerpo 1600×900 | Generada por nosotros | 109MUSIC | Own work |
+| how-to-sell-out-your-next-show | miniatura 256×256 | Generada por nosotros | 109MUSIC | Own work |
+| how-to-sell-out-your-next-show | tarjeta OG 1200×630 | Generada por `tools/og.mjs` | 109MUSIC | Own work |
+| turn-streams-into-fans | hero, figura, miniatura | Generadas por nosotros | 109MUSIC | Own work |
+| (todos) | tarjeta OG | Generada por `tools/og.mjs` | 109MUSIC | Own work |

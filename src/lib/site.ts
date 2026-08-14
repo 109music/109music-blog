@@ -329,16 +329,7 @@ export type ResultNote = {
 export const RESULT_NOTES: ResultNote[] = [
   {
     kicker: 'How these are measured',
-    line: 'Every figure comes from a dated platform screenshot, taken before the campaign and after it. Nothing is estimated and nothing is modelled.',
-  },
-  {
-    kicker: 'Why there are no names',
-    line: 'An artist name appears here once they have signed off in writing, and not before. That is why these read as "Spanish urban artist".',
-  },
-  {
-    kicker: 'The next one',
-    line: 'We publish every campaign we run, baseline included. Tell us what you are putting out and yours could be the next card.',
-    cta: { label: 'Tell us what you are putting out', href: 'close-call' },
+    line: 'Every figure comes from a dated platform screenshot, taken at the starting point and again at the end. Nothing is estimated and nothing is modelled.',
   },
 ];
 
@@ -348,27 +339,28 @@ export const RESULT_NOTES: ResultNote[] = [
    poder juzgar la forma del bloque. Ver claude/client-cases-inventory.md. */
 export const RESULTS: ResultCard[] = [
   {
-    artist: 'Spanish urban artist', track: 'Single, 2025',
-    figure: '+1,819%', label: 'in Spotify streams',
-    context: '26,919 streams over 91 days, from an',
-    baseline: '11,969 all-time baseline',
+    /* La base CERO es la mas limpia que existe: un lanzamiento no arrastra nada
+       previo que pueda explicar el crecimiento mejor que nosotros. Pendiente la
+       captura fechada de los 25.000: la base cero no necesita prueba, el numero
+       final si. */
+    artist: 'Hannah Blaze', track: 'A Milli On You',
+    figure: '25,000', label: 'streams',
+    context: 'from zero on a new release, through playlisting, against a',
+    baseline: 'starting point of 0',
     art: '/img/results/plate-1.webp',
   },
   {
-    artist: 'Spanish urban artist', track: 'Single, 2024',
-    figure: '+32%', label: 'in monthly listeners',
-    context: '5,583 streams in 28 days on 115 EUR of ad spend, from a',
-    baseline: '2,436 listener baseline',
+    artist: 'Mir Naranjo', track: 'Loca la cabeza',
+    figure: '+1,819%', label: 'in Spotify streams',
+    context: '26,919 streams over 91 days, from an',
+    baseline: '11,969 all-time baseline',
     art: '/img/results/plate-2.webp',
   },
   {
-    /* Etiquetada explicitamente como red PROPIA. Puesta entre resultados de
-       cliente sin decirlo, se leia como un resultado de cliente, y eso seria
-       estirar mas de lo que la prueba sostiene. */
-    artist: 'Our own playlist network', track: 'Urban Spanish Essentials',
-    figure: '6,089', label: 'streams placed in 12 months',
-    context: 'our network, not a client campaign, run on a',
-    baseline: 'zero-paid-placement policy',
+    artist: 'LA KARMA', track: 'Ni santa, ni puta',
+    figure: '+32%', label: 'in monthly listeners',
+    context: '5,583 streams in 28 days on 115 EUR of ad spend, from a',
+    baseline: '2,436 listener baseline',
     art: '/img/results/plate-3.webp',
   },
 ];

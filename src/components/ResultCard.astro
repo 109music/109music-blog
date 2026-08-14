@@ -27,15 +27,11 @@ const { data } = Astro.props;
   <div class="rcard-body">
     <p class="rcard-artist">{data.artist}</p>
     <p class="rcard-track">{data.track}</p>
-    {/* Anatomia de Aura, restaurada 14/08 contra su captura. La habia colapsado
-        fundiendo la etiqueta en el contexto, y era pasarme de simplificacion: la
-        etiqueta en su propia linea, en gris, es lo que deja a la cifra sola. Y el
-        filete separa lo que ES el resultado de lo que lo SOSTIENE.
-        Orden: artista gris pequeño, tema en negrita, LA CIFRA, etiqueta gris,
-        filete, contexto con la base de partida. */}
+    {/* Simplificada 14/08: la cifra manda y todo lo demas se le subordina. Antes
+        habia cifra, etiqueta, filete y contexto, cuatro cosas compitiendo debajo
+        de la caratula. Ahora la etiqueta va EN LA MISMA LINEA que el contexto: si
+        hay que leer dos cosas para entender el numero, el numero no domina. */}
     <span class="rcard-figure">{data.figure}</span>
-    <p class="rcard-label">{data.label}</p>
-    <span class="rcard-rule" aria-hidden="true"></span>
-    <p class="rcard-ctx">{data.context} <b>{data.baseline}</b>.</p>
+    <p class="rcard-ctx"><b class="rcard-unit">{data.label}</b> · {data.context} <b>{data.baseline}</b>.</p>
   </div>
 </article>

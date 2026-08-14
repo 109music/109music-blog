@@ -296,10 +296,6 @@ export const STEPS = [
 export type ResultCard = {
   artist: string;
   track: string;
-  /* Id de Spotify VERIFICADO abriendo cada enlace. Los que llegaron el 14/08
-     traian el 2 y el 3 cruzados. De aqui sale la caratula: 640x640 del oEmbed,
-     recortada a 600x600 WebP. */
-  spotify?: string;
   figure: string;
   label: string;
   context: string;
@@ -348,7 +344,6 @@ export const RESULTS: ResultCard[] = [
        captura fechada de los 25.000: la base cero no necesita prueba, el numero
        final si. */
     artist: 'Hannah Blaze', track: 'A Milli On You',
-    spotify: '76K8ZcrPyjmY8oVevGHfzb',
     figure: '25,000', label: 'streams',
     context: 'from zero on a new release, through playlisting, against a',
     baseline: 'starting point of 0',
@@ -356,17 +351,13 @@ export const RESULTS: ResultCard[] = [
   },
   {
     artist: 'Mir Naranjo', track: 'Loca la cabeza',
-    spotify: '3yeVW681ZDcpi9f9v6f14B',
     figure: '+1,819%', label: 'in Spotify streams',
     context: '26,919 streams over 91 days, from an',
     baseline: '11,969 all-time baseline',
     art: '/img/results/plate-2.webp',
   },
   {
-    /* El tema figura en Spotify como "LA KARMA, La Hater". Pendiente decidir si
-       la tarjeta acredita a las dos. */
     artist: 'LA KARMA', track: 'Ni santa, ni puta',
-    spotify: '4VR9uZbvaInIZndR3dw9oV',
     figure: '+32%', label: 'in monthly listeners',
     context: '5,583 streams in 28 days on 115 EUR of ad spend, from a',
     baseline: '2,436 listener baseline',

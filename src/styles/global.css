@@ -2204,7 +2204,11 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
       animation-fill-mode: both;
       animation-duration: 1ms;
       animation-timeline: view(inline);
-      animation-range: cover 0% cover 100%;
+      /* `cover 0% cover 100%` dejaba a toda tarjeta fuera de pantalla clavada en
+         el maximo de inclinacion, y al desplazar entraban de golpe. Medido:
+         [4, -13, -17, -17, -17, -17] en reposo. Acotar a entry/exit reparte el
+         giro en el tramo donde la tarjeta se ve de verdad. */
+      animation-range: entry 25% exit 75%;
       transition: none;
       will-change: transform;
     }
@@ -2422,3 +2426,16 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
 .around-line { font-size: 15px; line-height: 1.55; color: var(--on-bone-mute); }
 .around-price { font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--lav-deep); }
 @media (min-width: 860px) { .around-price { text-align: right; } }
+
+/* --- La tarjeta de resultado, simplificada (2026-08-14) ------------------- */
+/* La cifra manda, pero "+1,819%" tiene ocho caracteres y "25,000" seis: a tamaño
+   fijo el largo se salia de la tarjeta. `cqw` no vale porque la tarjeta no es un
+   contenedor de consulta, asi que el tope baja y se permite encoger. */
+.rcard-figure {
+  display: block; margin-top: 4px; line-height: .92;
+  font-size: clamp(38px, 4.4vw, 56px);
+  white-space: nowrap;
+}
+.rcard-ctx { margin-top: 10px; font-size: 13px; line-height: 1.5; color: var(--on-bone-mute); }
+.rcard-unit { color: var(--ink); font-weight: 700; }
+.rcard-label, .rcard-rule { display: none; }

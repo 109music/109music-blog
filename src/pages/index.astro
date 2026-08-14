@@ -104,7 +104,7 @@ const schema = {
     )}
 
     <!-- 03 · Start where you are -->
-    <section class="startwhere">
+    <section class="startwhere surf-bone">
       <div class="sec-head">
         <h2 class="display">Start where you are</h2>
         <a href={url('/music-marketing/')}>All playbooks →</a>
@@ -124,7 +124,7 @@ const schema = {
 
     <!-- 04 · Lead story -->
     {lead && (
-      <section class="leadstory">
+      <section class="leadstory surf-tint">
         <div class="sec-head">
           <h2 class="display">Latest</h2>
           <a href={url('/rss.xml')}>Subscribe via RSS</a>
@@ -170,7 +170,7 @@ const schema = {
   <div class="wrap">
     <!-- 06 · Playbooks -->
     {marketing.length > 0 && (
-      <section>
+      <section class="surf-tint">
         <div class="sec-head">
           <h2 class="display">Music Marketing</h2>
           <a href={url('/music-marketing/')}>All playbooks →</a>
@@ -186,7 +186,7 @@ const schema = {
 
     <!-- 07 · Case studies -->
     {cases.length > 0 && (
-      <section>
+      <section class="surf-bone">
         <div class="sec-head">
           <h2 class="display">Case Studies</h2>
           <a href={url('/case-studies/')}>All case studies →</a>
@@ -202,7 +202,7 @@ const schema = {
 
     <!-- 08 · Music business bridge -->
     {businessCount > 0 && (
-      <section class="bridge">
+      <section class="bridge surf-tint">
         <div>
           <h2 class="display">The money side</h2>
           <p>
@@ -218,7 +218,7 @@ const schema = {
 
     <!-- 09 · Topics -->
     {topTags.length > 0 && (
-      <section>
+      <section class="surf-bone">
         <div class="sec-head">
           <h2 class="display">Topics</h2>
           <a href={url('/tags/')}>All topics →</a>

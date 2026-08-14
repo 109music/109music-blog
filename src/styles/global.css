@@ -1156,3 +1156,27 @@ body {
 .searchexc { font-size: 0.9em; line-height: 1.5; color: rgba(10, 10, 10, 0.64); }
 .searchexc mark { background: var(--lav); color: var(--ink); padding: 0 2px; }
 .searchnote { margin: 0; padding: 20px 18px; color: rgba(10, 10, 10, 0.62); font-size: 0.94em; }
+
+/* ---------- Third surface: lavender tint ----------
+   The page had two light surfaces ten points of luminance apart, so two adjacent
+   sections read as one continuous block. This is the third level: bone #F4F3EF is
+   blended 12% toward the lavender, which is enough to register as a different sheet
+   of paper without becoming a colour.
+
+   It costs nothing from the accent budget on purpose — a 12% tint is not saturated
+   lavender, and the measured saturated-accent share stays where it was. Full-bleed via
+   side box-shadows so the band runs edge to edge from inside the centred container. */
+:root { --tint: #EEE9F1; }
+
+.wrap > section.surf-bone { background: var(--bone); box-shadow: -100vw 0 0 var(--bone), 100vw 0 0 var(--bone); }
+.wrap > section.surf-tint { background: var(--tint); box-shadow: -100vw 0 0 var(--tint), 100vw 0 0 var(--tint); }
+.wrap > section.surf-sunk { background: var(--bone-sunk); box-shadow: -100vw 0 0 var(--bone-sunk), 100vw 0 0 var(--bone-sunk); }
+
+/* A card sitting on the tint needs to stay distinguishable from it. */
+.surf-tint .leadcard, .surf-tint .chart { background: var(--bone); }
+.surf-tint .plate { background: var(--bone); }
+
+/* Section titles carry more weight and more air above, so the eye registers a new
+   block before it reads a word — surface alone should not have to do all the work. */
+.sec-head h2, .momenthead h2 { font-size: clamp(28px, 4.8vw, 50px); }
+.wrap > section { padding-top: clamp(38px, 5.4vw, 84px); }

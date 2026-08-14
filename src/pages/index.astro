@@ -1,10 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
 import Row from '../components/Row.astro';
+import ResultCard from '../components/ResultCard.astro';
+import SectionMarker from '../components/SectionMarker.astro';
 import { getCollection } from 'astro:content';
 import {
   SITE, SECTIONS, TAGS, MOMENTS, url, readingTime, labelOf, fmtDate,
-  wa, RESULTS_LIVE, RESULTS,
+  wa, pathOf, RESULTS_LIVE, RESULTS,
 } from '../lib/site';
 
 const live = (arr: any[]) =>
@@ -36,6 +38,17 @@ for (const e of everything) for (const t of e.data.tags) tagCounts.set(t, (tagCo
 const topTags = TAGS.filter((t) => (tagCounts.get(t.slug) ?? 0) > 0);
 
 const businessCount = everything.filter((e) => e.data.tags.includes('music-business')).length;
+const resultsLive = RESULTS_LIVE && RESULTS.length > 0;
+
+/* Surface rhythm, generated rather than hand-written. Two light blocks in a row
+   reading identically was the exact failure the third level was introduced to solve,
+   and hand-assigning classes breaks the moment a block is toggled — which the results
+   block does, on a flag. So the light bands alternate from a counter, and the numbered
+   markers count from the same source. Nothing to keep in sync by hand. */
+let surfN = 0;
+const surf = () => (surfN++ % 2 === 0 ? 'surf-bone' : 'surf-tint');
+let markN = 0;
+const mark = () => ++markN;
 
 const schema = {
   '@context': 'https://schema.org',
@@ -60,24 +73,27 @@ const schema = {
 ---
 <Base title={SITE.name} description={SITE.description} schema={schema}>
 
-  <!-- 01 · Statement, full-bleed black -->
+  {/* 01 · Hero. The wordmark IS the headline, indepenjend's pattern: one enormous piece
+      of brand, one line underneath that says what the place is for, nothing else above
+      the fold. The keyword work moves to <title>, the schema and the section headings,
+      because the h1 is now a brand name. */}
   <div class="slab">
     <div class="wrap">
       <section class="hero home-hero">
-      <p class="kicker mono rise">Independent music marketing · Published weekly</p>
-      <h1 class="display wordmark-face rise">Music<br />marketing,<br /><span class="lav">broken down.</span></h1>
-      {/* One-line statement, the reference's job: say what this is in a glance.
-          Two alternates are kept below so the choice is a one-line edit. */}
-      <p class="statement rise">
-        Real rollouts <b>taken apart</b>, with the numbers, so you can <b>run them yourself</b> without a label.
-      </p>
-      <div class="hero-cta rise">
-        <a class="btn" href={url('/music-marketing/')}>
-          <span>Start with the playbooks</span><span class="arrow" aria-hidden="true">→</span>
-        </a>
-        <a class="btn ghost" href={wa('home')} target="_blank" rel="noopener">
-          <span>Work with us on WhatsApp</span><span class="arrow" aria-hidden="true">→</span>
-        </a>
+        <p class="kicker mono rise">Independent music marketing · Madrid</p>
+        <h1 class="display face rise brandline">109MUSIC.CO</h1>
+        <p class="statement rise">
+          A 360 platform for independent artists and labels to <b>release</b>,{' '}
+          <b>grow</b> and <b>get paid</b>. We run the campaigns, and we publish
+          exactly how they work.
+        </p>
+        <div class="hero-cta rise">
+          <a class="btn" href={url('/results/')}>
+            <span>See the results</span><span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="btn ghost" href={wa('home')} target="_blank" rel="noopener">
+            <span>Work with us on WhatsApp</span><span class="arrow" aria-hidden="true">→</span>
+          </a>
         </div>
       </section>
     </div>
@@ -85,26 +101,127 @@ const schema = {
 
   <div class="wrap">
 
-    {/* 02 · Client results — sits immediately under the hero on purpose. Deliberately absent until real numbers exist — the layout
-        is built and reserved, but a visitor must never see a placeholder figure. */}
-    {RESULTS_LIVE && RESULTS.length > 0 && (
-      <section class="proof">
-        <p class="mono proof-kicker">What we have done for artists</p>
-        <div class="proofgrid">
-          {RESULTS.map((r) => (
-            <div>
-              <span class="figure">{r.figure}</span>
-              <span class="label">{r.label}</span>
-              <span class="artist mono">{r.artist}</span>
-            </div>
-          ))}
+    {/* 02 · Client results, immediately under the hero. Real results drive everything:
+        what turns an artist into a client is seeing numbers from artists like them.
+        Deliberately absent until real figures exist — the layout is built and reserved,
+        but a visitor must never see a placeholder number. */}
+    {resultsLive && (
+      <section class={surf()}>
+        <SectionMarker n={mark()} slug="client_results" />
+        <div class="sec-head">
+          <h2 class="display">Real artists. Real numbers.</h2>
+          <a href={url('/results/')}>All results →</a>
         </div>
-        <a class="proof-link" href={wa('results')} target="_blank" rel="noopener">Get numbers like these →</a>
+        <p class="sec-intro">
+          Every figure is measured against the week before the campaign started.
+        </p>
+        <div class="rcard-grid">
+          {RESULTS.slice(0, 4).map((r) => <ResultCard data={r} />)}
+        </div>
       </section>
     )}
 
-    <!-- 03 · Start where you are -->
-    <section class="startwhere surf-bone">
+    {/* 03 · Services */}
+    <section class={surf()}>
+      <SectionMarker n={mark()} slug="what_we_run" />
+      <div class="sec-head">
+        <h2 class="display">Two things, done properly</h2>
+        <a href={url('/services/')}>All services →</a>
+      </div>
+      <div class="svcgrid">
+        <div class="svccard">
+          <h3 class="display">Meta ads for music</h3>
+          <p>Campaign build, targeting and optimisation for releases and shows. We run it, you get the reporting.</p>
+          <ul class="ticks">
+            <li>Release and tour campaigns</li>
+            <li>Geo-targeting down to the venue radius</li>
+            <li>Pixel setup you keep</li>
+            <li>Weekly reporting in plain language</li>
+          </ul>
+          <a class="btn" href={wa('meta-ads')} target="_blank" rel="noopener">
+            <span>Ask about Meta ads</span><span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+        <div class="svccard">
+          <h3 class="display">Playlisting</h3>
+          <p>Editorial and curator pitching for a single track. Fixed price, no retainer.</p>
+          <ul class="ticks">
+            <li>One track, pitched to real curators</li>
+            <li>No bots, no bought placements</li>
+            <li>You get the list of who was pitched</li>
+          </ul>
+          <a class="btn" href={url('/submit-your-track/')}>
+            <span>Submit your track · 5 EUR</span><span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    {/* 04 · The alternatives. Aura's comparison table, re-aimed at the four things an
+        independent artist actually tries before finding us. The last row is the one
+        only we can write, and it is what connects the editorial half of the site to
+        the commercial half.
+
+        Aura runs theirs on black. Ours runs on a light band and lifts our own column
+        to white, because our black budget was already at 41% against their 24% — and
+        because the white column then matches the result cards, so the proof and the
+        argument read as the same object. */}
+      <section class={surf()}>
+        <SectionMarker n={mark()} slug="the_alternatives" />
+        <div class="sec-head"><h2 class="display">What most artists try first</h2></div>
+        <div class="cmp-scroll">
+          <table class="cmp">
+            <thead>
+              <tr>
+                <th class="cmp-lab"><span class="visually-hidden">Comparison</span></th>
+                <th>Paid playlist placements</th>
+                <th>Agency retainer</th>
+                <th>Running ads yourself</th>
+                <th class="cmp-us">109MUSIC</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th class="cmp-lab" scope="row">What you get</th>
+                <td>Streams from accounts that never come back</td>
+                <td>A deck, monthly</td>
+                <td>Reach, if the targeting is right</td>
+                <td class="cmp-us">Listeners who save and follow</td>
+              </tr>
+              <tr>
+                <th class="cmp-lab" scope="row">What it costs</th>
+                <td>Per placement, with no floor</td>
+                <td>Monthly retainer, three-month minimum</td>
+                <td>Ad spend plus your own week</td>
+                <td class="cmp-us">Ad spend plus one flat fee</td>
+              </tr>
+              <tr>
+                <th class="cmp-lab" scope="row">Who keeps the pixel</th>
+                <td>Not applicable</td>
+                <td>Usually the agency</td>
+                <td>You</td>
+                <td class="cmp-us">You, always</td>
+              </tr>
+              <tr>
+                <th class="cmp-lab" scope="row">Risk to the release</th>
+                <td>Bot flags and playlist removal</td>
+                <td>Slow to react mid-campaign</td>
+                <td>Budget burnt learning</td>
+                <td class="cmp-us">We publish our method — read it before you pay</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      <p class="cmp-foot mono">
+        The last row is the whole argument. Everything below is what we run for clients,
+        written down.
+      </p>
+    </section>
+
+    {/* 04 · Where the editorial half begins, and it is framed as verification of the
+        row above rather than as a second front door. */}
+    <section class={`startwhere ${surf()}`}>
+      <SectionMarker n={mark()} slug="start_where_you_are" />
       <div class="sec-head">
         <h2 class="display">Start where you are</h2>
         <a href={url('/music-marketing/')}>All playbooks →</a>
@@ -122,14 +239,14 @@ const schema = {
       </div>
     </section>
 
-    <!-- 04 · Lead story -->
+    {/* 06 · Lead story */}
     {lead && (
-      <section class="leadstory surf-tint">
+      <section class={`leadstory ${surf()}`}>
         <div class="sec-head">
           <h2 class="display">Latest</h2>
           <a href={url('/rss.xml')}>Subscribe via RSS</a>
         </div>
-        <a class="leadcard" href={url(`/${lead.collection}/${lead.id}/`)}>
+        <a class="leadcard" href={url(pathOf(lead.collection, lead.id))}>
           <span class="pill">{labelOf(lead.collection)}</span>
           <span class="leadtitle display">{lead.data.title}</span>
           <span class="leaddek">{lead.data.dek}</span>
@@ -139,86 +256,90 @@ const schema = {
         </a>
       </section>
     )}
-
   </div>
 
-  <!-- 05 · News wire, full-bleed black -->
+  {/* 07 · News wire, full-bleed black */}
   {news.length > 0 && (
     <div class="slab">
       <div class="wrap">
-      <section>
-        <div class="sec-head">
-          <h2 class="display">News</h2>
-          <a href={url('/news/')}>All news →</a>
-        </div>
-        <ul class="wire">
-          {news.slice(0, 5).map((e) => (
-            <li>
-              <a href={url(`/news/${e.id}/`)}>
-                <span class="wire-date mono">{fmtDate(e.data.date)}</span>
-                <span class="wire-title">{e.data.title}</span>
-                <span class="wire-dek">{e.data.dek}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
+        <section>
+          <SectionMarker n={mark()} slug="the_wire" />
+          <div class="sec-head">
+            <h2 class="display">News</h2>
+            <a href={url('/news/')}>All news →</a>
+          </div>
+          <ul class="wire">
+            {news.slice(0, 5).map((e) => (
+              <li>
+                <a href={url(pathOf('news', e.id))}>
+                  <span class="wire-date mono">{fmtDate(e.data.date)}</span>
+                  <span class="wire-title">{e.data.title}</span>
+                  <span class="wire-dek">{e.data.dek}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
       </div>
     </div>
   )}
 
   <div class="wrap">
-    <!-- 06 · Playbooks -->
+    {/* 07 · Playbooks */}
     {marketing.length > 0 && (
-      <section class="surf-tint">
+      <section class={surf()}>
         <div class="sec-head">
           <h2 class="display">Music Marketing</h2>
           <a href={url('/music-marketing/')}>All playbooks →</a>
         </div>
         <ul class="rows">
           {marketing.slice(0, 4).map((e, i) => (
-            <Row n={i + 1} href={`/music-marketing/${e.id}/`} title={e.data.title} dek={e.data.dek}
+            <Row n={i + 1} href={pathOf('music-marketing', e.id)} title={e.data.title} dek={e.data.dek}
                  date={e.data.date} label="Music Marketing" minutes={readingTime(e.body)} hero={e.data.hero} />
           ))}
         </ul>
       </section>
     )}
 
-    <!-- 07 · Case studies -->
+    {/* 08 · Case studies. Labelled so nobody mistakes them for our own client work. */}
     {cases.length > 0 && (
-      <section class="surf-bone">
+      <section class={surf()}>
         <div class="sec-head">
           <h2 class="display">Case Studies</h2>
-          <a href={url('/case-studies/')}>All case studies →</a>
+          <a href={url('/music-marketing/case-studies/')}>All case studies →</a>
         </div>
+        <p class="sec-intro">
+          Somebody else's rollout, taken apart. Our own campaign numbers are under
+          {' '}<a href={url('/results/')}>Results</a>.
+        </p>
         <ul class="rows">
           {cases.slice(0, 3).map((e, i) => (
-            <Row n={i + 1} href={`/case-studies/${e.id}/`} title={e.data.title} dek={e.data.dek}
+            <Row n={i + 1} href={pathOf('case-studies', e.id)} title={e.data.title} dek={e.data.dek}
                  date={e.data.date} label="Case Studies" minutes={readingTime(e.body)} hero={e.data.hero} />
           ))}
         </ul>
       </section>
     )}
 
-    <!-- 08 · Music business bridge -->
+    {/* 10 · Business bridge */}
     {businessCount > 0 && (
-      <section class="bridge surf-tint">
+      <section class={`bridge ${surf()}`}>
         <div>
           <h2 class="display">The money side</h2>
           <p>
             Rights, payouts, platform rules and the arithmetic behind an independent career.
-            {' '}{businessCount} pieces filed under Music Business.
+            {' '}{businessCount} pieces filed under Business.
           </p>
         </div>
-        <a class="btn" href={url('/music-business/')}>
-          <span>Read Music Business</span><span class="arrow" aria-hidden="true">→</span>
+        <a class="btn" href={url('/business/')}>
+          <span>Read Business</span><span class="arrow" aria-hidden="true">→</span>
         </a>
       </section>
     )}
 
-    <!-- 09 · Topics -->
+    {/* 10 · Topics */}
     {topTags.length > 0 && (
-      <section class="surf-bone">
+      <section class={surf()}>
         <div class="sec-head">
           <h2 class="display">Topics</h2>
           <a href={url('/tags/')}>All topics →</a>
@@ -232,22 +353,21 @@ const schema = {
         </nav>
       </section>
     )}
-
   </div>
 
-  <!-- 10 · Work with us, full-bleed black -->
+  {/* 12 · Work with us, full-bleed black */}
   <div class="slab">
     <div class="wrap">
       <section class="workband">
-      <p class="mono">Bespoke work</p>
-      <h2 class="display">We run this for artists, not just write about it.</h2>
-      <p class="workband-line">
-        Meta ads, release planning and playlisting for independent artists. Tell us what
-        you are putting out and we will tell you straight whether we can move it.
-      </p>
-      <a class="btn" href={wa('home')} target="_blank" rel="noopener">
-        <span>Message us on WhatsApp</span><span class="arrow" aria-hidden="true">→</span>
-      </a>
+        <p class="mono">Bespoke work</p>
+        <h2 class="display face">We run this for artists, not just write about it.</h2>
+        <p class="workband-line">
+          Meta ads, release planning and playlisting for independent artists. Tell us what
+          you are putting out and we will tell you straight whether we can move it.
+        </p>
+        <a class="btn" href={wa('home')} target="_blank" rel="noopener">
+          <span>Message us on WhatsApp</span><span class="arrow" aria-hidden="true">→</span>
+        </a>
         <p class="workband-fine mono">Replies from a person, usually same day</p>
       </section>
     </div>

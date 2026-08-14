@@ -1180,3 +1180,299 @@ body {
    block before it reads a word — surface alone should not have to do all the work. */
 .sec-head h2, .momenthead h2 { font-size: clamp(28px, 4.8vw, 50px); }
 .wrap > section { padding-top: clamp(38px, 5.4vw, 84px); }
+
+/* ==========================================================================
+   AURA PASS — 2026-08-14
+   Reference: auramusic.ai, measured with computed styles, not screenshots.
+   What was actually wrong, in order of how much it mattered:
+
+     imagery     Aura paints 18.4% of its page with artwork. We paint 0%.
+     black       Aura runs 24% dark. We ran 43%. Our black was doing the job
+                 their white cards do, and that is why ours read as unfinished.
+     accent      Aura has no brand accent at all — every colour on the page is
+                 album art. We keep lavender, because unlike them we publish and
+                 an editorial layer needs signposting. But it was under-used at
+                 0.7% against a 2% ceiling.
+
+   What we take: the result card, the four-level light ladder, hairline borders,
+   no shadows, 16px card radius, the numbered mono marker, a narrower container.
+   What we refuse: their serif voice, and their absence of accent.
+   ========================================================================== */
+
+/* Container. Aura tops out at 1152px and indepenjend at 1120px; we were at 1360px,
+   which is most of why our blocks felt loose rather than composed. */
+.wrap { max-width: 1200px; }
+
+/* --------------------------------------------------------------------------
+   1 · SECTION HEADINGS IN ARCHIVO BLACK
+   The diagnosis "they come out in Inter" was right about the symptom and wrong
+   about the cause: every section h1 carried .display, which resolves to Archivo
+   VARIABLE at 800. Only the home hero added .wordmark-face for Archivo Black.
+
+   The trap when fixing it: `.hero h1 { font-weight: 800 }` is 0-1-1 and beats a
+   bare `.face` class at 0-1-0, so swapping only the family makes the browser
+   synthesise a fake bold on top of an already-black face. Family AND weight have
+   to be re-stated at matching specificity. Same fix already shipped on the home.
+   -------------------------------------------------------------------------- */
+.face { font-family: var(--logo); font-weight: 400; letter-spacing: -.032em; }
+.display.face { text-transform: none; }
+.hero h1.face,
+.hero h2.face { font-weight: 400; line-height: .92; letter-spacing: -.034em; }
+.hero h1.face { font-size: clamp(38px, 8vw, 92px); max-width: 15ch; }
+.workband h2.face, .final h2.face { font-weight: 400; text-transform: none; letter-spacing: -.03em; }
+.slab .display.face { color: var(--on-dark); }
+
+/* The wordmark-as-headline, indepenjend's move. Tighter than a sentence hero
+   because it is one word and wants to read as a mark, not as a line of type. */
+.brandline { letter-spacing: -.045em; max-width: none; }
+.hero h1.brandline { font-size: clamp(40px, 10.5vw, 122px); line-height: .86; }
+
+/* --------------------------------------------------------------------------
+   2 · GROUPED NAVIGATION
+   Six destinations instead of nine. The group opens on hover and on focus-within,
+   so it is keyboard-reachable with no JavaScript, and its children are real
+   anchors in the DOM of every page — grouped for the eye, never hidden from a
+   crawler. Below 900px the panel is shown inline and the grouping disappears,
+   because a submenu inside a hamburger costs two taps to reach News.
+   -------------------------------------------------------------------------- */
+.navgroup { position: relative; display: inline-flex; }
+.navgroup-btn {
+  appearance: none; background: none; border: 0; padding: 0; cursor: pointer;
+  font: inherit; color: inherit; display: inline-flex; align-items: center; gap: 5px;
+  border-bottom: 2px solid transparent;
+}
+.navgroup-btn .caret { font-size: .7em; opacity: .6; transition: transform .18s var(--ease); }
+.navgroup:hover .navgroup-btn .caret,
+.navgroup:focus-within .navgroup-btn .caret { transform: rotate(180deg); }
+.sitehead .navgroup-btn { color: var(--on-dark-mute); }
+.sitehead .navgroup:hover .navgroup-btn,
+.sitehead .navgroup:focus-within .navgroup-btn,
+.sitehead .navgroup-btn[aria-current] { color: var(--lav); border-color: var(--lav); }
+
+.navpanel {
+  position: absolute; top: calc(100% + 14px); left: -18px; z-index: 60;
+  min-width: 290px; padding: 16px 18px 10px;
+  background: var(--ink); border: 1px solid var(--on-dark-rule); border-radius: 14px;
+  opacity: 0; visibility: hidden; transform: translateY(-6px);
+  transition: opacity .18s var(--ease), transform .18s var(--ease), visibility .18s;
+  box-shadow: 0 18px 50px rgba(0,0,0,.38);
+}
+.navgroup:hover .navpanel, .navgroup:focus-within .navpanel {
+  opacity: 1; visibility: visible; transform: translateY(0);
+}
+.navpanel-head { margin: 0 0 12px; font-size: 9.5px; color: var(--on-dark-faint); }
+.navpanel a {
+  display: block; padding: 9px 0; border: 0 !important;
+  border-top: 1px solid var(--on-dark-rule) !important;
+}
+.navpanel a:first-of-type { border-top: 0 !important; }
+.np-label {
+  display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .13em;
+  text-transform: uppercase; color: var(--on-dark);
+}
+.np-blurb {
+  display: block; margin-top: 3px; font-family: var(--body); font-weight: 500;
+  font-size: 13px; letter-spacing: 0; text-transform: none; color: var(--on-dark-mute);
+}
+.navpanel a:hover .np-label { color: var(--lav); }
+.navpanel a[aria-current='page'] .np-label { color: var(--lav); }
+
+@media (max-width: 899px) {
+  /* Flatten. No panel, no hover state, every destination one tap away. */
+  .navgroup { display: contents; }
+  .navgroup-btn { display: none; }
+  .navpanel {
+    position: static; opacity: 1; visibility: visible; transform: none;
+    min-width: 0; padding: 0; background: none; border: 0; border-radius: 0;
+    box-shadow: none; display: contents;
+  }
+  .navpanel-head { display: none; }
+  .navpanel a { padding: 0; border-top: 0 !important; }
+  .np-blurb { display: none; }
+  .np-label { font-size: inherit; letter-spacing: inherit; }
+}
+
+/* --------------------------------------------------------------------------
+   3 · NUMBERED BLOCK MARKER
+   Aura signals every block with a small mono label carrying an index. It costs
+   almost no painted area, reads as machinery rather than decoration, and gives
+   the accent somewhere structural to live instead of only appearing on hover.
+   This is the cheapest place we spend accent budget and the one that does the
+   most navigational work.
+   -------------------------------------------------------------------------- */
+.marker {
+  margin: 0 0 20px; font-size: 10.5px; letter-spacing: .14em;
+  color: var(--on-bone-faint);
+}
+.marker .idx { color: var(--lav-deep); font-weight: 700; margin-right: 8px; }
+.slab .marker { color: var(--on-dark-faint); }
+.slab .marker .idx { color: var(--lav); }
+
+/* --------------------------------------------------------------------------
+   4 · RESULT CARD
+   Lifted wholesale, then re-cut for our type system. Aura sets the figure in
+   Lora 500 at 48px with -1.2px tracking; the serif is what makes it read as a
+   measurement rather than a headline. We hold at three families and get the same
+   separation with Archivo at 600 — lighter than the 800 of every heading around
+   it, so the number still steps forward instead of joining the shouting.
+   White card, 16px radius, ONE hairline, no shadow. Artwork square and flush to
+   the top edge, clipped by the card's own radius.
+   -------------------------------------------------------------------------- */
+.rcard-grid {
+  display: grid; gap: 20px; grid-template-columns: 1fr;
+  margin-top: 8px;
+}
+@media (min-width: 620px) { .rcard-grid { grid-template-columns: repeat(2, 1fr); gap: 22px; } }
+@media (min-width: 1000px) { .rcard-grid { grid-template-columns: repeat(4, 1fr); gap: 24px; } }
+
+.rcard {
+  display: flex; flex-direction: column; overflow: hidden;
+  background: var(--white); border: 1px solid var(--on-bone-rule); border-radius: 16px;
+  transition: border-color .2s var(--ease), transform .2s var(--ease);
+}
+.rcard:hover { border-color: var(--lav-deep); transform: translateY(-2px); }
+.rcard-art { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
+.rcard-art--plate {
+  display: grid; place-items: center; background: var(--ink);
+  font-family: var(--logo); font-size: 34px; color: var(--on-dark-faint);
+  letter-spacing: -.03em;
+}
+.rcard-body { display: flex; flex-direction: column; flex: 1; padding: 20px; }
+.rcard-artist {
+  margin: 0; font-size: 12px; font-weight: 500; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--on-bone-faint);
+}
+.rcard-track { margin: 2px 0 16px; font-size: 14px; font-weight: 600; color: var(--ink); }
+.rcard-figure {
+  display: block; font-family: var(--display); font-weight: 600;
+  font-size: clamp(38px, 4.4vw, 48px); line-height: 1; letter-spacing: -.035em;
+  color: var(--ink);
+}
+.rcard-label { margin: 7px 0 0; font-size: 14px; color: var(--on-bone-mute); }
+.rcard-rule { display: block; height: 1px; background: var(--on-bone-rule); margin: 16px 0 12px; }
+.rcard-ctx { margin: 0 0 0; font-size: 12px; line-height: 1.62; color: var(--on-bone-faint); }
+/* The baseline is the part that makes the figure evidence. It gets the accent. */
+.rcard-ctx b { color: var(--lav-deep); font-weight: 600; }
+
+/* --------------------------------------------------------------------------
+   5 · COMPARISON TABLE
+   Aura runs theirs on pure black with the Aura column washed to 10% white and a
+   gap of zero. Same construction here. Scrolls horizontally on small screens
+   rather than reflowing, because a comparison that cannot be read across is not
+   a comparison.
+   -------------------------------------------------------------------------- */
+.cmp-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 calc(var(--gutter) * -1); padding: 0 var(--gutter); }
+@media (min-width: 900px) { .cmp-scroll { margin: 0; padding: 0; } }
+.cmp { width: 100%; min-width: 720px; border-collapse: collapse; font-size: 15px; }
+.cmp th, .cmp td {
+  padding: 15px 16px; text-align: left; vertical-align: top;
+  border-top: 1px solid var(--on-bone-rule); font-weight: 500;
+}
+.cmp thead th {
+  border-top: 0; font-family: var(--mono); font-size: 10px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--on-bone-faint); font-weight: 400;
+}
+.cmp .cmp-lab {
+  font-family: var(--mono); font-size: 10px; letter-spacing: .13em;
+  text-transform: uppercase; color: var(--on-bone-faint); font-weight: 400; width: 17%;
+}
+.cmp td { color: var(--on-bone-mute); }
+/* Our column is the one card in the table: white, like the result cards, so the
+   comparison and the proof read as the same object. Aura washes theirs with 10% white
+   on black; on a light surface the equivalent is to lift it to pure white. */
+.cmp .cmp-us { background: var(--white); color: var(--ink); font-weight: 600; }
+.cmp thead .cmp-us { color: var(--lav-deep); font-weight: 700; }
+.cmp tbody tr:first-child .cmp-us { border-top-color: transparent; }
+.cmp-foot { margin: 20px 0 0; font-size: 10px; color: var(--on-bone-faint); }
+.cmp-foot a { color: var(--lav-deep); }
+
+/* Dark surface variant. The component does not decide its own colours — the surface
+   does. This is the rule that cost 16 contrast failures the last time it was broken. */
+.slab .cmp th, .slab .cmp td { border-top-color: var(--on-dark-rule); }
+.slab .cmp thead th, .slab .cmp .cmp-lab { color: var(--on-dark-faint); }
+.slab .cmp td { color: var(--on-dark-mute); }
+.slab .cmp .cmp-us { background: rgba(255,255,255,.08); color: var(--on-dark); }
+.slab .cmp thead .cmp-us { color: var(--lav); }
+.slab .cmp-foot { color: var(--on-dark-faint); }
+.slab .cmp-foot a { color: var(--lav); }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   6 · SERVICE CARDS ON THE HOME
+   Same card physics as the result card so the page reads as one system.
+   -------------------------------------------------------------------------- */
+.svcgrid { display: grid; gap: 22px; grid-template-columns: 1fr; margin-top: 6px; }
+@media (min-width: 820px) { .svcgrid { grid-template-columns: 1fr 1fr; gap: 24px; } }
+.svccard {
+  display: flex; flex-direction: column;
+  background: var(--white); border: 1px solid var(--on-bone-rule); border-radius: 16px;
+  padding: clamp(22px, 3vw, 32px);
+}
+.svccard h3 { font-size: clamp(19px, 2.2vw, 23px); margin: 0 0 12px; }
+.svccard > p { margin: 0 0 18px; font-size: 16px; color: var(--on-bone-mute); }
+.svccard .ticks { margin: 0 0 24px; }
+.svccard .btn { align-self: flex-start; margin-top: auto; }
+
+/* --------------------------------------------------------------------------
+   7 · LAVENDER, PLACED STRUCTURALLY
+   Measured budget before this pass: 0.7% saturated accent on the home, against a
+   2% ceiling. The reference runs 1.7% and almost all of theirs is album artwork
+   rather than brand colour.
+
+   The bug this fixes first: `.lightband .hero h1 .lav` painted the accent word
+   INK on every light section hero, so Music Marketing, Business, Case Studies
+   and Resources had no lavender at all in their heroes. News looked different
+   from the rest of the site because News sat on a slab and was the only section
+   where the accent survived. Section heroes are all dark now, so the rule is
+   inert — it is neutralised here anyway, so a future light hero cannot re-break
+   it. Deep purple, not lavender: #C59FFD does not contrast on bone.
+   -------------------------------------------------------------------------- */
+.lightband .hero h1 .lav { color: var(--lav-deep); }
+
+/* Row index numerals: accent at rest, not only on hover. */
+.plate .plate-n { color: var(--lav-deep); }
+.slab .plate .plate-n { color: var(--lav); }
+
+/* Listing dates: what already works in News, extended to every listing. */
+.row .meta span:nth-child(2) { color: var(--lav-deep); }
+.slab .row .meta span:nth-child(2) { color: var(--lav); }
+
+/* Block rule: the first 28px of every section rule takes the accent. A separator
+   that is doing structural work should look like it belongs to the system. */
+.sec-head { position: relative; }
+.sec-head::after {
+  content: ''; position: absolute; left: 0; bottom: -1px;
+  width: 28px; height: 2px; background: var(--lav-deep);
+}
+.slab .sec-head::after { background: var(--lav); }
+
+/* List markers inside service and tick lists. */
+.ticks li::marker { color: var(--lav-deep); }
+.slab .ticks li::marker { color: var(--lav); }
+
+/* Cross-reference link in a section hero — the Results / Case Studies signpost. */
+.crosslink { margin: 22px 0 0; }
+.crosslink a {
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--lav); text-decoration: none;
+  border-bottom: 1px solid rgba(197,159,253,.4); padding-bottom: 3px;
+}
+.crosslink a:hover { border-color: var(--lav); }
+
+/* Statement emphasis, indepenjend's hero pattern: the verbs carry the weight. */
+.statement b { font-weight: 800; color: var(--on-dark); }
+.paper .lightband .statement b { color: var(--ink); }
+
+/* The ghost button inside a slab. `.slab .btn` and `.btn.ghost` are both 0-2-0, and
+   `.slab .btn` is declared later, so it won every dark hero and painted both CTAs
+   solid lavender — two full-strength accent blocks side by side, and no visual
+   hierarchy between the primary and secondary action. Re-assert at 0-3-0. */
+.slab .btn.ghost {
+  background: transparent; color: var(--on-dark);
+  box-shadow: inset 0 0 0 1px var(--on-dark-rule);
+}
+.slab .btn.ghost:hover { background: var(--lav); color: var(--ink); box-shadow: none; }

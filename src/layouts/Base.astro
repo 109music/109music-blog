@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { SITE, NAV, NAV_CTA, FOOT_NAV, url } from '../lib/site';
+import { SITE, NAV, NAV_PARENT, NAV_CTA, FOOT_NAV, url } from '../lib/site';
 import Search from '../components/Search.astro';
 
 interface Props {
@@ -68,9 +68,34 @@ const fullTitle = title === SITE.name ? `${SITE.name} — ${SITE.tagline}` : `${
     <header class="chrome">
       <a class="wordmark" href={url('/')}>@109MUSIC.CO</a>
       <nav class="nav" aria-label="Sections">
-        {NAV.map((n) => (
-          <a href={url(n.href)} aria-current={activeSection === n.id ? 'page' : undefined}>{n.label}</a>
-        ))}
+        {NAV.map((n: any) =>
+          n.children ? (
+            /* Grouped, not hidden. Every child is a real anchor in the DOM on every
+               page, so the group costs nothing in crawlability. The panel opens on
+               hover AND on focus-within, so it works from the keyboard with no JS.
+               Below 900px the panel is displayed inline and the group flattens. */
+            <div class="navgroup" data-nav-group>
+              <button
+                type="button"
+                class="navgroup-btn"
+                aria-expanded="false"
+                aria-controls="nav-learn"
+                aria-current={NAV_PARENT[activeSection] === n.id ? 'true' : undefined}
+              >{n.label} <span class="caret" aria-hidden="true">▾</span></button>
+              <div class="navpanel" id="nav-learn">
+                <p class="navpanel-head mono">Everything we publish</p>
+                {n.children.map((c: any) => (
+                  <a href={url(c.href)} aria-current={activeSection === c.id ? 'page' : undefined}>
+                    <span class="np-label">{c.label}</span>
+                    <span class="np-blurb">{c.blurb}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <a href={url(n.href)} aria-current={activeSection === n.id ? 'page' : undefined}>{n.label}</a>
+          ),
+        )}
         <button class="searchbtn" type="button" data-search-open aria-label="Search" aria-haspopup="dialog">
           <svg viewBox="0 0 20 20" aria-hidden="true" width="15" height="15">
             <circle cx="9" cy="9" r="6.2" fill="none" stroke="currentColor" stroke-width="2"/>

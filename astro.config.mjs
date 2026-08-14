@@ -18,7 +18,20 @@ export default defineConfig({
   base: '/',
   trailingSlash: 'always',
   build: { format: 'directory' },   // clean URLs: /music-marketing/slug/
-  // Retired /guides/ URLs are redirect stubs. They stay reachable forever but must not
-  // be advertised in the sitemap, or Search Console files them as duplicates.
-  integrations: [sitemap({ filter: (page) => !page.includes('/guides/') })],
+  // Retired URLs are redirect stubs. They stay reachable forever but must not be
+  // advertised in the sitemap, or Search Console files them as duplicates.
+  //
+  // Match on the PATH PREFIX, not with includes(). `/music-marketing/case-studies/` is a
+  // live destination that contains the retired `/case-studies/` as a substring, so a
+  // naive includes() check would quietly drop the real pages from the sitemap and leave
+  // the redirect stubs as the only thing Google was told about.
+  integrations: [
+    sitemap({
+      filter: (page) => {
+        const path = new URL(page).pathname;
+        const RETIRED = ['/guides/', '/case-studies/', '/music-business/'];
+        return !RETIRED.some((p) => path === p || path.startsWith(p));
+      },
+    }),
+  ],
 });

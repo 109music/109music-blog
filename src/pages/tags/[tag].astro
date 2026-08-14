@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Row from '../../components/Row.astro';
 import { getCollection } from 'astro:content';
-import { SECTIONS, TAGS, url, readingTime, labelOf } from '../../lib/site';
+import { SECTIONS, TAGS, url, readingTime, labelOf, pathOf } from '../../lib/site';
 
 export async function getStaticPaths() {
   const bySlug = new Map<string, any[]>();
@@ -44,7 +44,7 @@ const schema = {
       '@type': 'ListItem',
       position: i + 1,
       name: e.data.title,
-      url: new URL(url(`/${e.collection}/${e.id}/`), Astro.site).href,
+      url: new URL(url(pathOf(e.collection, e.id)), Astro.site).href,
     })),
   },
 };
@@ -64,7 +64,7 @@ const schema = {
         {entries.map((e: any, i: number) => (
           <Row
             n={i + 1}
-            href={`/${e.collection}/${e.id}/`}
+            href={url(pathOf(e.collection, e.id))}
             title={e.data.title}
             dek={e.data.dek}
             date={e.data.date}

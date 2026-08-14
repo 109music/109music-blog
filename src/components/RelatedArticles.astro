@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import { SECTIONS, url, fmtDate, labelOf } from '../lib/site';
+import { SECTIONS, url, fmtDate, labelOf, pathOf } from '../lib/site';
 
 /* Related reading. Ranked by shared tags first, then same section, then recency.
    Tags do the topic work here, which is the whole point of the vocabulary. */
@@ -35,7 +35,7 @@ const picks = all
     <ul class="grid">
       {picks.map((e) => (
         <li class="card">
-          <a href={url(`/${e.collection}/${e.id}/`)}>
+          <a href={url(pathOf(e.collection, e.id))}>
             <span class="kick">{labelOf(e.collection)}</span>
             <h3>{e.data.title}</h3>
             <p>{e.data.dek.length > 132 ? `${e.data.dek.slice(0, 132).trimEnd()}…` : e.data.dek}</p>

@@ -1,19 +1,14 @@
 ---
-import Article from '../../layouts/Article.astro';
-import { getCollection, render } from 'astro:content';
-import { sectionOf } from '../../lib/site';
+/* Retired 2026-08-14: /case-studies/<slug>/ -> /music-marketing/case-studies/<slug>/.
+   Driven by LEGACY_CASE_STUDY_SLUGS, not by the live collection, so these stubs keep
+   working even if an article is later renamed, re-filed or unpublished. */
+import Redirect from '../../layouts/Redirect.astro';
+import { LEGACY_CASE_STUDY_SLUGS, url } from '../../lib/site';
 
-export async function getStaticPaths() {
-  const entries = await getCollection('case-studies');
-  return entries
-    .filter((e) => !e.data.draft)
-    .map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+export function getStaticPaths() {
+  return LEGACY_CASE_STUDY_SLUGS.map((slug) => ({ params: { slug }, props: { slug } }));
 }
 
-const s = sectionOf('case-studies')!;
-const { entry } = Astro.props;
-const { Content } = await render(entry);
+const { slug } = Astro.props;
 ---
-<Article entry={entry} sectionId={s.id} sectionLabel={s.label}>
-  <Content />
-</Article>
+<Redirect to={url(`/music-marketing/case-studies/${slug}/`)} label="Case Studies" />

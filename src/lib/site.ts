@@ -42,22 +42,34 @@ export type MomentId = (typeof MOMENTS)[number]['id'];
 export const MOMENT_IDS = MOMENTS.map((m) => m.id) as unknown as [MomentId, ...MomentId[]];
 export const momentOf = (id?: string | null) => MOMENTS.find((m) => m.id === id);
 
-/* Sections handle navigation. Tags handle topic browsing. Do not blur the two. */
+/* Sections handle navigation. Tags handle topic browsing. Do not blur the two.
+
+   `path` is the ONLY place a section's URL is written down. Every link is built from it
+   through pathOf(), so relocating a section is a one-line edit here plus a redirect
+   stub. Case Studies moved under Music Marketing on 2026-08-14 by exactly that route. */
 export const SECTIONS = [
   {
     id: 'news',
     label: 'News',
+    path: '/news/',
     blurb: 'What changed on the platforms, and what it costs you.',
   },
   {
     id: 'music-marketing',
     label: 'Music Marketing',
+    path: '/music-marketing/',
     blurb: 'Step-by-step playbooks with real numbers. Marketing, money, and the business behind both.',
   },
   {
     id: 'case-studies',
     label: 'Case Studies',
-    blurb: 'How a real rollout actually worked.',
+    path: '/music-marketing/case-studies/',
+    /* Read this next to RESULTS and keep them apart. Case Studies are OTHER people's
+       rollouts pulled apart for teaching. Our own client numbers live at /results/ and
+       never use the word "case". If the two ever blur, the commercial page stops
+       meaning anything. */
+    blurb: 'Major-label rollouts taken apart, so you can steal the structure at your budget.',
+    parent: 'music-marketing',
   },
 ] as const;
 
@@ -66,26 +78,60 @@ export const SECTIONS = [
    call getCollection(), and a virtual id there fails the build. */
 export const VIRTUAL_SECTIONS = [
   {
-    id: 'music-business',
-    label: 'Music Business',
+    id: 'business',
+    label: 'Business',
+    path: '/business/',
     blurb: 'Rights, payouts, platform rules and the money behind the music.',
     tag: 'music-business',
   },
 ] as const;
 
-/* The navigation bar. Order is deliberate: news first because it changes daily,
-   then the two evergreen sections, then the proof. */
+/** Where a collection's articles live. Single source of truth for every article URL. */
+export const pathOf = (collection: string, slug?: string) => {
+  const base = (SECTIONS as readonly any[]).find((s) => s.id === collection)?.path ?? '/';
+  return slug ? `${base}${slug}/` : base;
+};
+
+/* The navigation bar. Six destinations instead of nine.
+   The rule Blanca set: what sells goes in the header, what is read can be grouped.
+   Results and Services are the commercial pair, flat and first. Everything editorial
+   collapses under Learn — whose children are real anchors in the DOM of every page,
+   grouped for the eye and never hidden from a crawler. On mobile the group flattens,
+   because a submenu inside a hamburger is two taps to reach News. */
 export const NAV = [
-  { href: '/news/', label: 'News', id: 'news' },
-  { href: '/music-marketing/', label: 'Music Marketing', id: 'music-marketing' },
-  { href: '/music-business/', label: 'Music Business', id: 'music-business' },
-  { href: '/case-studies/', label: 'Case Studies', id: 'case-studies' },
-  { href: '/resources/', label: 'Resources', id: 'resources' },
+  { href: '/results/', label: 'Results', id: 'results' },
   { href: '/services/', label: 'Services', id: 'services' },
+  {
+    href: '/music-marketing/',
+    label: 'Learn',
+    id: 'learn',
+    children: [
+      { href: '/news/', label: 'News', id: 'news', blurb: 'What changed this week.' },
+      { href: '/music-marketing/', label: 'Music Marketing', id: 'music-marketing', blurb: 'Playbooks, by release moment.' },
+      { href: '/music-marketing/case-studies/', label: 'Case Studies', id: 'case-studies', blurb: 'Famous rollouts, taken apart.' },
+      { href: '/business/', label: 'Business', id: 'business', blurb: 'Rights, payouts and platform rules.' },
+    ],
+  },
+  { href: '/resources/', label: 'Resources', id: 'resources' },
 ] as const;
 
+/** Every nav destination, flattened. Drives the mobile menu and the link audit. */
+export const NAV_FLAT: { href: string; label: string; id: string }[] = NAV.flatMap((n: any) =>
+  n.children ? n.children.map((c: any) => ({ href: c.href, label: c.label, id: c.id }))
+             : [{ href: n.href, label: n.label, id: n.id }],
+);
+
+/** Which top-level nav item should light up for a given active section id. */
+export const NAV_PARENT: Record<string, string> = {
+  news: 'learn',
+  'music-marketing': 'learn',
+  'case-studies': 'learn',
+  business: 'learn',
+  tags: 'learn',
+};
+
 /* The one conversion point in the header, styled as a button rather than a link so it
-   stops competing with six editorial sections it would always lose to. */
+   stops competing with the editorial sections it would always lose to. */
 export const NAV_CTA = { href: '/submit-your-track/', label: 'Submit your track' };
 
 /* Second tier. Topics is navigation of the second order — you reach it from a section,
@@ -152,12 +198,39 @@ export const LEGACY_GUIDE_SLUGS = [
   'turn-streams-into-fans',
 ] as const;
 
+/* Retired 2026-08-14: /case-studies/<slug>/ -> /music-marketing/case-studies/<slug>/.
+   Same rule as LEGACY_GUIDE_SLUGS — hard-coded rather than read from the collection, so
+   the stubs survive an article being renamed, re-filed or unpublished. Never delete. */
+export const LEGACY_CASE_STUDY_SLUGS = [
+  'ariana-grande-petal-presave-machine',
+  'charli-xcx-no-dead-air-rollout',
+] as const;
+
 /* Results block on the home page.
    Stays OFF until real client numbers exist. The markup is built and the layout is
    reserved, but nothing renders publicly while this is false — the site must never
    show placeholder figures to a visitor. Flip to true when RESULTS has real data. */
 export const RESULTS_LIVE = false;
 
-export const RESULTS: { figure: string; label: string; artist: string }[] = [
-  // { figure: '', label: '', artist: '' },
+/* One card per client campaign. `figure` is the single big number; `context` is the
+   sentence that carries the BASELINE, and without it the figure means nothing — a
+   "+400%" on twelve daily streams is not a result. See the intake template for the
+   rules the data has to satisfy before a card can be built.
+   `art` is a path under /public; null falls back to the branded plate. */
+export type ResultCard = {
+  artist: string;
+  track: string;
+  figure: string;
+  label: string;
+  context: string;
+  baseline: string;
+  art?: string | null;
+};
+
+export const RESULTS: ResultCard[] = [
+  // {
+  //   artist: '', track: '', figure: '+312%', label: 'in daily Spotify streams',
+  //   context: '18,400 streams during the campaign, from a', baseline: '590/day baseline',
+  //   art: null,
+  // },
 ];

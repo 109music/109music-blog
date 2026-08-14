@@ -31,9 +31,13 @@
   let pagefind = null, lastFocus = null, timer = null;
 
   const SECTION = (u) => {
+    /* Order matters: case studies live UNDER /music-marketing/, so the more specific
+       path has to be tested first or every teardown is labelled Music Marketing. */
+    if (u.includes('/case-studies/')) return 'Case Studies';
     if (u.includes('/news/')) return 'News';
     if (u.includes('/music-marketing/')) return 'Music Marketing';
-    if (u.includes('/case-studies/')) return 'Case Studies';
+    if (u.includes('/business/')) return 'Business';
+    if (u.includes('/results/')) return 'Results';
     if (u.includes('/resources/')) return 'Resources';
     if (u.includes('/services/') || u.includes('/submit-your-track/')) return 'Services';
     if (u.includes('/tags/')) return 'Topics';

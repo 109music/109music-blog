@@ -1,6 +1,6 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
-import { SITE, SECTIONS, labelOf, tagLabel } from '../lib/site';
+import { SITE, SECTIONS, labelOf, tagLabel, pathOf } from '../lib/site';
 
 export async function GET(context) {
   const all = [];
@@ -12,7 +12,7 @@ export async function GET(context) {
         title: e.data.title,
         description: e.data.dek,
         pubDate: e.data.date,
-        link: `${import.meta.env.BASE_URL.replace(/\/$/, '')}/${s.id}/${e.id}/`,
+        link: `${import.meta.env.BASE_URL.replace(/\/$/, '')}${pathOf(s.id, e.id)}`,
         // Section label first, then the controlled tag vocabulary.
         categories: [labelOf(s.id), ...e.data.tags.map((t) => tagLabel(t))],
       });

@@ -1,9 +1,7 @@
 ---
-import SectionIndex from '../../components/SectionIndex.astro';
-import { getCollection } from 'astro:content';
-import { sectionOf } from '../../lib/site';
-
-const s = sectionOf('case-studies')!;
-const entries = await getCollection('case-studies');
+/* Retired 2026-08-14: /case-studies/ -> /music-marketing/case-studies/.
+   Keep this stub permanently. */
+import Redirect from '../../layouts/Redirect.astro';
+import { url } from '../../lib/site';
 ---
-<SectionIndex id={s.id} label={s.label} blurb={s.blurb} entries={entries} />
+<Redirect to={url('/music-marketing/case-studies/')} label="Case Studies" />

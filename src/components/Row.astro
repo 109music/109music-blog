@@ -1,11 +1,28 @@
 ---
-import { url, fmtDate, pad } from '../lib/site';
+import { url, fmtDate } from '../lib/site';
 
-/* The index row. `.plate` is a reserved hero slot: it renders a numbered branded
-   plate today and an <img> in Stage 2 at identical geometry, so adding photos
-   changes no layout on any breakpoint. */
+/* THE listing row for the whole site.
+   Rebuilt 2026-08-14 on the News-wire pattern, which Blanca picked as the standard:
+
+       12 AUG 2026   Turn streams into fans
+                     A stream is a rental. Here is the sequence that converts…
+       ────────────────────────────────────────────────────────────  hairline
+       08 AUG 2026   New ways your music pays in 2026
+                     …
+
+   Date in its own left column, headline and dek in the main column, one hairline
+   between rows. No card, no container, no numeral.
+
+   What this deliberately removes: the `.plate` slot — a 172px numbered plate that was
+   reserved in Stage 1 so Stage 2 could drop hero thumbnails in at identical geometry.
+   That reservation is gone. When article imagery lands it needs a fresh decision, and
+   the honest options are a small thumbnail on the right or images only on the article
+   page. Do not silently reinstate the plate: the giant numerals were the exact thing
+   that made Case Studies read as a different site from News.
+
+   `n` is still accepted so callers do not all have to change at once. It is ignored. */
 interface Props {
-  n: number;
+  n?: number;
   href: string;
   title: string;
   dek?: string;
@@ -13,32 +30,25 @@ interface Props {
   label: string;
   minutes?: number;
   showDek?: boolean;
+  /** Kept in the signature so existing callers type-check. Not rendered. */
   hero?: { src: string; alt: string; treatment?: string } | null;
+  /** Show the section label next to the date. On a single-section index it is noise. */
+  showLabel?: boolean;
 }
 const {
-  n, href, title, dek = '', date, label, minutes, showDek = true, hero = null,
+  href, title, dek = '', date, label, minutes, showDek = true, showLabel = false,
 } = Astro.props;
-const gray = hero?.treatment !== 'colour';
 ---
 <li class="row">
   <a href={url(href)}>
-    <span class={`plate${hero ? ' has-img' : ''}`}>
-      {hero ? (
-        <img src={url(hero.src)} alt={hero.alt} loading="lazy" decoding="async" class={gray ? 'grayscale' : ''} />
-      ) : (
-        <span class="plate-n" aria-hidden="true">{pad(n)}</span>
-      )}
+    <span class="row-date mono">
+      <span class="d">{fmtDate(date)}</span>
+      {showLabel && <span class="l">{label}</span>}
     </span>
-
-    <span class="rowmain">
+    <span class="row-main">
       <span class="ttl">{title}</span>
-      {showDek && dek && <p class="dek">{dek}</p>}
+      {showDek && dek && <span class="dek">{dek}</span>}
     </span>
-
-    <span class="meta">
-      <span>{label}</span>
-      <span>{fmtDate(date)}</span>
-      {minutes && <span>{minutes} MIN</span>}
-    </span>
+    {minutes && <span class="row-min mono">{minutes} min</span>}
   </a>
 </li>

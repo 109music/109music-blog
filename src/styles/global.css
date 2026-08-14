@@ -1622,3 +1622,118 @@ body {
 .wrap > section.surf-tint,
 .wrap > section.surf-sunk { position: relative; }
 .wrap > section > *:not(.ambient) { position: relative; z-index: 1; }
+
+/* ==========================================================================
+   PASE 3 — 2026-08-14. Lavanda estructural fuera + patrón de News en todo.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   A · LA LAVANDA DEJA DE SER FILETE Y DEJA DE SER BORDE DE CONTENEDOR
+   Regla nueva y definitiva: el acento vive en fechas, numerales, marcadores y
+   detalles pequeños. Nunca como separador entre bloques ni como contorno de una
+   caja. Un separador es estructura, y la estructura la lleva el filete neutro.
+   Trece sitios lo estaban rompiendo.
+   -------------------------------------------------------------------------- */
+.sec-head { border-bottom-color: var(--on-bone-rule); }
+.slab .sec-head { border-bottom-color: var(--on-dark-rule); }
+.sec-head::after { display: none; }           /* el segmento lavanda de 28px */
+
+.momenthead { border-bottom: 1px solid var(--on-bone-rule); }
+.slab .momenthead { border-bottom-color: var(--on-dark-rule); }
+
+.article h2 { border-top-color: var(--on-bone-rule); border-top-width: 1px; }
+.article blockquote { border-left-color: var(--on-bone-rule); border-left-width: 2px; }
+.sources { border-top-color: var(--on-bone-rule); border-top-width: 1px; }
+.proof { border-top-color: var(--on-bone-rule); border-top-width: 1px; }
+
+/* Pull-quote y bloques de cifra: el borde pasa a neutro. Lo que se queda en
+   lavanda es la CIFRA, que es el detalle pequeño y el que lleva el significado. */
+.pullquote { border-top-color: var(--on-bone-rule); border-bottom-color: var(--on-bone-rule);
+             border-top-width: 1px; border-bottom-width: 1px; }
+.statblock, .statbig { border-left-color: var(--on-bone-rule); border-left-width: 2px; }
+
+/* Hover de tarjeta: el contorno no se tiñe. Se mueve, que ya es señal suficiente. */
+.leadcard:hover { border-color: var(--on-bone-rule); }
+.rcard:hover { border-color: var(--on-bone-rule); }
+
+/* --------------------------------------------------------------------------
+   B · EL PATRÓN DE NEWS, EN TODOS LOS LISTADOS
+   Fecha en columna propia a la izquierda, titular y dek en la principal, un
+   filete fino entre filas. Sin tarjeta, sin contenedor, sin numeral.
+   `.rows` y `.wire` comparten geometría a propósito: eran el mismo objeto
+   dibujado de dos maneras, y esa era la razón de que Case Studies pareciera otro
+   sitio distinto de News.
+   -------------------------------------------------------------------------- */
+.rows { list-style: none; margin: 18px 0 0; padding: 0; border-top: 1px solid var(--on-bone-rule); }
+.slab .rows { border-top-color: var(--on-dark-rule); }
+.row { border-bottom: 1px solid var(--on-bone-rule); }
+.slab .row { border-bottom-color: var(--on-dark-rule); }
+
+.row > a {
+  display: grid; gap: 5px; padding: 18px 0; text-decoration: none;
+  grid-template-columns: minmax(0, 1fr);
+  transition: padding-left .3s var(--ease);
+}
+@media (min-width: 820px) {
+  .row > a {
+    grid-template-columns: 150px minmax(0, 1fr) 72px;
+    column-gap: 26px; align-items: baseline; padding: 20px 0;
+  }
+  .row .row-main { grid-column: 2; }
+  .row .row-min { grid-column: 3; text-align: right; }
+}
+.row > a:hover { padding-left: 10px; }
+
+.row-date { display: flex; flex-direction: column; gap: 3px; color: var(--on-bone-faint); }
+.slab .row-date { color: var(--on-dark-faint); }
+/* La fecha es el detalle que SÍ lleva acento. Es lo que ya funcionaba en News. */
+.row-date .d { color: var(--lav-deep); font-weight: 700; letter-spacing: .12em; }
+.slab .row-date .d { color: var(--lav); }
+.row-date .l { font-size: .92em; opacity: .8; }
+
+.row-main { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+.row .ttl {
+  font-family: var(--body); font-weight: 700;
+  font-size: clamp(17px, 1.9vw, 21px); line-height: 1.3; letter-spacing: -.012em;
+  color: var(--ink);
+}
+.slab .row .ttl { color: var(--on-dark); }
+.row .dek { font-size: 15px; line-height: 1.55; color: var(--on-bone-mute); max-width: 64ch; }
+.slab .row .dek { color: var(--on-dark-mute); }
+.row > a:hover .ttl { color: var(--lav-deep); }
+.slab .row > a:hover .ttl { color: var(--lav); }
+.row-min { font-size: 10px; letter-spacing: .13em; color: var(--on-bone-faint); }
+.slab .row-min { color: var(--on-dark-faint); }
+@media (max-width: 819px) { .row-min { display: none; } }
+
+/* El plate y su numeral gigante desaparecen. Se dejan neutralizados en vez de
+   borrados para que ninguna plantilla vieja abra un hueco de 172px. */
+.row .plate, .row .plate-n, .row .rowmain > .meta { display: none; }
+
+/* --------------------------------------------------------------------------
+   C · "WHAT WE GOT FOR YOU" — la estantería de tres rutas
+   El bloque que resuelve dónde encaja lo editorial: la ruta gratis va PRIMERA y
+   con el mismo peso visual que las de pago. Si lo editorial se dibuja más
+   pequeño, vuelve a leerse como un extra, que es justo lo que no es.
+   La tarjeta central lleva un realce mínimo — fondo blanco contra el hueso de la
+   banda — porque es la que convierte. Nada de borde de color.
+   -------------------------------------------------------------------------- */
+.offergrid { display: grid; gap: 20px; grid-template-columns: 1fr; margin-top: 4px; }
+@media (min-width: 700px) { .offergrid { grid-template-columns: 1fr 1fr; gap: 22px; } }
+@media (min-width: 1040px) { .offergrid { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
+
+.offer {
+  display: flex; flex-direction: column;
+  background: var(--white); border: 1px solid var(--on-bone-rule); border-radius: 16px;
+  padding: clamp(22px, 2.6vw, 30px);
+}
+.offer--lead { box-shadow: 0 26px 60px -34px rgba(60, 30, 110, .5); }
+.offer-tag { font-size: 9.5px; letter-spacing: .18em; color: var(--lav-deep); margin: 0 0 14px; }
+.offer h3 { font-size: clamp(19px, 2vw, 23px); margin: 0 0 12px; }
+.offer > p { margin: 0 0 18px; font-size: 15.5px; line-height: 1.55; color: var(--on-bone-mute); }
+.offer .ticks { margin: 0 0 22px; }
+.offer-cta {
+  margin-top: auto; font-size: 10.5px; letter-spacing: .15em;
+  color: var(--lav-deep); text-decoration: none;
+}
+.offer-cta:hover { text-decoration: underline; text-underline-offset: 4px; }

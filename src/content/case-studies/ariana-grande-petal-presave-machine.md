@@ -83,7 +83,7 @@ Scale it down and nothing about the logic changes.
 
 <div class="keyfact">
   <span class="mono">The honest scale-down</span>
-  <p>200 real pre-saves beats 0 every time. It will not chart you. It will start your release with a velocity signal rather than silence, and that is the only part of the major-label playbook that costs nothing to copy.</p>
+  <p>200 real pre-saves beats 0 every time. It will not chart you. It will start your release with a velocity signal rather than silence, and that is the only part of the major-label article that costs nothing to copy.</p>
 </div>
 
 ## What does not transfer

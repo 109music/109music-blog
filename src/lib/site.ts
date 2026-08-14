@@ -65,7 +65,7 @@ export const SECTIONS = [
     id: 'music-marketing',
     label: 'Music Marketing',
     path: '/music-marketing/',
-    blurb: 'Step-by-step playbooks with real numbers. Marketing, money, and the business behind both.',
+    blurb: 'Step-by-step guides with real numbers. Marketing, money, and the business behind both.',
   },
   {
     id: 'case-studies',
@@ -86,9 +86,12 @@ export const SECTIONS = [
 export const VIRTUAL_SECTIONS = [
   {
     id: 'business',
-    label: 'Business',
+    /* Renombrada el 14/08. "Business" a secas no decia que hay dentro. La RUTA se
+       queda en /business/: cambiarla obligaria a otra redireccion permanente a
+       cambio de nada, porque nadie busca una seccion por su slug. */
+    label: 'The Money Side',
     path: '/business/',
-    blurb: 'Rights, payouts, platform rules and the money behind the music.',
+    blurb: 'Royalties, rights, contracts and how the industry actually pays.',
     tag: 'music-business',
   },
 ] as const;
@@ -116,7 +119,7 @@ export const NAV = [
       { href: '/news/', label: 'News', id: 'news', blurb: 'What changed this week.' },
       { href: '/music-marketing/', label: 'Music Marketing', id: 'music-marketing', blurb: 'Playbooks, by release moment.' },
       { href: '/music-marketing/case-studies/', label: 'Case Studies', id: 'case-studies', blurb: 'Famous rollouts, taken apart.' },
-      { href: '/business/', label: 'Business', id: 'business', blurb: 'Rights, payouts and platform rules.' },
+      { href: '/business/', label: 'The Money Side', id: 'business', blurb: 'Royalties, rights and contracts.' },
     ],
   },
   { href: '/resources/', label: 'Resources', id: 'resources' },
@@ -229,18 +232,27 @@ export const RESULTS_LIVE = false;
 /* Los cuatro pasos. Nombran mecánica concreta (Meta ads, playlisting, píxel,
    línea base) a propósito: la referencia de indepenjend cuenta su proceso en
    genérico porque vende un servicio gestionado, y ahí es donde les ganamos. */
+/* Servicios que se anaden al proceso segun lo que necesite el disco, no antes.
+   El playlisting salio del paso 03 el 14/08: mezclarlo con los anuncios daba a
+   entender que van juntos siempre, y la promesa del bloque es la contraria. */
+export const EXTRA_SERVICES = [
+  { label: 'Playlist pitching', line: 'Your track in front of real curators. No bots, no bought placements.' },
+  { label: 'Creative for the ads', line: 'We cut the video and write the copy when you do not have it.' },
+  { label: 'Release planning', line: 'The calendar, the assets and the order things go out in.' },
+] as const;
+
 export const STEPS = [
   {
     h: 'You send the track',
-    p: 'A WhatsApp message with the release date and the link. We tell you straight whether we can move it, and if we cannot, we say so.',
+    p: 'A message with the release date and the link. You do not have to know which service you need. That is our job, and it is the first thing we work out.',
   },
   {
-    h: 'We set the baseline',
-    p: 'Seven days of your current numbers, recorded before a single euro is spent. Nothing we claim later means anything without this.',
+    h: 'We set the baseline and pick the route',
+    p: 'Seven days of your current numbers, recorded before a single euro is spent, and a straight answer on what your record needs. Sometimes that is ads. Sometimes it is not.',
   },
   {
-    h: 'Meta ads and playlisting run',
-    p: 'Campaigns built, targeted and optimised in-house, and your track pitched to real curators. The pixel sits on your account, not ours, so the audience stays yours when we are done.',
+    h: 'The Meta ads run',
+    p: 'Campaigns built, targeted and optimised in-house, adjusted while they are live. The pixel sits on your account, not ours, so the audience stays yours when we are done.',
   },
   {
     h: 'You get the numbers',

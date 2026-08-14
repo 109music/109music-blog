@@ -25,7 +25,7 @@ import SectionMarker from '../components/SectionMarker.astro';
 import Ambient from '../components/Ambient.astro';
 import { getCollection } from 'astro:content';
 import {
-  SITE, SECTIONS, STEPS, url, readingTime, labelOf, wa, pathOf,
+  SITE, SECTIONS, STEPS, EXTRA_SERVICES, url, readingTime, labelOf, wa, pathOf,
   RESULTS_LIVE, RESULTS,
 } from '../lib/site';
 
@@ -68,15 +68,15 @@ const schema = {
         <p class="kicker mono rise">Independent music marketing · Madrid</p>
         <h1 class="display face rise brandline">109MUSIC.CO</h1>
         <p class="statement rise">
-          Your number one source to market your music. <b>Learn it free</b> in the
-          playbooks, or <b>hand us the campaign</b> and we run it for you.
+          Your number one source to market your music. <b>Read how it works</b>,
+          free, or <b>hand us the campaign</b> and we run it for you.
         </p>
         <div class="hero-cta rise">
           <a class="btn" href={wa('hero-call')} target="_blank" rel="noopener">
             <span>Book a call</span><span class="arrow" aria-hidden="true">→</span>
           </a>
           <a class="btn ghost" href={url('/music-marketing/')}>
-            <span>Start with the playbooks</span><span class="arrow" aria-hidden="true">→</span>
+            <span>Read the articles</span><span class="arrow" aria-hidden="true">→</span>
           </a>
         </div>
       </section>
@@ -127,9 +127,9 @@ const schema = {
             </svg>
           </span>
           <p class="offer-tag mono">Free</p>
-          <h3 class="display">The playbooks</h3>
-          <p>Everything we run for clients, written down with the real numbers.</p>
-          <a class="offer-cta mono" href={url('/music-marketing/')}>Read the playbooks →</a>
+          <h3 class="display">Articles &amp; case studies</h3>
+          <p>Music marketing strategies, platform news and real rollouts taken apart.</p>
+          <a class="offer-cta mono" href={url('/music-marketing/')}>Start reading →</a>
         </div>
 
         <div class="offer offer--lead">
@@ -169,21 +169,45 @@ const schema = {
     <div class="wrap">
       <section class="howwork">
         <SectionMarker n={mark()} slug="how_we_work" />
-        <div class="sec-head"><h2 class="display">How a campaign actually runs</h2></div>
+        <h2 class="display howwork-title">How a campaign<br />actually runs</h2>
+        <p class="howwork-lead">
+          You do not have to know which service you need before you talk to us.
+          <b>Working that out is the first thing we do</b>, and it is free.
+        </p>
+
+        {/* Los mockups son NUESTROS y estan generados: el mensaje real, la linea base
+            real, la forma del anuncio y la forma del informe. Cuando haya capturas
+            reales aprobadas por el cliente, se sustituyen y no se toca el layout. */}
         <ol class="steps">
           {STEPS.map((s, i) => (
             <li class="step">
               <span class="step-n mono">{String(i + 1).padStart(2, '0')}</span>
-              <h3 class="display">{s.h}</h3>
-              <p>{s.p}</p>
+              <div class="step-body">
+                <h3 class="display">{s.h}</h3>
+                <p>{s.p}</p>
+              </div>
+              <span class="step-shot">
+                <img src={url(`/img/steps/step-${i + 1}.webp`)} alt="" loading="lazy"
+                     decoding="async" width="440" height="640" />
+              </span>
             </li>
           ))}
         </ol>
+
+        <div class="extras">
+          <p class="extras-lab mono">Added when the record needs it, not before</p>
+          <ul>
+            {EXTRA_SERVICES.map((x) => (
+              <li><b>{x.label}</b> {x.line}</li>
+            ))}
+          </ul>
+        </div>
+
         <div class="steps-cta">
           <a class="btn" href={wa('how-we-work')} target="_blank" rel="noopener">
             <span>Book a call</span><span class="arrow" aria-hidden="true">→</span>
           </a>
-          <p class="mono">A WhatsApp message, then a call. We tell you if we can move it before you spend anything.</p>
+          <p class="mono">We tell you if we can move it before you spend anything.</p>
         </div>
       </section>
     </div>
@@ -200,20 +224,21 @@ const schema = {
         atmosfera; la necesitan los bloques que venden. */}
     {latest.length > 0 && (
       <section class="surf-bone">
-        <SectionMarker n={mark()} slug="learn_it_free" />
+        <SectionMarker n={mark()} slug="the_109_blog" />
         <div class="sec-head">
-          <h2 class="display">Learn it free</h2>
+          <h2 class="display">The 109 blog</h2>
           <a href={url('/rss.xml')}>Subscribe via RSS →</a>
         </div>
         <p class="sec-intro">
-          Everything we run for clients, written down. No signup, no gate.
+          Latest news, articles and case studies. Everything we run for clients,
+          written down. No signup, no gate.
         </p>
         {/* Enlaces reales a cada sección, no filtros. Cero JavaScript y reparten
             autoridad hacia las tres secciones. */}
         <nav class="pills" aria-label="Browse by section">
           <a class="pill-link mono" href={url('/news/')}>News</a>
           <a class="pill-link mono" href={url('/music-marketing/')}>Music Marketing</a>
-          <a class="pill-link mono" href={url('/business/')}>Business</a>
+          <a class="pill-link mono" href={url('/business/')}>The Money Side</a>
         </nav>
         <ul class="rows">
           {latest.map((e) => (
@@ -283,8 +308,8 @@ const schema = {
         </table>
       </div>
       <p class="cmp-foot mono">
-        The last row is the whole argument. Everything under
-        <a href={url('/music-marketing/')}>the playbooks</a> is what we run for clients,
+        The last row is the whole argument. Every article in
+        <a href={url('/music-marketing/')}>the 109 blog</a> is what we run for clients,
         written down.
       </p>
     </section>

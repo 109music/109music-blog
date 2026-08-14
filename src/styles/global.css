@@ -1855,7 +1855,10 @@ body {
    hueco arriba: es lo que antes hacía el cambio de color. */
 .wrap > section.surf-bone + section.surf-bone,
 .wrap > section.surf-bone + section.surf-tint {
-  padding-top: clamp(72px, 10vw, 132px);
+  /* 90px de tope, bajado de 132 el 14/08. A 132 el hueco entre el blog y la
+     comparativa se leia como un vacio en la captura completa. A 90 sigue
+     separando sin que parezca que falta un bloque. */
+  padding-top: clamp(64px, 7vw, 90px);
 }
 
 /* --- B · CARRUSEL DE RESULTADOS -------------------------------------------
@@ -1953,3 +1956,126 @@ body {
   font-family: var(--display); font-weight: 800; font-size: 34px;
   letter-spacing: -.02em; color: var(--lav);
 }
+
+/* ==========================================================================
+   PASE 5 (2026-08-14)
+   Mayusculas en h1 de seccion · mockups en How we work · comparativa
+   rediseñada · reparto de acento
+   ========================================================================== */
+
+/* --- A · H1 DE SECCION EN MAYUSCULAS --------------------------------------
+   Solo el h1 de pagina de seccion. NO toca el h1 de articulo (`.masthead h1`,
+   que no lleva `.face` y se quedo en caja de frase el 14/08 a proposito) ni las
+   frases de las bandas de cierre, que siguen siendo frases. */
+h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
+.hero h1.face.brandline { text-transform: none; }   /* el wordmark ya es la marca */
+.workband h2.face, .final h2.face { text-transform: none; }
+
+/* --- B · HOW WE WORK, con mockup por paso --------------------------------- */
+.howwork-title {
+  font-size: clamp(38px, 6.4vw, 78px); line-height: .98; letter-spacing: -.03em;
+  color: var(--on-dark); margin: 10px 0 0;
+}
+.howwork-lead {
+  margin: 18px 0 0; max-width: 46ch; font-size: clamp(16px, 1.5vw, 19px);
+  line-height: 1.55; color: var(--on-dark-mute);
+}
+.howwork-lead b { color: var(--lav); font-weight: 600; }
+
+.steps { margin-top: clamp(34px, 5vw, 56px); }
+.step {
+  /* 30px de tope, bajado de 46 el 14/08. Cada fila medía 337px y el mockup solo
+     244: sobraban 93px de aire por fila que no estaban haciendo trabajo. */
+  padding: clamp(24px, 3vw, 30px) 0;
+  grid-template-columns: 46px minmax(0, 1fr);
+  gap: 10px 26px; align-items: start;
+}
+@media (min-width: 860px) {
+  .step { grid-template-columns: 74px minmax(0, 1fr) 144px; gap: 0 40px; align-items: center; }
+  .step .step-body { grid-column: 2; }
+  .step .step-shot { grid-column: 3; }
+}
+.step-body { display: flex; flex-direction: column; gap: 9px; }
+.step-body > p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--on-dark-mute); max-width: 58ch; }
+.step h3 { color: var(--on-dark); }
+.step-n { align-self: start; padding-top: 4px; }
+
+/* El marco. Cuerpo del telefono en negro con un filete lavanda tenue, para que
+   la pantalla se lea como pantalla y no como una imagen pegada. */
+.step-shot { display: block; line-height: 0; }
+.step-shot img {
+  width: 100%; height: auto; aspect-ratio: 440 / 640; object-fit: cover;
+  border: 1px solid rgba(197, 159, 253, .26); border-radius: 14px;
+  background: var(--ink);
+}
+@media (max-width: 859px) {
+  .step-shot { grid-column: 1 / -1; max-width: 148px; margin-top: 6px; }
+}
+
+/* Servicios que se anaden despues. Deliberadamente en lista de texto y no en
+   tarjetas: no son tres ofertas entre las que elegir, son extras que aparecen
+   dentro del proceso. Darles tarjeta seria contradecir el mensaje del bloque. */
+.extras { margin-top: clamp(30px, 4vw, 44px); border-top: 1px solid var(--on-dark-rule); padding-top: 22px; }
+.extras-lab { font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--lav); margin: 0; }
+.extras ul { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 10px; }
+@media (min-width: 860px) { .extras ul { grid-template-columns: repeat(3, 1fr); gap: 22px; } }
+.extras li { font-size: 14.5px; line-height: 1.55; color: var(--on-dark-mute); }
+.extras li b { display: block; color: var(--on-dark); font-weight: 600; }
+
+/* --- C · LA COMPARATIVA, rediseñada --------------------------------------
+   Aura la resuelve con filas muy separadas, sin lineas verticales, y una sola
+   columna destacada. Lo que faltaba en la nuestra era AIRE y que la columna
+   propia se leyera como la respuesta y no como una celda mas. */
+.cmp { border-collapse: separate; border-spacing: 0; font-size: 15px; }
+.cmp th, .cmp td {
+  padding: 20px 22px; vertical-align: top; border: 0;
+  border-bottom: 1px solid var(--on-bone-rule);
+}
+.cmp thead th {
+  font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--on-bone-faint); font-weight: 500; padding-bottom: 14px;
+}
+.cmp .cmp-lab {
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--lav-deep); font-weight: 600; width: 158px;
+}
+.cmp td { color: var(--on-bone-mute); line-height: 1.5; }
+
+/* La columna propia es una tarjeta dentro de la tabla: fondo blanco a lo alto,
+   filete lavanda a los lados, y la celda del titulo en lavanda solida. */
+.cmp .cmp-us { background: var(--white); color: var(--ink); font-weight: 600; }
+.cmp thead th.cmp-us {
+  background: var(--lav-deep); color: #fff; font-weight: 700; font-size: 11px;
+  padding-top: 14px; border-radius: 2px 2px 0 0;
+}
+.cmp tbody td.cmp-us { box-shadow: inset 1px 0 0 var(--on-bone-rule), inset -1px 0 0 var(--on-bone-rule); }
+.cmp tbody tr:last-child td.cmp-us { box-shadow: inset 1px 0 0 var(--on-bone-rule), inset -1px 0 0 var(--on-bone-rule), inset 0 -1px 0 var(--lav-deep); }
+.cmp tbody tr:last-child td { border-bottom: 0; }
+/* La ultima fila es el argumento. Se marca. */
+.cmp tbody tr:last-child .cmp-lab { color: var(--lav-deep); }
+.cmp tbody tr:last-child td.cmp-us { color: var(--lav-deep); font-weight: 700; }
+
+/* --- D · REPARTO DE ACENTO -----------------------------------------------
+   Cinco sitios donde faltaba lavanda, todos pequenos y estructurales. El acento
+   se gasta en lo que ORIENTA (indices, rotulos, filetes de encabezado), nunca en
+   titulares ni en masas grandes: por eso sube la presencia sin subir el area. */
+
+/* 1. El indice del marcador de bloque ya era lavanda; el slug se apaga menos. */
+.marker .idx { color: var(--lav-deep); }
+.slab .marker .idx { color: var(--lav); }
+
+/* 2. Filete corto bajo el titulo de seccion. */
+.sec-head h2::after {
+  content: ''; display: block; width: 46px; height: 2px;
+  background: var(--lav-deep); margin-top: 14px;
+}
+.slab .sec-head h2::after { background: var(--lav); }
+
+/* 3. Las vinetas de las tarjetas de oferta. */
+.offer .ticks li::before { color: var(--lav-deep); }
+
+/* 4. El numero de paso, ya lavanda, gana peso. */
+.step-n { font-weight: 700; }
+
+/* 5. Hover de la pastilla de seccion: relleno, no solo borde. */
+.pill-link:hover { background: var(--lav-deep); color: #fff; border-color: var(--lav-deep); }

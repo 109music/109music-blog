@@ -31,7 +31,7 @@ const unfiled = entries.filter((e: any) => !e.data.moment);
 const present = orderTags([...new Set(entries.flatMap((e: any) => e.data.tags))]);
 let n = 0;
 ---
-<Base title={s.label} description={`${s.blurb} Music marketing playbooks from 109MUSIC.`} activeSection={s.id}>
+<Base title={s.label} description={`${s.blurb} Music marketing articles from 109MUSIC.`} activeSection={s.id}>
 
   <!-- 01 · hero, dark, same geometry as every other section -->
   <div class="slab slab--tight">
@@ -60,7 +60,7 @@ let n = 0;
   </div>
 
   <div class="wrap">
-    <!-- 02 · the playbooks, by moment, on bone -->
+    <!-- 02 · the articles, by release moment, on bone -->
     <section class="surf-bone">
       <SectionMarker n={1} slug="by_release_moment" />
       {groups.map((g) => (

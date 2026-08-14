@@ -41,7 +41,7 @@ charts:
     source: "109MUSIC campaign data, 2026"
 igEmbed: null
 cta:
-  heading: "Get the rest of the playbooks"
+  heading: "Read the rest of the blog"
   line: "Three breakdowns a day on Instagram, and every free resource we have in one place."
   buttonText: "109MUSIC on Beacons"
   buttonUrl: "https://beacons.ai/109music.co"

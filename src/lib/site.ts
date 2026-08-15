@@ -227,9 +227,11 @@ export const LEGACY_CASE_STUDY_SLUGS = [
 ] as const;
 
 /* Results block on the home page.
-   Stays OFF until real client numbers exist. The markup is built and the layout is
-   reserved, but nothing renders publicly while this is false — the site must never
-   show placeholder figures to a visitor. Flip to true when RESULTS has real data. */
+   ON desde el 15/08/2026. Estuvo en false mientras faltaba alguna confirmacion:
+   la nota del bloque dice que ninguna cifra aparece sin que la artista la haya
+   visto y confirmado, y publicar antes habria hecho falsa esa frase el dia uno.
+   Las tres confirmaciones estan fechadas en claude/client-cases-inventory.md.
+   Si se anade una tarjeta nueva sin confirmar, esto vuelve a false. */
 export const RESULTS_LIVE = true;
 
 /* El CTA comercial es agendar una llamada, no comprar, y va por WhatsApp como el
@@ -337,43 +339,40 @@ export const RESULT_NOTES: ResultNote[] = [
        CADA cifra, y para un lanzamiento desde cero esa captura no existe porque el
        tema no existia. La excepcion explicada es mas creible que la promesa
        generica, porque dice POR QUE el cero no necesita prueba. */
-    line: 'Every figure comes from a dated platform screenshot. Where a track already had an audience, we screenshot the starting point too. Where it is a new release, the starting point is zero and the release date is the proof.',
+    line: 'Every figure comes from Spotify for Artists on the artist\'s own account, rounded down. No number appears here that the artist has not seen and confirmed.',
   },
 ];
 
-/* MUESTRA. Cifras reales y verificadas contra capturas fechadas, sin nombre porque
-   todavía no hay permiso por escrito, y sin inversión porque no existe la captura de
-   Meta de esas campañas. NO se publican: RESULTS_LIVE sigue en false. Están aquí para
-   poder juzgar la forma del bloque. Ver claude/client-cases-inventory.md. */
+/* EN PRODUCCION. Tres casos reales, con nombre y permiso de la artista. Sin
+   inversion publicitaria porque no existe la captura de Meta de esas campañas y
+   aqui no se publica nada que no se pueda ensenar. Ver el inventario en
+   claude/client-cases-inventory.md para la procedencia dato a dato. */
 export const RESULTS: ResultCard[] = [
-  {
-    /* La base CERO es la mas limpia que existe: un lanzamiento no arrastra nada
-       previo que pueda explicar el crecimiento mejor que nosotros. Pendiente la
-       captura fechada de los 25.000: la base cero no necesita prueba, el numero
-       final si. */
-    artist: 'Hannah Blaze', track: 'A MILLI ON YOU',
-    spotify: '76K8ZcrPyjmY8oVevGHfzb',
-    figure: '25,000', label: 'streams',
-    context: 'from zero on a new release, through playlisting, against a',
-    baseline: 'starting point of 0',
-    art: '/img/results/plate-1.webp',
-  },
+  /* Cifras facilitadas por Blanca, redondeadas a la baja, y confirmadas por cada
+     artista sobre su propia tarjeta el 15/08/2026. NO son lecturas mias de una
+     captura: el inventario marca dato a dato que viene de captura y que viene de
+     la clienta. Cambiar una cifra invalida su confirmacion: se vuelve a pedir. */
   {
     artist: 'Mir Naranjo', track: 'LOCA LA CABEZA',
     spotify: '3yeVW681ZDcpi9f9v6f14B',
-    figure: '+1,819%', label: 'in Spotify streams',
-    context: '26,919 streams over 91 days, from an',
-    baseline: '11,969 all-time baseline',
+    figure: '65,000+', label: 'streams',
+    context: 'in', baseline: '3 months',
     art: '/img/results/plate-2.webp',
   },
   {
-    /* El tema figura en Spotify como "LA KARMA, La Hater". Pendiente decidir si
-       la tarjeta acredita a las dos. */
+    artist: 'Hannah Blaze', track: 'A MILLI ON YOU',
+    spotify: '76K8ZcrPyjmY8oVevGHfzb',
+    figure: '25,000+', label: 'streams',
+    context: 'from zero on a new release, in', baseline: '30 days',
+    art: '/img/results/plate-1.webp',
+  },
+  {
+    /* El "from 500+" se queda: aqui el punto de partida no es un tecnicismo, es
+       lo que convierte la cifra en una historia. */
     artist: 'LA KARMA', track: 'NI SANTA, NI PUTA',
     spotify: '4VR9uZbvaInIZndR3dw9oV',
-    figure: '+32%', label: 'in monthly listeners',
-    context: '5,583 streams in 28 days on 115 EUR of ad spend, from a',
-    baseline: '2,436 listener baseline',
+    figure: '25,000+', label: 'monthly listeners',
+    context: 'from 500+, in', baseline: '2 months',
     art: '/img/results/plate-3.webp',
   },
 ];

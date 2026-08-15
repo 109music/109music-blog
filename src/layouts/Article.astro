@@ -24,6 +24,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
    writes /img/og/<section>/<slug>.jpg for every article, and `og` in frontmatter
    only exists to override a card that came out wrong. */
 const slug = entry.id.replace(/\.md$/, '').split('/').pop();
+/* Solo va de fondo si hay hero Y su layout lo permite. Un hero tipografico
+   nunca: ya lleva su propio titular dentro. */
+const bgHero = !!d.hero && d.hero.layout !== 'below';
 const ogImage = d.og ?? `/img/og/${sectionId}/${slug}.jpg`;
 
 const schema: any = {
@@ -74,7 +77,10 @@ if (d.faq?.length) {
 >
   <ReadingProgress slot="progress" />
 
-  <div class="masthead">
+  {/* El hero como FONDO del masthead. Ver el bloque HERO DE FONDO en el CSS
+      para el velo y los numeros de contraste medidos sobre cada imagen. */}
+  <div class={bgHero ? 'masthead masthead--bg' : 'masthead'}
+       style={bgHero ? `background-image: var(--scrim), url('${url(d.hero.src)}')` : undefined}>
     <div class="wrap inner">
       <span class="pill">{sectionLabel}</span>
       <h1 class="display">{d.title}</h1>
@@ -86,6 +92,19 @@ if (d.faq?.length) {
         <span>By <b>109MUSIC</b></span>
       </div>
       <TagChips tags={d.tags} label="Article topics" />
+      {/* El credito va DENTRO del masthead cuando la imagen es el fondo: ya no
+          existe un "debajo de la imagen" donde ponerlo. Abajo a la derecha, sobre
+          la parte mas oscura del velo. Sin esto la cadena de licencias se rompe:
+          una CC BY sin credito visible deja de estar acreditada. */}
+      {bgHero && (d.hero.credit || d.hero.license) && (
+        <p class="masthead-credit mono">
+          {d.hero.creditUrl
+            ? <a href={d.hero.creditUrl} target="_blank" rel="noopener nofollow">{d.hero.credit}</a>
+            : d.hero.credit}
+          {d.hero.credit && d.hero.license && ' · '}
+          {d.hero.license}
+        </p>
+      )}
     </div>
   </div>
 
@@ -93,7 +112,18 @@ if (d.faq?.length) {
       reserved either: the body simply rises against the masthead, which is how the
       nine articles written before any imagery existed still read correctly. An
       empty frame would be worse than no frame. */}
-  {d.hero && (
+  {/* En movil el patron de fondo se apaga, asi que la imagen tiene que volver a
+      aparecer debajo. Se emite siempre que hay hero de fondo y el CSS la oculta
+      en escritorio. */}
+  {bgHero && (
+    <div class="wrap hero-mobile">
+      <figure class="hero-frame">
+        <img src={url(d.hero.src)} alt={d.hero.alt} width="1600" height="900" decoding="async" />
+      </figure>
+    </div>
+  )}
+
+  {d.hero && !bgHero && (
     <div class="wrap">
       <figure class="hero-frame">
         <img src={url(d.hero.src)} alt={d.hero.alt} width="1600" height="900"

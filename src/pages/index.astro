@@ -98,12 +98,15 @@ const schema = {
           <h2 class="display">Real artists. Real numbers.</h2>
           <a href={url('/results/')}>All results →</a>
         </div>
-        {/* Reescrita: con un lanzamiento desde cero, "the week before the campaign
-            started" dejaba de ser cierto. La segunda frase convierte ese caso en el
-            mas limpio en vez de en la excepcion. */}
+        {/* Reescrita el 15/08. La version anterior prometia que cada
+            cifra se media contra un punto de partida registrado antes de gastar
+            nada, y esa captura de partida no existe para dos de los tres casos: las cifras vienen del
+            conocimiento de la campana y del visto bueno de la artista. La nota del
+            final ya lo decia asi y la entrada seguia prometiendo otra cosa, que es
+            la peor combinacion posible: el bloque contradiciendose solo. */}
         <p class="sec-intro">
-          Every figure is measured against a starting point we recorded before
-          spending anything. For a new release, that starting point is zero.
+          Three campaigns, three artists. Each of them checked the figure on her
+          own card before it went up here.
         </p>
         {/* Sin esta linea el bloque se contradice con la comparativa, que promete
             que publicamos el metodo: tres cifras anonimas leidas justo despues de

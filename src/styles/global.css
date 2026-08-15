@@ -2191,7 +2191,7 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
   @media (max-width: 999px) {
     /* LONGHANDS, no el atajo. Lightning CSS (el minificador de Astro) pliega
        `animation-timeline` dentro del atajo `animation` y emite
-       `animation: linear both rcard-coverflow view(inline)`. Chrome no acepta un
+       el atajo `animation:` con el nombre y `view(inline)` dentro. Chrome no acepta un
        timeline dentro del atajo, descarta la declaracion entera, y la animacion
        no llega a existir: animation-name resolvia a `none` en produccion aunque
        en el CSS fuente estuviera perfecta. Comprobado sobre el build, no sobre
@@ -2505,3 +2505,123 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
 @media (max-width: 819px) {
   .row > a.has-thumb .row-thumb { grid-column: 1; }
 }
+
+/* ==========================================================================
+   PASE 10 (2026-08-15) · HERO DE FONDO EN EL MASTHEAD
+   El titular, el dek y los metadatos van ENCIMA de la imagen, como en
+   musicbusinessworldwide.com, en vez de un masthead negro con la foto debajo.
+
+   EL VELO, ELEGIDO MIDIENDO Y NO A OJO. Un velo plano no vale: sobre unos heroes
+   funciona y sobre otros la luz cae justo donde va el titular. Este es un
+   degradado desde abajo mas un oscurecido global, de forma que el fondo efectivo
+   bajo el texto nunca supera una luminancia conocida y el contraste DEJA DE
+   DEPENDER de la imagen. Medido pixel a pixel sobre los nueve heroes, en la zona
+   real del texto (62% izquierdo, del 48% al 92% de altura), contra el blanco al
+   94% del titular:
+
+     velo 38% / 94% / global 26%  ->  peor hero abstracto 5.26:1
+     (AA pide 4.5 para el dek de 18px y 3.0 para el h1)
+
+   Y LOS DOS TIPOGRAFICOS NO PUEDEN IR DE FONDO. Con este mismo velo dan 2.43:1,
+   porque la imagen YA CONTIENE tipografia blanca grande. Llevarlos a 4.5 exigiria
+   oscurecer al 40%, que aplasta las otras siete, y ademas serian dos titulares
+   superpuestos. Van con `layout: "below"`, masthead negro y la imagen debajo.
+   -------------------------------------------------------------------------- */
+.masthead--bg {
+  --scrim: linear-gradient(
+    to top,
+    rgba(10, 10, 10, .94) 0%,
+    rgba(10, 10, 10, .82) 18%,
+    rgba(10, 10, 10, .38) 44%,
+    rgba(10, 10, 10, 0) 62%
+  ), linear-gradient(rgba(10, 10, 10, .26), rgba(10, 10, 10, .26));
+  background-size: cover; background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  padding-top: clamp(40px, 9vw, 130px);
+  padding-bottom: clamp(30px, 5vw, 62px);
+}
+.masthead--bg .inner { position: relative; }
+/* El credito, abajo a la derecha del propio masthead, sobre la parte mas oscura
+   del velo. Ya no hay un "debajo de la imagen" donde ponerlo. */
+.masthead-credit {
+  position: absolute; right: 0; bottom: 0;
+  margin: 0; font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(255, 255, 255, .52);
+}
+.masthead-credit a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 819px) { .masthead-credit { position: static; margin-top: 18px; text-align: left; } }
+
+/* MOVIL: el patron se APAGA. A 390px el titular ocupa tres o cuatro lineas y con
+   el dek y los metadatos la caja de texto se come la altura entera, asi que de la
+   imagen solo quedaria una franja detras de un bloque de texto. Dos patrones a
+   proposito, que es lo que pide el criterio 07: decisiones distintas para el
+   movil, no la version de escritorio comprimida. */
+@media (max-width: 819px) {
+  .masthead--bg { background-image: none !important; background-color: var(--ink); }
+  .masthead--bg .hero-mobile { display: block; }
+}
+.hero-mobile { display: none; }
+@media (max-width: 819px) { .hero-mobile { display: block; } }
+
+/* --- PASE 10b · la tarjeta de resultado, compacta ------------------------
+   Medida sobre la referencia de Aura: proporcion cercana a 1:1,45, caratula
+   cuadrada a sangre arriba y un bloque de texto apretado debajo. La nuestra se
+   estiraba en vertical por dos razones a la vez: 26px de acolchado y una cifra
+   de 56px. Con el texto recortado y estas medidas se compacta sola. */
+.rcarousel-track { grid-auto-columns: 268px; }
+.rcard { padding: 0; }
+.rcard-body { padding: 16px 16px 18px; }
+.rcard-artist { font-size: 10px; letter-spacing: .14em; }
+.rcard-track { font-size: 13.5px; }
+.rcard-figure { font-size: clamp(30px, 3.2vw, 38px); margin-top: 8px; }
+.rcard-label { font-size: 13px; margin-top: 3px; }
+.rcard-rule { margin: 12px 0 9px; }
+.rcard-ctx { font-size: 11.5px; }
+
+/* ==========================================================================
+   PASE 10c (2026-08-15) · La caratula era cuadrada solo sobre el papel
+   ========================================================================== */
+/* `.rcard-art` declaraba `aspect-ratio: 1/1` desde el pase 8 y medido en el
+   navegador salia 266x320. El culpable: el <img> lleva `height="320"` como
+   ATRIBUTO (esta ahi a proposito, para reservar el hueco y no provocar salto de
+   maquetacion), y un height explicito gana a `aspect-ratio`. `width: 100%` si
+   pisaba el atributo width, asi que la imagen se quedaba en 266 de ancho por
+   320 de alto: ni cuadrada ni 4:3, un formato que nadie decidio.
+   `height: auto` devuelve el mando al aspect-ratio sin tocar los atributos, que
+   siguen evitando el salto durante la carga. */
+.rcard-art { height: auto; }
+
+/* Con la caratula ya cuadrada la tarjeta baja de 518 a ~462 (ratio 1.73 en vez
+   de 1.93), que era la queja. Pero el panel de la nota es mas alto que una
+   tarjeta, y como el carrusel es un grid, su fila estiraba las tres tarjetas
+   hasta la altura de la nota y metia un hueco muerto bajo el contexto.
+   `align-items: start` deja que cada pieza mida lo suyo: las tres tarjetas son
+   identicas entre si, que es lo unico que tiene que cuadrar. */
+.rcarousel-track { align-items: start; }
+/* El panel de la nota si estira, a proposito. Su altura natural son 226px y al
+   lado de una tarjeta de 464 se queda flotando como un recorte suelto; es una
+   pieza de la misma fila, no una tarjeta corta. Ahora la fila la marcan las
+   tarjetas y el panel las acompana. */
+.rcarousel-track > .rnote { align-self: stretch; }
+
+/* --- PASE 10c · el dek sobre imagen no es el dek sobre negro ---------------
+   Medido pixel a pixel sobre los siete heroes compuestos con el velo: el peor
+   pixel del dek de luminate daba 4,45 contra el minimo AA de 4,5. Falla por
+   nada, pero falla, y es exactamente el fallo que produce un token pensado para
+   un fondo plano cuando se le pone una foto detras: `--on-dark-mute` es .56 de
+   blanco, suficiente sobre #0a0a0a y no sobre una zona clara de imagen.
+   La correccion va en el CONTEXTO, no en el token global: subir el token
+   apagaria de mas todos los deks sobre negro del sitio. Los metadatos y el
+   credito ya pasaban con holgura y se quedan como estaban. */
+.masthead--bg .dek { color: rgba(255, 255, 255, .74); }
+
+/* --- PASE 10c · el desvanecido de borde pintaba encima del panel negro -----
+   `.rcarousel::after` es el velo de 56px que insinua "sigue habiendo contenido
+   a la derecha". Con cuatro piezas de 268px + huecos caben 1128px, y en el
+   regimen ancho (>=1000px) no hay nada que desplazar: el velo se quedaba encima
+   de la ultima pieza, que ahora es el panel oscuro de la nota, y le pintaba una
+   franja clara vertical en mitad del texto. Se veia como un fallo de render.
+   El velo solo tiene sentido cuando el carril desborda, asi que se apaga en el
+   regimen donde por construccion no desborda. */
+@media (min-width: 1000px) { .rcarousel::after { display: none; } }

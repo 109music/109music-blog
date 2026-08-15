@@ -28,6 +28,14 @@ const hero = z.object({
      the photo. An image whose licence cannot be identified does not ship. */
   license: z.string().optional(),
   source: z.enum(['wikimedia', 'presskit', 'own']).optional(),
+  /* Donde vive el hero. `background` lo pone de fondo del masthead con el titular
+     encima; `below` lo deja debajo, con el masthead negro de siempre.
+     NO es una preferencia estetica: medido sobre las nueve imagenes, un hero que
+     YA CONTIENE tipografia grande da 2.43:1 contra el titular incluso con el velo
+     puesto, y para llevarlo a 4.5 haria falta oscurecer un 40% y aplastar todas
+     las demas. Ademas serian dos titulares superpuestos. Los tipograficos van
+     `below`. */
+  layout: z.enum(['background', 'below']).default('background'),
   // Accepted for backwards compatibility. Not read: the web applies no filter.
   treatment: z.enum(['grayscale', 'colour']).default('colour'),
 });

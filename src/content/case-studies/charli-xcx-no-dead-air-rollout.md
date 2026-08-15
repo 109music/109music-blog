@@ -11,6 +11,7 @@ hero:
   credit: "109MUSIC"
   license: "Own work"
   source: "own"
+  layout: "below"
 igEmbed: null
 cta:
   heading: "One rollout dissected every week"

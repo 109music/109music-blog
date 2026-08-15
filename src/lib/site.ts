@@ -333,7 +333,11 @@ export type ResultNote = {
 export const RESULT_NOTES: ResultNote[] = [
   {
     kicker: 'How these are measured',
-    line: 'Every figure comes from a dated platform screenshot, taken at the starting point and again at the end. Nothing is estimated and nothing is modelled.',
+    /* Reescrita: la version anterior prometia una captura del punto de partida para
+       CADA cifra, y para un lanzamiento desde cero esa captura no existe porque el
+       tema no existia. La excepcion explicada es mas creible que la promesa
+       generica, porque dice POR QUE el cero no necesita prueba. */
+    line: 'Every figure comes from a dated platform screenshot. Where a track already had an audience, we screenshot the starting point too. Where it is a new release, the starting point is zero and the release date is the proof.',
   },
 ];
 
@@ -347,7 +351,7 @@ export const RESULTS: ResultCard[] = [
        previo que pueda explicar el crecimiento mejor que nosotros. Pendiente la
        captura fechada de los 25.000: la base cero no necesita prueba, el numero
        final si. */
-    artist: 'Hannah Blaze', track: 'A Milli On You',
+    artist: 'Hannah Blaze', track: 'A MILLI ON YOU',
     spotify: '76K8ZcrPyjmY8oVevGHfzb',
     figure: '25,000', label: 'streams',
     context: 'from zero on a new release, through playlisting, against a',
@@ -355,7 +359,7 @@ export const RESULTS: ResultCard[] = [
     art: '/img/results/plate-1.webp',
   },
   {
-    artist: 'Mir Naranjo', track: 'Loca la cabeza',
+    artist: 'Mir Naranjo', track: 'LOCA LA CABEZA',
     spotify: '3yeVW681ZDcpi9f9v6f14B',
     figure: '+1,819%', label: 'in Spotify streams',
     context: '26,919 streams over 91 days, from an',
@@ -365,7 +369,7 @@ export const RESULTS: ResultCard[] = [
   {
     /* El tema figura en Spotify como "LA KARMA, La Hater". Pendiente decidir si
        la tarjeta acredita a las dos. */
-    artist: 'LA KARMA', track: 'Ni santa, ni puta',
+    artist: 'LA KARMA', track: 'NI SANTA, NI PUTA',
     spotify: '4VR9uZbvaInIZndR3dw9oV',
     figure: '+32%', label: 'in monthly listeners',
     context: '5,583 streams in 28 days on 115 EUR of ad spend, from a',

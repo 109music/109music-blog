@@ -155,3 +155,44 @@ aunque el sitio este en "permitir siempre". Pestana nueva para cada archivo.
 **Ariana pendiente de mejora:** Blanca decidio buscar en press kit oficial. Cuando se
 haga, hay que leer las condiciones de uso del sello antes de bajar nada: los press kits
 suelen permitir uso editorial y prohibir el comercial, y esa linea la marca su texto.
+
+### Update 22 (15/08/2026) — dos heroes nuevos
+
+| Artículo | Archivo | Foto original | Año | Autor | Licencia | Ficha |
+|---|---|---|---|---|---|---|
+| case-studies/charli-xcx-no-dead-air-rollout | `charli-photo-hero.webp` + `-thumb` | `Charli XCX at the 2025 Toronto International Film Festival for Erupcja (1).jpg`, 6000x4000 | **2025** | Kevin Payravi | **CC BY-SA 4.0** | https://commons.wikimedia.org/wiki/File:Charli_XCX_at_the_2025_Toronto_International_Film_Festival_for_Erupcja_(1).jpg |
+| music-marketing/spotify-ai-purge-what-it-means | `spotify-purge-photo-hero.webp` + `-thumb` | `Datacenter Server Racks (22370909788).jpg`, 6000x4000 | 2015 | Carl Lender | **CC BY 2.0** | https://commons.wikimedia.org/wiki/File:Datacenter_Server_Racks_(22370909788).jpg |
+
+**Charli sustituye a la de Glastonbury 2017.** Se publica como **excepción
+consciente** al criterio de imagen: la ficha lleva `restrictions: personality` y
+el fondo es un photocall con logos de TIFF. Se acepta porque es persona pública
+en acto público, uso editorial en un case study sobre su propio lanzamiento, y va
+con crédito visible enlazado a la ficha. El razonamiento completo está en
+`claude/imagery-sourcing-playbook.md`.
+
+Encuadre: recorte de 3360x1890 tomado **desde y=640** del original de 6000x4000.
+Subir la ventana saca el logo de RBC de cuadro y deja la cara entera en la mitad
+superior, donde el titular no la tapa. **Aprendido: en un photocall, recortar más
+cerrado AGRANDA los logos** — el muro es un patrón repetido. Lo que funciona es
+mover el encuadre, no cerrarlo.
+
+**Spotify pasa de gráfico a foto.** Sala de servidores, que es la escala a la que
+ocurre una purga de catálogo. El gráfico tipográfico baja al cuerpo como figura
+tras el primer h2, con su pie.
+
+Descartada antes: `Racks Amravati Data Center.jpg`, 6000x4004, CC BY-SA 4.0.
+Imagen mejor y más reciente, pero **imposible de comprimir**: puertas de rack
+perforadas, ruido de alta frecuencia puro, no bajaba de 194 KB ni a calidad 38 ni
+con desenfoque previo. **Señal para el futuro: mallas, rejillas y tramas finas
+revientan el presupuesto de peso; se descartan antes de invertir tiempo.**
+
+**SoundCloud se queda con su gráfico propio.** Ninguna candidata libre superaba
+lo que ya dice el gráfico, y forzar una foto genérica de tienda de vinilos habría
+sido peor. Es el resultado correcto según nuestra propia regla.
+
+**Vía de sala de prensa, explorada y cerrada por ahora.** El anuncio de Spotify
+del 11/08/2026 sobre las etiquetas de IA tiene las imágenes exactas del tema, a
+2560x1458, pero **sin enlaces de descarga y sin condiciones de uso publicadas** en
+todo el newsroom. SoundCloud no tiene ni capturas de producto ni página de notas
+de prensa (404). La ruta real sería pedirlo por correo, como hace la prensa
+especializada; Blanca decide no enviar correos y quedarse en Creative Commons.

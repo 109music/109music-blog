@@ -6,11 +6,11 @@ tags: ["case-study", "release-strategy", "music-marketing"]
 moment: "release-week"
 hero:
   src: "/img/articles/charli-photo-hero.webp"
-  alt: "Charli XCX performing at Glastonbury, 2017"
+  alt: "Charli XCX at the Toronto International Film Festival, September 2025"
   thumb: "/img/articles/charli-photo-thumb.webp"
-  credit: "Raph_PH"
-  creditUrl: "https://commons.wikimedia.org/wiki/File:Charli_XCX_Glastonbury_2017_(3).jpg"
-  license: "CC BY 2.0"
+  credit: "Kevin Payravi"
+  creditUrl: "https://commons.wikimedia.org/wiki/File:Charli_XCX_at_the_2025_Toronto_International_Film_Festival_for_Erupcja_(1).jpg"
+  license: "CC BY-SA 4.0"
   source: "wikimedia"
 figures:
   - after: "move-01--never-go-dark"

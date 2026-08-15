@@ -2447,3 +2447,61 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
 .rcard-rule { display: block; height: 1px; background: var(--on-bone-rule); margin: 16px 0 12px; }
 .rcard-ctx { margin-top: 0; font-size: 12.5px; line-height: 1.5; color: var(--on-bone-mute); }
 .rcard-unit { color: var(--ink); font-weight: 700; }
+
+/* ==========================================================================
+   PASE 9 (2026-08-15) · la fila de listado con imagen a la IZQUIERDA
+   Patron de musicbusinessworldwide.com. La imagen es apaisada, no cuadrada, y
+   casi el doble de ancha que los 96px de antes.
+   ========================================================================== */
+.row > a {
+  display: grid; gap: 4px 22px; padding: 20px 0;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+}
+@media (min-width: 820px) {
+  .row > a { grid-template-columns: minmax(0, 1fr); padding: 22px 0; }
+  /* La columna de la imagen se declara SOLO en .has-thumb. Una pista declarada y
+     vacia sigue aportando su gap, asi que una fila sin imagen abriria un hueco
+     de 176px que no hay nada que llene. */
+  .row > a.has-thumb { grid-template-columns: 176px minmax(0, 1fr); }
+  .row > a.has-thumb .row-main { grid-column: 2; }
+}
+.row-thumb { display: block; line-height: 0; grid-row: 1; }
+.row-thumb img {
+  width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover;
+  background: var(--on-bone-rule); filter: none;
+  transition: opacity .35s var(--ease);
+}
+.slab .row-thumb img { background: var(--on-dark-rule); }
+.row > a:hover .row-thumb img { opacity: .88; }
+
+.row-meta {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px;
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--on-bone-faint); margin-bottom: 7px;
+}
+.slab .row-meta { color: var(--on-dark-faint); }
+.row-meta .d { color: var(--lav-deep); font-weight: 700; }
+.slab .row-meta .d { color: var(--lav); }
+.row-meta .sep { opacity: .5; }
+
+/* Movil: la imagen NO cambia de lado, solo encoge. El texto pierde 120px, que a
+   390px se compensa porque los metadatos ya no ocupan una fila propia. */
+@media (max-width: 819px) {
+  .row > a.has-thumb { grid-template-columns: 104px minmax(0, 1fr); column-gap: 14px; }
+  .row > a.has-thumb .row-main { grid-column: 2; }
+}
+/* Neutraliza la geometria anterior sin borrarla, por si alguna plantilla vieja
+   sigue emitiendo .row-date o .row-min. */
+.row-date, .row-min { display: none; }
+
+/* La regla del pase 3b seguia mandando la miniatura a `grid-column: 4`, asi que
+   el navegador creaba columnas implicitas y la fila salia con CUATRO pistas
+   (176px 350px 0px 480px) en vez de dos. `display:none` sobre .row-min la sacaba
+   del grid, pero la colocacion de .row-thumb seguia viva. Se anula aqui: la
+   imagen va SIEMPRE en la primera columna. */
+.row > a .row-thumb { grid-column: 1; grid-row: 1; }
+.row > a.has-thumb .row-main { grid-column: 2; grid-row: 1; }
+@media (max-width: 819px) {
+  .row > a.has-thumb .row-thumb { grid-column: 1; }
+}

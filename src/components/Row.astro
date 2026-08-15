@@ -1,36 +1,21 @@
 ---
 import { url, fmtDate } from '../lib/site';
 
-/* THE listing row for the whole site.
-   Rebuilt 2026-08-14 on the News-wire pattern, which Blanca picked as the standard:
+/* LA FILA DE LISTADO, rehecha 2026-08-15 sobre el patron de
+   musicbusinessworldwide.com: imagen APAISADA a la IZQUIERDA, y a su derecha una
+   sola columna de texto con una linea de metadatos encima del titular.
 
-       12 AUG 2026   Turn streams into fans                     [img]
-                     A stream is a rental. Here is the sequence...
-       -----------------------------------------------------------  hairline
+   Por que se movio la fecha. Antes la rejilla era `150px de fecha | texto | 72px
+   de minutos`, y esa columna de fecha eran 150px casi vacios. Al meter la imagen
+   a la izquierda habrian sido tres columnas apretadas. Con los metadatos en una
+   linea de mono encima del titular, esos 150px pasan a la imagen sin ensanchar
+   la fila, y las filas SIN imagen quedan mas limpias que antes, porque degradan
+   a una sola columna de texto en vez de a una rejilla con un hueco.
 
-   Date in its own left column, headline and dek in the main column, minutes to
-   the right, one hairline between rows. No card, no container, no numeral.
-
-   THE THUMBNAIL, decided 2026-08-14 (see claude/site-design-system.md).
-   A 96px square at the far right, and the `.plate` is NOT coming back: a 172px
-   numbered plate was the exact thing that made Case Studies read as a different
-   site from News, and a 4:5 thumbnail at 96px wide stands 120px tall, which
-   pushes the row past its natural height and reproduces that same failure.
-
-   The square is load-bearing in two ways. It never exceeds the row's own content
-   height, so the listing rhythm is unchanged. And in a music brand a square reads
-   as cover art, which is the language that ties the site to the Instagram grid.
-
-   NO EMPTY SLOT. The fourth grid column is declared only on `.has-thumb`. A
-   declared-but-empty track still contributes its 26px column-gap, so an
-   un-illustrated row would carry a visible hole. Rows without an image keep the
-   three-column template byte for byte. Adding imagery is a data change: fill
-   `hero` (and optionally `hero.thumb`) in the frontmatter and the column appears.
-
-   Source of the square: `hero.thumb` when the hero does not crop well, otherwise
-   `hero.src`. Never a carousel cover, because typography at 96px is illegible
-   noise, and never a carousel PHOTO: those are agency files licensed for the
-   Instagram pipeline only and barred from the web. */
+   LA MINIATURA ES EL HERO, EN PEQUEÑO. No una imagen distinta: se genera
+   reescalando el hero del propio articulo, que tambien es 16:9. Asi la fila del
+   listado y la cabecera del articulo se reconocen como la misma pieza. Cuando
+   lleguen las fotos reales, la miniatura sale de la foto, no del grafico. */
 interface Props {
   n?: number;
   href: string;
@@ -41,33 +26,30 @@ interface Props {
   minutes?: number;
   showDek?: boolean;
   hero?: { src: string; alt: string; thumb?: string; treatment?: string } | null;
-  /** Show the section label next to the date. On a single-section index it is noise. */
   showLabel?: boolean;
 }
 const {
   href, title, dek = '', date, label, minutes, showDek = true, hero = null, showLabel = false,
 } = Astro.props;
 
-/* No filter on the web. Grayscale lives in the Instagram carousels only and the
-   two pipelines do not share a treatment. `hero.treatment` is still accepted by
-   the schema so the nine existing files validate; it is deliberately not read. */
+/* Sin filtro. El gris vive solo en los carruseles de Instagram. */
 const thumb = hero ? (hero.thumb ?? hero.src) : null;
 ---
 <li class="row">
   <a href={url(href)} class={thumb ? 'has-thumb' : undefined}>
-    <span class="row-date mono">
-      <span class="d">{fmtDate(date)}</span>
-      {showLabel && <span class="l">{label}</span>}
-    </span>
+    {thumb && (
+      <span class="row-thumb">
+        <img src={url(thumb)} alt="" loading="lazy" decoding="async" width="480" height="270" />
+      </span>
+    )}
     <span class="row-main">
+      <span class="row-meta mono">
+        <span class="d">{fmtDate(date)}</span>
+        {showLabel && <><span class="sep" aria-hidden="true">·</span><span>{label}</span></>}
+        {minutes && <><span class="sep" aria-hidden="true">·</span><span>{minutes} min</span></>}
+      </span>
       <span class="ttl">{title}</span>
       {showDek && dek && <span class="dek">{dek}</span>}
     </span>
-    {minutes && <span class="row-min mono">{minutes} min</span>}
-    {thumb && (
-      <span class="row-thumb">
-        <img src={url(thumb)} alt="" loading="lazy" decoding="async" width="96" height="96" />
-      </span>
-    )}
   </a>
 </li>

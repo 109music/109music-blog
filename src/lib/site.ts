@@ -348,7 +348,12 @@ export const RESULT_NOTES: ResultNote[] = [
    aqui no se publica nada que no se pueda ensenar. Ver el inventario en
    claude/client-cases-inventory.md para la procedencia dato a dato. */
 export const RESULTS: ResultCard[] = [
-  /* Cifras facilitadas por Blanca, redondeadas a la baja, y confirmadas por cada
+  /* Caratulas reales desde el oEmbed de Spotify, 640x640 recortadas a 600x600
+     WebP. Ya no es el mosaico de marca. La de Mir Naranjo lleva impreso "Make It
+     Real", que es el disco, y la de LA KARMA es la de "Alma Pura" y salen dos
+     mujeres: son las portadas autenticas que Spotify sirve para esos temas y las
+     dos decisiones estan tomadas y registradas en el inventario.
+     Cifras facilitadas por Blanca, redondeadas a la baja, y confirmadas por cada
      artista sobre su propia tarjeta el 15/08/2026. NO son lecturas mias de una
      captura: el inventario marca dato a dato que viene de captura y que viene de
      la clienta. Cambiar una cifra invalida su confirmacion: se vuelve a pedir. */
@@ -357,14 +362,14 @@ export const RESULTS: ResultCard[] = [
     spotify: '3yeVW681ZDcpi9f9v6f14B',
     figure: '65,000+', label: 'streams',
     context: 'in', baseline: '3 months',
-    art: '/img/results/plate-2.webp',
+    art: '/img/results/cover-mir.webp',
   },
   {
     artist: 'Hannah Blaze', track: 'A MILLI ON YOU',
     spotify: '76K8ZcrPyjmY8oVevGHfzb',
     figure: '25,000+', label: 'streams',
     context: 'from zero on a new release, in', baseline: '30 days',
-    art: '/img/results/plate-1.webp',
+    art: '/img/results/cover-hannah.webp',
   },
   {
     /* El "from 500+" se queda: aqui el punto de partida no es un tecnicismo, es
@@ -373,6 +378,6 @@ export const RESULTS: ResultCard[] = [
     spotify: '4VR9uZbvaInIZndR3dw9oV',
     figure: '25,000+', label: 'monthly listeners',
     context: 'from 500+, in', baseline: '2 months',
-    art: '/img/results/plate-3.webp',
+    art: '/img/results/cover-karma.webp',
   },
 ];

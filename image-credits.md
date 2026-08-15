@@ -102,7 +102,7 @@ ND ni restricciones adicionales.
 |---|---|---|---|---|---|---|
 | case-studies/ariana-grande-petal-presave-machine | `ariana-photo-hero.webp` + `-thumb` | `Ariana Grande (33269922185).jpg`, 4608x3456 | 2017 | Emma | **CC BY-SA 2.0** | https://commons.wikimedia.org/wiki/File:Ariana_Grande_(33269922185).jpg |
 | case-studies/charli-xcx-no-dead-air-rollout | `charli-photo-hero.webp` + `-thumb` | `Charli XCX Glastonbury 2017 (3).jpg`, 5989x3376 | 2017 | Raph_PH | **CC BY 2.0** | https://commons.wikimedia.org/wiki/File:Charli_XCX_Glastonbury_2017_(3).jpg |
-| music-marketing/turn-streams-into-fans | `turn-streams-photo-hero.webp` + `-thumb` | `Post Malone @ Veld 2016.jpg`, 4600x3648 | 2016 | The Come Up Show | **CC BY 2.0** | https://commons.wikimedia.org/wiki/File:Post_Malone_@_Veld_2016.jpg |
+| music-marketing/turn-streams-into-fans | `turn-streams-photo-hero.webp` + `-thumb` | `Seigmen 2026-25.jpg`, 3508x1973 | **2026** | Birgit Fostervold | **CC BY-SA 4.0** | https://commons.wikimedia.org/wiki/File:Seigmen_2026-25.jpg |
 
 **Credito que se pinta bajo cada foto**, abajo a la derecha del masthead: `Emma · CC BY-SA
 2.0`, `Raph_PH · CC BY 2.0`, `The Come Up Show · CC BY 2.0`, con el autor enlazado a la
@@ -114,9 +114,43 @@ distinta y ya no es el grafico generado.
 **El grafico tipografico de cada uno baja al cuerpo** como figura tras el primer h2, con
 su pie y su credito `109MUSIC · Own work`. No se tira nada.
 
-**Aviso de edad:** las tres son de 2016-2017. Es lo mas reciente que existe con licencia
-utilizable. La de Post Malone tiene diez anos y el articulo va de una gira cancelada en
-2026. Es el, es legal y esta acreditado, pero no es una foto actual.
+**turn-streams cambio de foto en el update 21.** Llevaba a Post Malone de 2016, y el
+articulo habla de una gira cancelada en 2026: diez anos de diferencia y otro aspecto. No
+hay foto suya reciente con licencia utilizable — `Category:Post Malone` tiene 63 archivos
+y la mas nueva apaisada es la de 2016 —, asi que **decision de Blanca: si el articulo
+trata de giras, una foto de concierto**. Publico y escenario dicen de que va sin depender
+de quien sale, y sin protagonista identificable no hay permiso que pedir. La sustituta es
+del **10 de julio de 2026**, un mes antes de publicarse.
+
+**Aviso de edad, ya solo para las dos que quedan:** Ariana y Charli son de 2017, que es lo
+mas reciente con licencia utilizable para las dos. En sus articulos si tiene sentido,
+porque el texto va sobre esa artista y ese lanzamiento.
+
+### Caratulas de Real Results (update 21)
+
+Las tres desde el oEmbed de Spotify, 640x640 recortadas a **600x600 WebP**. Sustituyen al
+mosaico de marca `plate-1/2/3.webp`, que era placeholder de diseno.
+
+| Tarjeta | Archivo | Que muestra la portada | KB |
+|---|---|---|---|
+| Mir Naranjo · LOCA LA CABEZA | `cover-mir.webp` | el disco, "Make It Real" | 15 |
+| Hannah Blaze · A MILLI ON YOU | `cover-hannah.webp` | el propio titulo, "INTO THE 109" | 67 |
+| LA KARMA · NI SANTA, NI PUTA | `cover-karma.webp` | el disco, "Alma Pura", con dos mujeres | 62 |
+
+No son Creative Commons: son las portadas de los lanzamientos que 109MUSIC promociono,
+publicadas con permiso de cada artista. Las dos rarezas — el titulo del disco distinto del
+tema en Mir Naranjo, y las dos mujeres en la de LA KARMA con el permiso de las dos — estan
+decididas y registradas en `claude/client-cases-inventory.md`.
+
+### Los heroes se rehicieron desde el original (update 21)
+
+En el update 20 las tres fotos cruzaron por captura de pantalla, que topa a 1488x812, asi
+que el hero salia reescalado. Con las descargas desbloqueadas se rehicieron desde el
+archivo original de Commons: Ariana desde 4608x3456 y Charli desde 5989x3376. Ganan entre
+un 80 y un 150 por ciento de peso a igual medida, que es detalle real y no relleno.
+
+**Truco de descarga, para la proxima:** Chrome deja pasar **una descarga por pestana**,
+aunque el sitio este en "permitir siempre". Pestana nueva para cada archivo.
 
 **Ariana pendiente de mejora:** Blanca decidio buscar en press kit oficial. Cuando se
 haga, hay que leer las condiciones de uso del sello antes de bajar nada: los press kits

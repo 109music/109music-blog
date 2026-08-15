@@ -6,11 +6,11 @@ tags: ["music-marketing", "touring", "spotify-growth"]
 moment: "always-on"
 hero:
   src: "/img/articles/turn-streams-photo-hero.webp"
-  alt: "Post Malone on stage at Veld, 2016"
+  alt: "Crowd at a festival headline set, Kristiansand, July 2026"
   thumb: "/img/articles/turn-streams-photo-thumb.webp"
-  credit: "The Come Up Show"
-  creditUrl: "https://commons.wikimedia.org/wiki/File:Post_Malone_@_Veld_2016.jpg"
-  license: "CC BY 2.0"
+  credit: "Birgit Fostervold"
+  creditUrl: "https://commons.wikimedia.org/wiki/File:Seigmen_2026-25.jpg"
+  license: "CC BY-SA 4.0"
   source: "wikimedia"
 figures:
   - after: "why-reach-stopped-selling-seats"

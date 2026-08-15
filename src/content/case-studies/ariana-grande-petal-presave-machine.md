@@ -5,13 +5,21 @@ date: 2026-08-12
 tags: ["case-study", "release-strategy", "spotify-growth"]
 moment: "pre-release"
 hero:
-  src: "/img/articles/ariana-hero.webp"
-  alt: "3.22M pre-saves set as a typographic statement"
-  thumb: "/img/articles/ariana-thumb.webp"
-  credit: "109MUSIC"
-  license: "Own work"
-  source: "own"
-  layout: "below"
+  src: "/img/articles/ariana-photo-hero.webp"
+  alt: "Ariana Grande on the Dangerous Woman tour, 2017"
+  thumb: "/img/articles/ariana-photo-thumb.webp"
+  credit: "Emma"
+  creditUrl: "https://commons.wikimedia.org/wiki/File:Ariana_Grande_(33269922185).jpg"
+  license: "CC BY-SA 2.0"
+  source: "wikimedia"
+figures:
+  - after: "move-01--the-stockpile"
+    src: "/img/articles/ariana-hero.webp"
+    alt: "3.22M pre-saves set as a typographic statement"
+    caption: "The number is the whole argument: 3.22 million commitments banked before a single stream existed."
+    credit: "109MUSIC"
+    license: "Own work"
+    source: "own"
 igEmbed: null
 cta:
   keyword: "CALL"

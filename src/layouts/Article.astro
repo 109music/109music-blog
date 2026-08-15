@@ -27,6 +27,12 @@ const slug = entry.id.replace(/\.md$/, '').split('/').pop();
 /* Solo va de fondo si hay hero Y su layout lo permite. Un hero tipografico
    nunca: ya lleva su propio titular dentro. */
 const bgHero = !!d.hero && d.hero.layout !== 'below';
+/* Una FOTO no se comporta como un grafico generado. Los nuestros son oscuros
+   por construccion; una foto de directo lleva cara, piel y ropa clara justo en
+   la banda donde cae el titular. Medido: con el velo normal los seis titulares
+   y deks de los tres articulos con foto bajaban del minimo AA. El velo fuerte
+   se activa por procedencia, no a mano, para que no se olvide en la siguiente. */
+const photoHero = bgHero && !!d.hero.source && d.hero.source !== 'own';
 const ogImage = d.og ?? `/img/og/${sectionId}/${slug}.jpg`;
 
 const schema: any = {
@@ -79,7 +85,7 @@ if (d.faq?.length) {
 
   {/* El hero como FONDO del masthead. Ver el bloque HERO DE FONDO en el CSS
       para el velo y los numeros de contraste medidos sobre cada imagen. */}
-  <div class={bgHero ? 'masthead masthead--bg' : 'masthead'}
+  <div class={bgHero ? (photoHero ? 'masthead masthead--bg masthead--photo' : 'masthead masthead--bg') : 'masthead'}
        style={bgHero ? `background-image: var(--scrim), url('${url(d.hero.src)}')` : undefined}>
     <div class="wrap inner">
       <span class="pill">{sectionLabel}</span>

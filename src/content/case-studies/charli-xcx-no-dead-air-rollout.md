@@ -5,13 +5,21 @@ date: 2026-08-12
 tags: ["case-study", "release-strategy", "music-marketing"]
 moment: "release-week"
 hero:
-  src: "/img/articles/charli-hero.webp"
-  alt: "Four moves set as a typographic statement"
-  thumb: "/img/articles/charli-thumb.webp"
-  credit: "109MUSIC"
-  license: "Own work"
-  source: "own"
-  layout: "below"
+  src: "/img/articles/charli-photo-hero.webp"
+  alt: "Charli XCX performing at Glastonbury, 2017"
+  thumb: "/img/articles/charli-photo-thumb.webp"
+  credit: "Raph_PH"
+  creditUrl: "https://commons.wikimedia.org/wiki/File:Charli_XCX_Glastonbury_2017_(3).jpg"
+  license: "CC BY 2.0"
+  source: "wikimedia"
+figures:
+  - after: "move-01--never-go-dark"
+    src: "/img/articles/charli-hero.webp"
+    alt: "A rollout calendar with no empty weeks, set as a typographic statement"
+    caption: "Every week of the campaign carries something. The gaps are what kill an independent rollout."
+    credit: "109MUSIC"
+    license: "Own work"
+    source: "own"
 igEmbed: null
 cta:
   heading: "One rollout dissected every week"

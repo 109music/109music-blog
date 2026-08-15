@@ -48,42 +48,32 @@ typography, stay crisp at every pixel density, add no image weight, and re-theme
 page — which also makes them usable in the light-vs-dark comparison without being rebuilt.
 Each carries a `109MUSIC · Source: …` caption. No third-party chart branding anywhere.
 
-### Blocked: photographic heroes
+### Resuelto el 15/08 — Openverse
 
-`commons.wikimedia.org`, `upload.wikimedia.org`, `api.wikimedia.org` and Openverse are all
-unreachable from the cloud container — the egress proxy returns
-`This domain is cache-only and cannot be fetched` for WebFetch and a 403 CONNECT for
-anything else. Flickr is reachable.
+`commons.wikimedia.org` y `api.openverse.org` siguen siendo inalcanzables desde el
+contenedor, y Flickr tambien lo es ahora (la nota anterior que decia lo contrario ya no
+vale). La busqueda y la descarga se hacen **por el navegador de Blanca**.
 
-Consequence: licence tags, author credits and original dimensions **cannot be verified from
-this environment**, and the rule above says an unverifiable licence is an automatic reject.
-So no photo hero has been added.
+**Openverse (openverse.org, antes search.creativecommons.org) es la fuente de entrada.**
+Busca en Wikimedia, Flickr y otros a la vez, y su API acepta el filtro de licencia en la
+propia consulta: `license=cc0,pdm,by,by-sa`. Eso deja **NC y ND fuera desde el origen**,
+que es mas seguro que descartarlos despues.
 
-Wikimedia-sourced files already sitting in `batches/2026-W35-pilot/img/` under the `wm-`,
-`wm2-` and `wm3-` prefixes are candidates, but `batches/2026-W35-pilot/image-credits.md`
-records only the Commons **file name** for each — not the licence tag or the author string.
-Both are required before any of them can be published here.
+- **NC es el filtro que mas importa.** La web vende servicios, asi que una foto
+  non-commercial no vale aunque el articulo sea editorial.
+- **ND tambien queda fuera**, porque toda foto se reduce y casi siempre se recorta.
+- **Openverse no es la prueba.** Su metadato se desincroniza. Cada imagen se verifica en
+  la ficha original antes de bajarla, y lo que se registra abajo es lo que dice la ficha.
 
-### Candidate heroes awaiting licence verification
+Openverse resolvio el caso que Commons no resolvia: buscando en Commons directamente,
+Ariana no tenia ninguna foto apaisada decente. Openverse la ordeno mejor y aparecieron
+las de la gira Dangerous Woman.
 
-Do not use any of these until the licence tag and author credit are confirmed on the
-Commons file page and recorded in the table below.
-
-| Article | Subject | Already on disk? | Commons file |
-|---|---|---|---|
-| case-studies/charli-xcx-no-dead-air-rollout | Charli XCX | `wm-charli-1.jpg` (2997×3987) | `File:Charli_XCX-4059_(cropped_II).jpg` |
-| case-studies/charli-xcx-no-dead-air-rollout | Charli XCX, alt | `wm-charli-2.jpg` (2929×4000) | `File:Charli_XCX_at_the_2025_Toronto_International_Film_Festival_for_Erupcja_(1)_(cropped).jpg` |
-| case-studies/ariana-grande-petal-presave-machine | Ariana Grande | `wm-ariana-1.jpg`, `wm-ariana-2.jpg` | not recorded — needs identifying |
-| music-marketing/turn-streams-into-fans | Post Malone | `wm-post-malone.jpg` | not recorded — needs identifying |
-| music-marketing/sell-out-your-next-show | Venue / small crowd | no | `Category:Concert crowds` is the entry point |
-| music-marketing/spotify-ai-purge-what-it-means | Spotify | no | probably none exists; the wordmark is a trademark and a poor hero regardless |
-
-### Fields required before any photo ships
-
-For each image, this file must record: Commons file page URL · exact file name · direct
-`upload.wikimedia.org` URL · original pixel dimensions · exact licence tag · author credit
-string exactly as stated · the attribution line rendered under the photo · framing
-(face / upper body preferred over distant live shots).
+**Descargas:** Chrome tiene bloqueadas las descargas automaticas en la maquina de Blanca,
+probado desde cuatro origenes y con blob y data-url. Las imagenes cruzan por captura de
+pantalla, que topa a 1488x812, asi que los heroes de foto salen de un reescalado a
+1600x900 desde esa captura. Cuando se desbloquee
+(`chrome://settings/content/automaticDownloads`) conviene rehacerlos desde el original.
 
 ## Web (109music.co) — registro de imagen por artículo
 
@@ -102,3 +92,32 @@ solo en los carruseles.
 | how-to-sell-out-your-next-show | tarjeta OG 1200×630 | Generada por `tools/og.mjs` | 109MUSIC | Own work |
 | turn-streams-into-fans | hero, figura, miniatura | Generadas por nosotros | 109MUSIC | Own work |
 | (todos) | tarjeta OG | Generada por `tools/og.mjs` | 109MUSIC | Own work |
+
+### Fotos de artista publicadas (update 20, 15/08/2026)
+
+Las tres via Openverse, verificadas una a una en su ficha de Commons. Ninguna lleva NC,
+ND ni restricciones adicionales.
+
+| Articulo | Archivo en el repo | Foto original | Ano | Autor | Licencia | Ficha |
+|---|---|---|---|---|---|---|
+| case-studies/ariana-grande-petal-presave-machine | `ariana-photo-hero.webp` + `-thumb` | `Ariana Grande (33269922185).jpg`, 4608x3456 | 2017 | Emma | **CC BY-SA 2.0** | https://commons.wikimedia.org/wiki/File:Ariana_Grande_(33269922185).jpg |
+| case-studies/charli-xcx-no-dead-air-rollout | `charli-photo-hero.webp` + `-thumb` | `Charli XCX Glastonbury 2017 (3).jpg`, 5989x3376 | 2017 | Raph_PH | **CC BY 2.0** | https://commons.wikimedia.org/wiki/File:Charli_XCX_Glastonbury_2017_(3).jpg |
+| music-marketing/turn-streams-into-fans | `turn-streams-photo-hero.webp` + `-thumb` | `Post Malone @ Veld 2016.jpg`, 4600x3648 | 2016 | The Come Up Show | **CC BY 2.0** | https://commons.wikimedia.org/wiki/File:Post_Malone_@_Veld_2016.jpg |
+
+**Credito que se pinta bajo cada foto**, abajo a la derecha del masthead: `Emma · CC BY-SA
+2.0`, `Raph_PH · CC BY 2.0`, `The Come Up Show · CC BY 2.0`, con el autor enlazado a la
+ficha. Verificado en el HTML construido, no solo en el codigo fuente.
+
+**La miniatura sale de la misma foto**, reducida a 480x270 desde el hero. No es una imagen
+distinta y ya no es el grafico generado.
+
+**El grafico tipografico de cada uno baja al cuerpo** como figura tras el primer h2, con
+su pie y su credito `109MUSIC · Own work`. No se tira nada.
+
+**Aviso de edad:** las tres son de 2016-2017. Es lo mas reciente que existe con licencia
+utilizable. La de Post Malone tiene diez anos y el articulo va de una gira cancelada en
+2026. Es el, es legal y esta acreditado, pero no es una foto actual.
+
+**Ariana pendiente de mejora:** Blanca decidio buscar en press kit oficial. Cuando se
+haga, hay que leer las condiciones de uso del sello antes de bajar nada: los press kits
+suelen permitir uso editorial y prohibir el comercial, y esa linea la marca su texto.

@@ -2625,3 +2625,21 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
    El velo solo tiene sentido cuando el carril desborda, asi que se apaga en el
    regimen donde por construccion no desborda. */
 @media (min-width: 1000px) { .rcarousel::after { display: none; } }
+
+/* --- PASE 11 (2026-08-15) · velo fuerte para heroes fotograficos -----------
+   `.masthead--bg` se calibro sobre nuestros graficos, que son oscuros a
+   proposito. Con las tres primeras fotos reales de Commons los seis titulares
+   y deks caian por debajo de AA: el peor, Charli, daba 1,86 sobre un minimo de
+   3,0. No es un problema de esas tres fotos, es que una foto de directo pone
+   piel y ropa clara exactamente en la banda del titular.
+   Se activa por `hero.source` distinto de `own`, no a mano. */
+.masthead--photo {
+  --scrim: linear-gradient(
+    to top,
+    rgba(10, 10, 10, .98) 0%,
+    rgba(10, 10, 10, .95) 30%,
+    rgba(10, 10, 10, .78) 58%,
+    rgba(10, 10, 10, .42) 80%,
+    rgba(10, 10, 10, .18) 100%
+  ), linear-gradient(rgba(10, 10, 10, .40), rgba(10, 10, 10, .40));
+}

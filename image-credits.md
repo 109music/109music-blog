@@ -222,3 +222,64 @@ descartando.
 Contraste medido en las dos, ocho comprobaciones, ninguna falla. sell-out:
 titular 6,30 · dek 6,60 · metadatos 7,19 · crédito 5,45. eu-ai-act: 6,16 · 6,94 ·
 7,26 · 5,33.
+
+### Update 24 (16/08/2026) — new-ways, y el cierre de SoundCloud
+
+| Artículo | Archivo | Foto original | Año | Autor | Licencia | Ficha |
+|---|---|---|---|---|---|---|
+| music-marketing/new-ways-your-music-pays-2026 | `new-ways-photo-hero.webp` + `-thumb` | `w0IzSwffjbA`, 6000x4000 | 2022 | gaspifilms | **Unsplash License** | https://unsplash.com/photos/a-laptop-computer-sitting-on-top-of-a-desk-w0IzSwffjbA |
+
+Un estudio de dormitorio de noche: espuma acústica, dos monitores, cascos en el
+pie de micro y un portátil con una sesión abierta. Es el sitio donde aterriza el
+dinero del que habla el artículo, que era lo que faltaba: las cuatro vías son
+abstractas y el gráfico de carriles no las hacía menos abstractas.
+
+**Recorte forzado por un motivo concreto.** El original lleva **una figura de un
+Minion encima del monitor izquierdo**, y es el objeto más saturado del encuadre:
+el ojo va ahí antes que a nada. Es propiedad intelectual de terceros, del mismo
+tipo que los logos de photocall que ya descartamos. El recorte arranca en y=1450
+del original, justo por debajo (el Minion ocupa de y=829 a y=1325), y se lleva
+también las estrellas adhesivas de la pared. Origen 4533x2550 para un destino de
+1600x900, o sea 2,8 veces la resolución final.
+
+Quedan dentro dos marcas de terceros que **no** se pueden quitar sin destrozar el
+encuadre: el rótulo LEGION del portátil y la interfaz de FL Studio en pantalla.
+Se aceptan: es una foto de una habitación, no una captura de la interfaz, y ni
+una ni otra son el sujeto. **La distinción sigue siendo la que fijamos: una
+captura de interfaz subida por un tercero no vale, porque quien la sube no es
+dueño de la interfaz; una interfaz que aparece de fondo en una fotografía sí.**
+
+Subida de exposición: gamma 0,70 más 6 por ciento de ganancia. Sin ella el velo
+de `.masthead--photo` sobre una foto que ya nace oscura dejaba la cabecera casi
+en negro. 111 KB, dentro del presupuesto de 120 KB. Contraste medido sobre el
+píxel peor compuesto: **titular 12,85 · dek 9,61 · crédito 5,66**. Es la cabecera
+con más margen de todo el blog.
+
+**SoundCloud se queda con su gráfico, decisión cerrada.** Busqué otra vez con la
+tienda de vinilos como metáfora de la selección humana. Dos motivos para no
+hacerlo: la metáfora es falsa — The Upload es una lista editorial digital, no
+vinilo — y las candidatas buenas fallaban por otro lado. La mejor,
+`XpxuhBvekjQ`, 6240x4160, manos rebuscando en una caja de discos, es **Unsplash+**
+y sale con marca de agua. La siguiente, `ivbI3VqsqEM`, lleva una portada de
+Quincy Jones en primer plano, que es obra de terceros, y además es una foto clara
+que pelearía con el titular blanco.
+
+**Criterio de descarte nuevo: Unsplash+ no es Unsplash.** Es una licencia de pago
+con marca de agua en la previsualización, y en la API se distingue por el campo
+`plus`. Hay que filtrarlo en la propia búsqueda, no al mirar la foto.
+
+**Regla nueva de nombres de archivo, aprendida a la mala.** El 22 y el 23 usaron
+el mismo `spotify-purge-photo-hero.webp` para dos fotos distintas. El despliegue
+era correcto y la web servía la foto nueva, pero el navegador de Blanca seguía
+enseñando la vieja durante horas: mismo nombre, ningún motivo para volver a
+pedirla. **Cuando cambia la foto de un hero, cambia también el nombre del
+archivo.** Un cambio de imagen bajo el mismo nombre es indistinguible de ningún
+cambio para cualquier caché del camino.
+
+### Nota de esquema
+
+`hero.source` y `figures[].source` aceptaban solo `wikimedia | presskit | own`.
+Con Unsplash entrando en el catálogo, el enum pasa a
+`wikimedia | unsplash | pexels | presskit | own`. Sigue siendo cerrado: un valor
+no listado rompe el build a propósito, que es lo que queremos. `photoHero` no
+cambia, sigue siendo «cualquier cosa que no sea `own`».

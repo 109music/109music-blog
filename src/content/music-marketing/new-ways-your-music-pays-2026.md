@@ -5,12 +5,13 @@ date: 2026-08-12
 tags: ["music-business", "revenue", "tiktok"]
 moment: "always-on"
 hero:
-  src: "/img/articles/new-ways-hero.webp"
-  alt: "Four broken lanes running left to right at different weights"
-  thumb: "/img/articles/new-ways-thumb.webp"
-  credit: "109MUSIC"
-  license: "Own work"
-  source: "own"
+  src: "/img/articles/new-ways-photo-hero.webp"
+  alt: "A bedroom studio at night: a laptop with a session open, monitors either side, headphones on the mic stand"
+  thumb: "/img/articles/new-ways-photo-thumb.webp"
+  credit: "gaspifilms"
+  creditUrl: "https://unsplash.com/photos/a-laptop-computer-sitting-on-top-of-a-desk-w0IzSwffjbA"
+  license: "Unsplash License"
+  source: "unsplash"
 figures:
   - after: "what-these-four-have-in-common"
     src: "/img/articles/new-ways-figure.webp"

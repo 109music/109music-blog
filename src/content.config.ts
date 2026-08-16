@@ -27,7 +27,7 @@ const hero = z.object({
   /* Licence exactly as the source states it, e.g. "CC BY-SA 4.0". Rendered under
      the photo. An image whose licence cannot be identified does not ship. */
   license: z.string().optional(),
-  source: z.enum(['wikimedia', 'presskit', 'own']).optional(),
+  source: z.enum(['wikimedia', 'unsplash', 'pexels', 'presskit', 'own']).optional(),
   /* Donde vive el hero. `background` lo pone de fondo del masthead con el titular
      encima; `below` lo deja debajo, con el masthead negro de siempre.
      NO es una preferencia estetica: medido sobre las nueve imagenes, un hero que
@@ -54,7 +54,7 @@ const figure = z.object({
   credit: z.string().optional(),
   creditUrl: z.string().url().optional(),
   license: z.string().optional(),
-  source: z.enum(['wikimedia', 'presskit', 'own']).optional(),
+  source: z.enum(['wikimedia', 'unsplash', 'pexels', 'presskit', 'own']).optional(),
 });
 
 /* A brand data chart, same placement mechanism. Our own numbers, drawn with the

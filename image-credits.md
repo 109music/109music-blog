@@ -533,3 +533,55 @@ Lo que había en `site.ts` desapareció cuando el update 21 metió las tres tarj
 reales. El perfil de Spotify ya sale como **@109music.co**, o sea que el cambio
 está hecho. Queda `info109records@gmail.com` como autor de los commits de git,
 que es historia y no se reescribe.
+
+### Update 32 (16/08/2026) — el último sin foto ya tiene foto
+
+MARCADOR-32: catorce de catorce con foto real.
+
+| Artículo | Archivo | Foto original | Autor | Licencia | Ficha |
+|---|---|---|---|---|---|
+| music-marketing/viral-week-into-an-audience-you-own | `viral-week-photo-hero.webp` + `-thumb` | `ZDN4oUCnE6Y`, 9449x7087 | tom depont | **Unsplash License** | https://unsplash.com/photos/performer-on-stage-with-illuminated-audience-holding-phones-ZDN4oUCnE6Y |
+
+Vista **desde detrás del artista**: la silueta a contraluz y delante una sala
+entera con los móviles en alto. Es literalmente lo que dice el titular, el pico
+de atención visto desde el lado de quien lo recibe. Ningún otro hero del sitio
+está tomado desde ese punto de vista, así que además no se parece a ninguno.
+
+**Y el protagonista no es identificable**, porque es una silueta de espaldas.
+Eso es lo que pide el criterio y casi nunca se consigue con una foto de directo.
+
+**El peso fue el problema, y era predecible.** Cientos de linternas de móvil son
+detalle fino repartido por todo el encuadre, la misma familia que las rejillas de
+rack. En crudo salía a **267 KB a calidad 86 y 177 KB a calidad 80**, fuera de
+presupuesto por mucho.
+
+Lo que lo arregló **no fue bajar la calidad, fue el tratamiento**: gamma 1,55 más
+apagado de la mitad izquierda al 40 por ciento. Al oscurecer, el detalle de las
+luces pequeñas se comprime muchísimo mejor. **124 KB a calidad 80**, dentro del
+techo de 160 KB de multitudes, y sin degradar nada visible.
+
+**Regla nueva, y es útil: oscurecer no solo arregla el contraste, arregla el
+peso.** En una foto con muchas fuentes de luz puntuales, el mismo tratamiento que
+hace legible el titular baja el archivo un tercio. Antes de bajar la calidad,
+subir la gamma.
+
+Elegí la banda **inferior** del recorte 16:9, no la central: el original es 4:3 y
+sobran 1.772 píxeles de alto. La banda de abajo tenía la zona del titular a
+luminancia 81 frente a 115 de la central, o sea que ya venía medio hecha.
+
+Contraste, peor píxel compuesto: **titular 11,00 · dek 9,85 · crédito 5,66.**
+
+**Salvedad: hay caras identificables en el público de la derecha.** Concierto
+público, uso editorial, tamaño pequeño y con el velo encima. Es el mismo criterio
+que ya aceptamos en el Enmore y en el festival de Luminate.
+
+**Se borra `owned-audience-hero.webp` y su miniatura.** Es el gráfico propio que
+llevaba este artículo y queda huérfano igual que el estudio de dormitorio. Mismo
+caso, misma decisión. El artículo no tiene cifras duras que justifiquen bajarlo
+al cuerpo como figura.
+
+### Estado: se acabó
+
+**Catorce artículos, catorce cabeceras, catorce con foto real.** Ya no queda
+ninguno con gráfico propio en la cabecera. Los gráficos propios siguen donde
+tienen que estar, en el cuerpo y solo cuando hay datos.

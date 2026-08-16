@@ -5,12 +5,13 @@ date: 2026-08-16
 tags: ["music-marketing", "tiktok", "instagram"]
 moment: "post-release"
 hero:
-  src: "/img/articles/owned-audience-hero.webp"
-  alt: "A spike of bars rising and falling away to nothing, and below it a solid unbroken line that continues past the edge"
-  thumb: "/img/articles/owned-audience-thumb.webp"
-  credit: "109MUSIC"
-  license: "Own work"
-  source: "own"
+  src: "/img/articles/viral-week-photo-hero.webp"
+  alt: "Seen from behind a performer on stage: a crowd filling the room, hundreds of phone lights held up"
+  thumb: "/img/articles/viral-week-photo-thumb.webp"
+  credit: "tom depont"
+  creditUrl: "https://unsplash.com/photos/performer-on-stage-with-illuminated-audience-holding-phones-ZDN4oUCnE6Y"
+  license: "Unsplash License"
+  source: "unsplash"
 igEmbed: null
 cta:
   keyword: "OWNED"

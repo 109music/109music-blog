@@ -339,3 +339,59 @@ el material de tiendas de vinilo (Unsplash+ o portadas de terceros en primer
 plano); `9zh8fSUQb8w`, buena foto de club pero con el rótulo «Solomons Jazz Club»
 legible; `lstL0OETugY`, un cantante identificable en primer plano; `B4Q0RxtWS84`,
 otro patio de butacas lleno, demasiado parecido al Enmore.
+
+### Update 27 (16/08/2026) — los cuatro artículos que quedaban de agosto
+
+Los cuatro salen en borrador (`draft: true`). No se publican hasta que Blanca los
+lea. Los cuatro heroes son foto real, con el criterio ampliado del 26: música,
+buena foto, encaje razonable.
+
+| Artículo | Archivo | Foto original | Autor | Licencia | Ficha |
+|---|---|---|---|---|---|
+| film-a-month-of-content-in-one-hour | `content-system-photo-hero.webp` + `-thumb` | `ftW3L0qtT_k`, 6240x4160 | atelierbyvineeth | **Unsplash License** | https://unsplash.com/photos/person-playing-guitar-with-camera-on-tripod-ftW3L0qtT_k |
+| where-your-first-hundred-fans-come-from | `first-fans-photo-hero.webp` + `-thumb` | `i49Sw4YT7Tw`, 8649x5851 | Pascal Bernardon | **Unsplash License** | https://unsplash.com/photos/musicians-playing-instruments-on-a-bridge-in-paris-i49Sw4YT7Tw |
+| what-to-release-next-and-how-often | `release-pace-photo-hero.webp` + `-thumb` | `AnsMiqi86Pk`, 7952x5304 | AMONWAT DUMKRUT | **Unsplash License** | https://unsplash.com/photos/a-person-adjusting-controls-on-a-sound-mixing-board-AnsMiqi86Pk |
+| before-you-post-anything | `before-you-post-photo-hero.webp` + `-thumb` | `LakKPeF1ONE`, 6774x4492 | Barney Goodman | **Unsplash License** | https://unsplash.com/photos/a-music-stage-with-instruments-and-equipment-under-yellow-lights-LakKPeF1ONE |
+
+Tratamiento, y esta vez hubo que trabajar dos de ellas:
+
+- **content-system**: recorte desde arriba, y=0 a 3510. La mitad inferior del
+  original es suelo vacío. Sin retoque de exposición, ya nace oscura.
+- **first-fans**: es de día y con cielo, la más difícil de todas. Gamma 1,55 y un
+  apagado progresivo de la mitad izquierda al 42 por ciento, que es donde cae el
+  titular. **148 KB**, por encima del presupuesto de 120 KB: es una foto de
+  ciudad con follaje otoñal, o sea detalle fino por todas partes, y entra por la
+  misma excepción medida que sell-out y eu-ai-act.
+- **release-pace**: sin tocar, ya es oscura.
+- **before-you-post**: bruma amarilla muy clara. Gamma 1,45 y apagado izquierdo
+  al 46 por ciento.
+
+Contraste, peor píxel compuesto, titular · dek · crédito:
+**content 11,43 · 10,00 · 5,66 — fans 11,83 · 10,01 · 5,66 — release 13,16 ·
+10,47 · 5,66 — before 13,13 · 9,61 · 5,66.** Ninguna cerca de fallar.
+
+**Salvedad en first-fans: hay cuatro músicos con la cara identificable.** Son
+artistas callejeros tocando en un puente, en un lugar público, y el uso es
+editorial en un artículo que habla precisamente de tocar para poca gente. Es
+defendible, pero incumple la preferencia de «sin protagonista identificable», así
+que queda anotado. A esa distancia y con el velo puesto, las caras no se
+reconocen en la cabecera montada.
+
+**En before-you-post se lee «nord electro» en un teclado.** Incidental, de fondo,
+no es el sujeto. Entra por la misma regla que el rótulo del portátil en new-ways.
+
+**Descartada por marca: `pPfGWg83GAg` y `m9fMawDQLXA`,** dos primeros planos
+preciosos de un amplificador Fender, 10000x6667 los dos. **El logotipo de Fender
+ES el sujeto de la foto**, no un rótulo de fondo. Eso cruza la línea: una marca
+que ocupa el encuadre en la cabecera de un artículo nuestro sí sugiere relación
+comercial. Criterio nuevo, escrito: **la distinción no es si la marca aparece,
+es si la marca es el sujeto.**
+
+**El gráfico huérfano de new-ways se borra.** `new-ways-hero.webp` y
+`new-ways-thumb.webp` dejaron de estar referenciados cuando la foto de estudio
+subió a la cabecera. Consideré bajarlo al cuerpo como se hizo en sell-out y en
+spotify, y no encaja: el gráfico dibuja los cuatro carriles, y el único h2 donde
+cabría ya tiene su figura, que dice lo mismo. Un segundo gráfico repitiendo el
+argumento es ruido. Además el artículo ya lleva dos piezas propias, la figura y
+el gráfico de barras de YouTube. El `.bat` del 27 los borra. `new-ways-figure.webp`
+NO se toca, esa sigue en uso.

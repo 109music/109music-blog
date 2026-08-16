@@ -102,7 +102,23 @@ const base = z.object({
     })
     .optional(),
   // Instagram permalink for the matching carousel. Null until the post is live.
+  /* UN carrusel: el campo de siempre. Se mantiene y no se toca, para que los
+     catorce articulos escritos hasta hoy sigan validando sin editarlos. */
   igEmbed: z.string().nullable().default(null),
+  /* VARIOS carruseles, que es lo que necesita un articulo agrupado del STEP 7:
+     junta dos o tres carruseles y tiene que enlazarlos todos. Sin esto, agrupar
+     significa perder dos enlaces a Instagram de cada tres.
+       - `after` coloca el embed detras de ESE h2, igual que las figuras. Es lo
+         que se quiere en un articulo agrupado: cada carrusel bajo su seccion.
+       - sin `after`, el embed cae al final del cuerpo, que es el comportamiento
+         de toda la vida. */
+  igEmbeds: z
+    .array(z.object({
+      url: z.string(),
+      after: z.string().optional(),
+      caption: z.string().optional(),
+    }))
+    .default([]),
   sources: z.array(source).default([]),
   faq: z.array(z.object({ q: z.string(), a: z.string() })).default([]),
   /* Body imagery and charts. Both default to empty, so every article written

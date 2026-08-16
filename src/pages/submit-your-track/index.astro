@@ -17,7 +17,7 @@
    el unico modo de fallo real del producto, asi que va numerado, en negrita y
    antes del boton, no en la letra pequena. */
 import Base from '../../layouts/Base.astro';
-import { KOFI, PLAYLISTS_URL, url } from '../../lib/site';
+import { KOFI, PLAYLISTS_URL, PLAYLISTS, url } from '../../lib/site';
 ---
 <Base
   title="Submit your track"
@@ -29,16 +29,16 @@ import { KOFI, PLAYLISTS_URL, url } from '../../lib/site';
       <p class="kicker mono rise">109MUSIC · Playlists</p>
       <h1 class="display face rise">Submit your<br /><span class="lav">track</span></h1>
       <p class="statement rise">
-        One Spotify link, <b>5 EUR</b>, considered for the playlists we run ourselves.
-        Placement is not guaranteed, and the playlists are public, so you can check
-        whether you fit before you pay.
+        One Spotify link, <b>5 EUR</b>, considered for the two lists we actively
+        programme. Placement is not guaranteed, and both lists are public, so you
+        can check whether you fit before you pay.
       </p>
       <div class="hero-cta rise">
         <a class="btn" href={KOFI} target="_blank" rel="noopener">
           <span>Submit on Ko-fi · 5 EUR</span><span class="arrow" aria-hidden="true">→</span>
         </a>
-        <a class="btn ghost" href={PLAYLISTS_URL} target="_blank" rel="noopener">
-          <span>Hear the playlists first</span><span class="arrow" aria-hidden="true">→</span>
+        <a class="btn ghost" href="#the-playlists">
+          <span>Hear the lists first</span><span class="arrow" aria-hidden="true">→</span>
         </a>
       </div>
     </section>
@@ -67,43 +67,40 @@ import { KOFI, PLAYLISTS_URL, url } from '../../lib/site';
       </div>
     </section>
 
-    <section>
-      <div class="sec-head"><h2 class="display">The playlists</h2></div>
+    <section id="the-playlists">
+      <div class="sec-head"><h2 class="display">The two lists</h2></div>
       <p class="sec-intro">
-        Five lists, around 35,000 likes between them. They are public and they have
-        been running for a while, so you can judge them yourself rather than take our
-        word for it.
+        Two lists, actively programmed, <b>22,000 saves between them</b>. They are
+        public, so listen before you decide whether five euros is worth it.
       </p>
-      <ul class="aroundlist">
-        <li>
-          <span class="around-name">Urban Essentials</span>
-          <span class="around-line">The main list. Urban, in English and beyond.</span>
-          <span class="around-price mono">Public</span>
-        </li>
-        <li>
-          <span class="around-name">Urban Spanish Essentials</span>
-          <span class="around-line">The same thing in Spanish, and the one most of our own artists live on.</span>
-          <span class="around-price mono">Public</span>
-        </li>
-        <li>
-          <span class="around-name">Bedroom &amp; chill</span>
-          <span class="around-line">Quieter, slower, late. Room for a demo that is not finished-sounding.</span>
-          <span class="around-price mono">Public</span>
-        </li>
-        <li>
-          <span class="around-name">Zyzz Hardstyle</span>
-          <span class="around-line">Gym and workout. Hard, fast, and a completely different audience to the rest.</span>
-          <span class="around-price mono">Public</span>
-        </li>
-        <li>
-          <span class="around-name">Prod. La Hater</span>
-          <span class="around-line">The producer list.</span>
-          <span class="around-price mono">Public</span>
-        </li>
-      </ul>
+
+      {/* CARGA BAJO DEMANDA, y no es decoracion: el reproductor de Spotify hace
+          36 peticiones a 7 dominios y planta seis cookies nada mas cargar, entre
+          ellas un identificador publicitario y una cadena de consentimiento IAB.
+          Dos de esos en una pagina, para quien solo esta leyendo, no se sostiene
+          ni en peso ni en privacidad. Asi no se pide NADA a Spotify hasta que
+          alguien pulsa play. El coste es un puñado de bytes de JS en linea. */}
+      <div class="players">
+        {PLAYLISTS.map((pl) => (
+          <div class="player" data-embed={`https://open.spotify.com/embed/playlist/${pl.id}`}>
+            <div class="player-face">
+              <span class="player-name">{pl.name}</span>
+              <span class="player-meta mono">{pl.saves} saves · {pl.line}</span>
+              <button type="button" class="player-play" data-play>
+                <span aria-hidden="true">▶</span> Play preview
+              </button>
+              <a class="player-out mono" href={pl.url} target="_blank" rel="noopener">Open in Spotify →</a>
+            </div>
+          </div>
+        ))}
+      </div>
+      <p class="player-note mono">
+        Nothing loads from Spotify until you press play.
+      </p>
+
       <p class="sec-intro">
-        If your record is nowhere near any of those, keep your five euros. We would
-        rather tell you here than take it and send you a no.
+        If your record is nowhere near either of those, keep your five euros. We
+        would rather tell you here than take it and send you a no.
       </p>
     </section>
 
@@ -119,4 +116,21 @@ import { KOFI, PLAYLISTS_URL, url } from '../../lib/site';
       </ul>
     </section>
   </div>
+
+  <script is:inline>
+    /* Un solo listener delegado. Al pulsar, el bloque se sustituye por el iframe
+       real. Antes de eso la pagina no ha hablado con Spotify ni una vez. */
+    document.addEventListener('click', function (ev) {
+      var b = ev.target.closest && ev.target.closest('[data-play]');
+      if (!b) return;
+      var host = b.closest('.player');
+      if (!host) return;
+      var f = document.createElement('iframe');
+      f.src = host.getAttribute('data-embed');
+      f.width = '100%'; f.height = '352'; f.frameBorder = '0';
+      f.loading = 'lazy'; f.title = 'Spotify player';
+      f.allow = 'clipboard-write; encrypted-media; fullscreen; picture-in-picture';
+      host.replaceChildren(f);
+    });
+  </script>
 </Base>

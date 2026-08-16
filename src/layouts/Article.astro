@@ -27,6 +27,7 @@ const slug = entry.id.replace(/\.md$/, '').split('/').pop();
 /* Solo va de fondo si hay hero Y su layout lo permite. Un hero tipografico
    nunca: ya lleva su propio titular dentro. */
 const bgHero = !!d.hero && d.hero.layout !== 'below';
+const trailingEmbeds = (d.igEmbeds ?? []).filter((e: any) => !e.after);
 /* Una FOTO no se comporta como un grafico generado. Los nuestros son oscuros
    por construccion; una foto de directo lleva cara, piel y ropa clara justo en
    la banda donde cae el titular. Medido: con el velo normal los seis titulares
@@ -153,7 +154,15 @@ if (d.faq?.length) {
         <slot />
       </div>
 
-      <IGEmbed permalink={d.igEmbed} caption={`"${d.title}" as a carousel`} />
+      {/* Los embeds SIN `after` van aqui, al final del cuerpo. Los que llevan
+          `after` ya los ha colocado rehype-media bajo su h2. Y si el articulo
+          no declara ninguno, se mantiene el campo de siempre, que ademas
+          dibuja el hueco con su aviso cuando todavia no hay carrusel. */}
+      {trailingEmbeds.length > 0
+        ? trailingEmbeds.map((e: any) => (
+            <IGEmbed permalink={e.url} caption={e.caption ?? `"${d.title}" as a carousel`} />
+          ))
+        : <IGEmbed permalink={d.igEmbed} caption={`"${d.title}" as a carousel`} />}
 
       {d.faq?.length > 0 && (
         <section class="faq">

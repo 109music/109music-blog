@@ -64,6 +64,23 @@ function figureNode(f) {
   return el('div', { className: ['media'] }, kids);
 }
 
+/* El embed de Instagram, para los articulos agrupados. Mismo marcado que el
+   componente IGEmbed.astro: si los dos divergen, el que manda es el componente.
+   El script de Instagram lo carga la pagina una sola vez, no una por embed. */
+function embedNode(e) {
+  const cap = e.caption || 'The carousel version of this section';
+  return el('figure', { className: ['embed'] }, [
+    el('blockquote', {
+      className: ['instagram-media'],
+      'data-instgrm-permalink': e.url,
+      'data-instgrm-version': '14',
+      style: 'margin:0;width:100%;',
+    }, [
+      el('a', { href: e.url, target: '_blank', rel: 'noopener' }, [txt(cap + ' — view on Instagram')]),
+    ]),
+  ]);
+}
+
 function chartNode(c) {
   /* Bars are normalised against the largest value, so an author writes real
      numbers and never a percentage of a bar width. */
@@ -97,6 +114,11 @@ export default function rehypeMedia() {
     const items = [
       ...(fm.figures ?? []).map((f) => ({ after: f.after, node: () => figureNode(f) })),
       ...(fm.charts ?? []).map((c) => ({ after: c.after, node: () => chartNode(c) })),
+      /* Solo los embeds que dicen DONDE van. Los que no llevan `after` los
+         pinta Article.astro al final del cuerpo, y por eso se filtran aqui:
+         si entraran, el aviso de huerfanos los daria por perdidos. */
+      ...(fm.igEmbeds ?? []).filter((e) => e.after)
+        .map((e) => ({ after: e.after, node: () => embedNode(e) })),
     ];
     if (!items.length) return;
 

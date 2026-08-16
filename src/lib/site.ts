@@ -21,6 +21,29 @@ export const KOFI = 'https://ko-fi.com/109music';
    de pagar. Es lo que mas baja la friccion y lo que mas protege la reputacion. */
 export const PLAYLISTS_URL = 'https://open.spotify.com/user/31jk6ht3ed5436kzxqjoggmp7cee';
 
+/* LAS DOS LISTAS ACTIVAS, y solo esas. Las otras tres del perfil (bedroom &
+   chill, Zyzz Hardstyle, Prod. La Hater) estan inactivas y por eso NO se nombran
+   en ninguna parte: prometer cinco listas en una pagina donde se paga, cuando
+   solo se programan dos, es una promesa falsa.
+   Cifras de guardados leidas en Spotify el 16/08/2026. Si se vuelven a citar,
+   se vuelven a leer: es un numero que sube y que aparece junto a un precio. */
+export const PLAYLISTS = [
+  {
+    id: '2fbKli1KFMkNeSHL6NSt5g',
+    name: 'Urban Essentials',
+    saves: '6,389',
+    line: 'Urban, in English and beyond',
+    url: 'https://open.spotify.com/playlist/2fbKli1KFMkNeSHL6NSt5g',
+  },
+  {
+    id: '1IsG2UxPdXajXg1raxckya',
+    name: 'Urban Spanish Essentials',
+    saves: '15,951',
+    line: 'The Spanish-language list, and the bigger of the two',
+    url: 'https://open.spotify.com/playlist/1IsG2UxPdXajXg1raxckya',
+  },
+] as const;
+
 export const WA_MESSAGES = {
   'meta-ads': 'Hola, me interesa la gestion de Meta ads para mi musica',
   playlisting: 'Hola, me interesa el servicio de playlisting',

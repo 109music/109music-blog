@@ -5,11 +5,11 @@ date: 2026-08-12
 tags: ["music-business", "revenue", "tiktok"]
 moment: "always-on"
 hero:
-  src: "/img/articles/new-ways-photo-hero.webp"
-  alt: "A bedroom studio at night: a laptop with a session open, monitors either side, headphones on the mic stand"
-  thumb: "/img/articles/new-ways-photo-thumb.webp"
-  credit: "gaspifilms"
-  creditUrl: "https://unsplash.com/photos/a-laptop-computer-sitting-on-top-of-a-desk-w0IzSwffjbA"
+  src: "/img/articles/new-ways-money-hero.webp"
+  alt: "A hand holding a fan of hundred-dollar bills against a dark background"
+  thumb: "/img/articles/new-ways-money-thumb.webp"
+  credit: "Giorgio Trovato"
+  creditUrl: "https://unsplash.com/photos/hand-holding-a-stack-of-us-hundred-dollar-bills-sFBV4yZclvY"
   license: "Unsplash License"
   source: "unsplash"
 figures:

@@ -2692,3 +2692,33 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
   font-family: var(--display); font-size: 20px; letter-spacing: -.01em;
   text-transform: none; color: var(--lav-deep);
 }
+
+/* --------------------------------------------------------------------------
+   PASE 13 · REPRODUCTORES BAJO DEMANDA (2026-08-16)
+   Medido antes de decidir: el embed de Spotify hace 36 peticiones a 7 dominios
+   y planta seis cookies al cargar, entre ellas un identificador publicitario
+   (sp_gaid) y una cadena de consentimiento IAB. Dos de esos, para alguien que
+   solo esta leyendo, no se sostiene. Asi la pagina no habla con Spotify hasta
+   que se pulsa play, y lo que se ve antes esta en el idioma del sitio.
+   -------------------------------------------------------------------------- */
+.players { display: grid; gap: 10px; margin: 24px 0 10px; }
+@media (min-width: 800px) { .players { grid-template-columns: 1fr 1fr; } }
+.player { min-height: 150px; display: grid; }
+.player-face {
+  display: grid; align-content: start; gap: 7px;
+  padding: 20px; border: 1px solid var(--on-bone-rule); background: var(--bone-sunk);
+}
+.player-name {
+  font-family: var(--display); font-size: clamp(16px, 2vw, 19px);
+  letter-spacing: -.01em; text-transform: uppercase; color: var(--ink); line-height: 1.1;
+}
+.player-meta { font-size: 10px; letter-spacing: .11em; text-transform: uppercase; color: var(--on-bone-mute); }
+.player-play {
+  justify-self: start; margin-top: 8px; cursor: pointer;
+  padding: 9px 15px; border: 0; background: var(--lav); color: var(--ink);
+  font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+}
+.player-play:hover { background: var(--lav-deep); color: #fff; }
+.player-out { font-size: 10px; letter-spacing: .11em; text-transform: uppercase; color: var(--on-bone-faint); }
+.player iframe { border: 0; display: block; }
+.player-note { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--on-bone-faint); margin: 0 0 18px; }

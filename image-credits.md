@@ -418,3 +418,118 @@ sigue en uso, esa no se toca.
 Estado tras el 28: **catorce artículos publicados, catorce con hero y miniatura,
 trece con foto real.** El único con gráfico propio es
 `viral-week-into-an-audience-you-own`.
+
+### Update 30 (16/08/2026) — new-ways pasa a dinero
+
+MARCADOR-30: la mejor foto no es la mejor cabecera.
+
+| Artículo | Archivo | Foto original | Autor | Licencia | Ficha |
+|---|---|---|---|---|---|
+| music-marketing/new-ways-your-music-pays-2026 | `new-ways-money-hero.webp` + `-thumb` | `sFBV4yZclvY`, 6720x4480 | Giorgio Trovato | **Unsplash License** | https://unsplash.com/photos/hand-holding-a-stack-of-us-hundred-dollar-bills-sFBV4yZclvY |
+
+Decisión de Blanca: el artículo va de cobrar y quiere dinero, no el estudio. Mi
+opinión era la contraria y queda anotada abajo, pero la foto que entra es dinero.
+
+**LA LECCION DE ESTA TANDA: la mejor foto no es la mejor cabecera.** Se bajaron dos candidatas. `2DlK5U_TuOs`, una mano metiendo un
+billete en una ranura, era claramente mejor fotografía: más oscura, sin marca,
+gesto de pago, 63 KB y luminancia 39 en la zona del titular. Sobre el papel
+ganaba en todo.
+
+Montada en el masthead **no se ve el billete**. El sujeto es pequeño, está
+centrado y cae bajo, justo detrás del dek. Probé seis recortes distintos, tres
+verticales y tres desplazando el sujeto a la derecha, y en todos o el billete
+queda tapado por el texto o sale cortado por el borde. La cabecera solo enseñaba
+una mano y un puño de camisa.
+
+`sFBV4yZclvY`, la mano con los billetes de cien, es peor foto en abstracto —más
+tópica, más clara, más pesada— y sin embargo **es mejor cabecera, porque el
+sujeto es grande y el «100» se lee detrás del titular**. Dice dinero en medio
+segundo, que es lo único que tiene que hacer.
+
+**Regla nueva para el playbook: se decide con la cabecera montada, no con la foto
+suelta.** Y en concreto: **un sujeto pequeño y centrado no sobrevive a un
+masthead con el texto a la izquierda.** Lo que funciona es sujeto grande, o
+textura pareja, o sujeto arriba a la derecha.
+
+Tratamiento: gamma 1,30 y apagado izquierdo hasta el 48 por ciento, que es el
+mismo procedimiento de París y del escenario con bruma. **87 KB**, dentro de
+presupuesto. Contraste: **titular 12,36 · dek 9,84 · crédito 5,66**.
+
+**Salvedad anotada: son dólares.** Para una agencia suiza que escribe en inglés
+no es incorrecto, pero tampoco es la moneda de casa. Si aparece una equivalente
+en euros con el mismo tamaño de sujeto, merece la pena cambiarla.
+
+**Mi opinión, que Blanca ha oído y ha decidido en contra, y la dejo escrita por
+si dentro de seis meses alguien se pregunta por qué.** El argumento del artículo
+es que esas cuatro vías pagan por profundidad y no por alcance: el dinero llega
+de personas concretas. Un fajo de billetes dice dinero como abstracción, sin
+nadie detrás, y es el sujeto más manido del banco de imágenes. El estudio de
+dormitorio decía «ese dinero aterriza en una persona en una habitación», que es
+la tesis del texto. Se pierde eso a cambio de que la cabecera se lea más rápido.
+
+`new-ways-photo-hero.webp` y su miniatura **quedan huérfanas**. No se borran
+todavía: si la decisión se revisa, están ahí.
+
+### Update 31 (16/08/2026) — dos listas, reproductores bajo demanda, y el estudio se borra
+
+MARCADOR-31: solo dos listas, y el embed de Spotify no carga hasta que se pulsa.
+
+**Se borra `new-ways-photo-hero.webp` y su miniatura.** El estudio de dormitorio
+quedó huérfano cuando entró el dinero en el update 30 y la decisión está tomada.
+`new-ways-figure.webp` NO se toca, esa sigue en uso en el cuerpo.
+
+**Las tres listas inactivas salen del copy.** `submit-your-track` nombraba cinco
+listas y solo dos se programan. En una página donde se paga, eso es una promesa
+falsa: alguien de bedroom & chill pagaba cinco euros contando con una lista que
+no se mueve. Fuera bedroom & chill, Zyzz Hardstyle y Prod. La Hater, de esa
+página y de la tarjeta de Services.
+
+**Y con ellas sale la cifra de 35.000.** Era el total de las cinco, incluidas las
+muertas. Leí las dos activas en Spotify el 16/08: **Urban Essentials 6.389
+guardados, Urban Spanish Essentials 15.951**. La página dice ahora **22.000 entre
+las dos**, redondeado a la baja, que es la misma regla que usamos en Results.
+
+**Regla nueva: una cifra que aparece al lado de un precio se vuelve a leer cada
+vez que se cita.** No se arrastra de un documento viejo.
+
+### El reproductor de Spotify: medido antes de decidir
+
+Cargué el embed en el navegador y lo medí en vez de suponerlo:
+
+- **36 peticiones a 7 dominios**, entre ellos `o22381.ingest.us.sentry.io`, que
+  es rastreo de errores de Spotify.
+- **Seis cookies nada más cargar**: `sp_t`, `sp_key`, **`sp_gaid`** (identificador
+  publicitario) y `OptanonConsent` más `eupubconsent-v2`, que son la cadena de
+  consentimiento IAB de OneTrust.
+- Eventos de experimentos e impresiones escritos en localStorage.
+
+Dos de esos en una página, para alguien que solo está leyendo, no se sostiene ni
+en peso ni en privacidad, y en Suiza y la UE eso pide consentimiento previo.
+
+**Solución: carga bajo demanda.** Se ve una tarjeta en el lenguaje del sitio con
+el nombre, los guardados y un botón. El iframe **no existe** hasta que se pulsa.
+Comprobado con el navegador escuchando la red: **cero dominios externos antes de
+pulsar**, y al pulsar aparece el iframe correcto. Coste: unos 400 bytes de JS en
+línea, delegado, un solo listener para los dos.
+
+### `igEmbed` pasa a array, antes del 26 y no el 26
+
+`igEmbeds: [{ url, after?, caption? }]`. `igEmbed` a secas **se queda tal cual**,
+así que los catorce artículos existentes validan sin tocarlos.
+
+- Con `after`, el embed lo coloca `rehype-media` **detrás de ese h2**, igual que
+  las figuras. Es lo que necesita un artículo agrupado del STEP 7: cada carrusel
+  bajo su sección.
+- Sin `after`, cae al final del cuerpo, que es el comportamiento de siempre.
+
+Probado de verdad, no solo compilado: un artículo con dos embeds, uno anclado y
+otro sin anclar. El anclado sale justo detrás de su h2 y el otro al final. Sin
+esto, un artículo que junta tres carruseles perdía dos de los tres enlaces.
+
+### 109records
+
+Comprobado en producción: **el nombre viejo no está en ninguna parte de la web**.
+Lo que había en `site.ts` desapareció cuando el update 21 metió las tres tarjetas
+reales. El perfil de Spotify ya sale como **@109music.co**, o sea que el cambio
+está hecho. Queda `info109records@gmail.com` como autor de los commits de git,
+que es historia y no se reescribe.

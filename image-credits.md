@@ -196,3 +196,29 @@ del 11/08/2026 sobre las etiquetas de IA tiene las imágenes exactas del tema, a
 todo el newsroom. SoundCloud no tiene ni capturas de producto ni página de notas
 de prensa (404). La ruta real sería pedirlo por correo, como hace la prensa
 especializada; Blanca decide no enviar correos y quedarse en Creative Commons.
+
+### Update 23 (16/08/2026) — dos heroes mas
+
+| Artículo | Archivo | Foto original | Año | Autor | Licencia | Ficha |
+|---|---|---|---|---|---|---|
+| music-marketing/sell-out-your-next-show | `sell-out-photo-hero.webp` + `-thumb` | `Audience - 15 Year Anniversary Tour at Enmore Theatre, 2025 (0R0A9687).jpg`, 7793x5195 | **2025** | Leoxiong | **CC BY-SA 4.0** | https://commons.wikimedia.org/wiki/File:Audience_-_15_Year_Anniversary_Tour_at_Enmore_Theatre,_2025_(0R0A9687).jpg |
+| news/eu-ai-act-labeling-live | `eu-ai-act-photo-hero.webp` + `-thumb` | `The European Parliament plenary session - July 2025 - 54644307137.jpg`, 7008x4672 | **2025** | Parlamento Europeo | **CC BY 4.0** | https://commons.wikimedia.org/wiki/File:The_European_Parliament_plenary_session_-_July_2025_-_54644307137.jpg |
+
+El gráfico tipográfico de sell-out baja al cuerpo como figura tras el primer h2.
+El de eu-ai-act no tiene h2 en el cuerpo, así que ese gráfico se retira.
+
+**EXCEPCION DE PESO, decidida con la curva medida delante.** Las dos superan el
+presupuesto de 120 KB: 153 KB y 146 KB a calidad 64. **La curva de compresión es
+plana**: bajar de calidad 64 a 48 solo ahorra un 18 por ciento y la degradación sí
+se ve. El peso no lo manda la calidad, lo manda el detalle — un público son
+cientos de caras y un hemiciclo son setecientos escaños.
+
+**Regla nueva: el presupuesto de 120 KB vale para gráficos y fotos limpias. Para
+fotos de multitud el techo sube a 160 KB.** Por debajo de eso se degrada sin
+ganar nada. Lo que no se toca es el criterio de descarte de tramas finas: una
+malla o una rejilla no baja de 190 KB ni destruyendo la imagen, y esas se siguen
+descartando.
+
+Contraste medido en las dos, ocho comprobaciones, ninguna falla. sell-out:
+titular 6,30 · dek 6,60 · metadatos 7,19 · crédito 5,45. eu-ai-act: 6,16 · 6,94 ·
+7,26 · 5,33.

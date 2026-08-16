@@ -4,12 +4,13 @@ dek: "Since 2 August 2026, AI-generated or AI-edited audio and video distributed
 date: 2026-08-10
 tags: ["news", "music-business"]
 hero:
-  src: "/img/articles/eu-ai-act-hero.webp"
-  alt: "A twelve-sided seal with a check mark inside"
-  thumb: "/img/articles/eu-ai-act-thumb.webp"
-  credit: "109MUSIC"
-  license: "Own work"
-  source: "own"
+  src: "/img/articles/eu-ai-act-photo-hero.webp"
+  alt: "The European Parliament in plenary session, Strasbourg"
+  thumb: "/img/articles/eu-ai-act-photo-thumb.webp"
+  credit: "European Parliament"
+  creditUrl: "https://commons.wikimedia.org/wiki/File:The_European_Parliament_plenary_session_-_July_2025_-_54644307137.jpg"
+  license: "CC BY 4.0"
+  source: "wikimedia"
 igEmbed: null
 sources:
   - name: "European Commission: AI Act regulatory framework"

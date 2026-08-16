@@ -6,11 +6,11 @@ tags: ["spotify-growth", "music-business"]
 moment: "pre-release"
 hero:
   src: "/img/articles/spotify-purge-photo-hero.webp"
-  alt: "Rows of server racks in a data centre, the scale a catalogue purge runs at"
+  alt: "A Spotify On Stage show in Bangkok, the audience filming from the floor"
   thumb: "/img/articles/spotify-purge-photo-thumb.webp"
-  credit: "Carl Lender"
-  creditUrl: "https://commons.wikimedia.org/wiki/File:Datacenter_Server_Racks_(22370909788).jpg"
-  license: "CC BY 2.0"
+  credit: "Sry85"
+  creditUrl: "https://commons.wikimedia.org/wiki/File:OneRepublic_at_Spotify_On_Stage_BKK_2019.jpg"
+  license: "CC BY-SA 4.0"
   source: "wikimedia"
 figures:
   - after: "what-actually-happened"

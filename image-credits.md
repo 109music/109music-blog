@@ -395,3 +395,26 @@ cabría ya tiene su figura, que dice lo mismo. Un segundo gráfico repitiendo el
 argumento es ruido. Además el artículo ya lleva dos piezas propias, la figura y
 el gráfico de barras de YouTube. El `.bat` del 27 los borra. `new-ways-figure.webp`
 NO se toca, esa sigue en uso.
+
+### Update 28 (16/08/2026) — los cinco salen de borrador
+
+`draft: true` fuera de los cinco. Se publican.
+
+**Cambio de fecha, y lo digo porque se ve.** Los cinco venían fechados entre el 31
+de agosto y el 4 de septiembre, siguiendo la regla del STEP 7 de que el artículo
+va después de sus carruseles. Publicándolos hoy, 16 de agosto, esas fechas salen
+en el futuro en una web que ya está en vivo, y eso se lee como un error.
+
+Los cinco pasan a **2026-08-16**, que es el día en que de verdad se publican. La
+regla de orden no se rompe: existe para que el `igEmbed` no apunte a un post que
+todavía no existe, y **estos cinco tienen `igEmbed: null`**. Sus carruseles son
+los posts de foto única de Meta de agosto, anteriores al pipeline, que nunca se
+iban a incrustar. Cuando el pipeline empiece a generar de verdad, con carruseles
+propios y permalink, la regla vuelve a morder y hay que respetarla.
+
+**El gráfico huérfano de new-ways queda borrado en el 27.** `new-ways-figure.webp`
+sigue en uso, esa no se toca.
+
+Estado tras el 28: **catorce artículos publicados, catorce con hero y miniatura,
+trece con foto real.** El único con gráfico propio es
+`viral-week-into-an-audience-you-own`.

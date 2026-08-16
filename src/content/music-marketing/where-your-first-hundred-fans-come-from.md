@@ -1,10 +1,9 @@
 ---
 title: "Where your first hundred real fans come from"
 dek: "Not from reach. From a narrow group of people who already want what you make, in a place small enough that you can be the one they know, given something to belong to once they arrive."
-date: 2026-09-02
+date: 2026-08-16
 tags: ["music-marketing", "instagram"]
 moment: "always-on"
-draft: true
 hero:
   src: "/img/articles/first-fans-photo-hero.webp"
   alt: "Four musicians playing on a bridge over a river in a city, instrument cases open at their feet"

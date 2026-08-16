@@ -1,10 +1,9 @@
 ---
 title: "Before you post anything"
 dek: "Two things worth settling first: an honest read on what level you are actually at, and the four decisions that turn an account into an artist brand. Both take an afternoon and both save you a year."
-date: 2026-09-04
+date: 2026-08-16
 tags: ["music-marketing", "release-strategy"]
 moment: "pre-release"
-draft: true
 hero:
   src: "/img/articles/before-you-post-photo-hero.webp"
   alt: "A stage set up with keyboards, mic stands and a drum kit under hazy yellow light, nobody on it yet"

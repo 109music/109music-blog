@@ -1,10 +1,9 @@
 ---
 title: "Film a month of content in one hour"
 dek: "One setup, three formats, thirty posts. Then a testing rule that stops you rebuilding from scratch every week: change one variable per post and let the feed tell you which one mattered."
-date: 2026-09-01
+date: 2026-08-16
 tags: ["music-marketing", "instagram", "tiktok"]
 moment: "always-on"
-draft: true
 hero:
   src: "/img/articles/content-system-photo-hero.webp"
   alt: "A guitar being played to a phone on a tripod in a dark room"

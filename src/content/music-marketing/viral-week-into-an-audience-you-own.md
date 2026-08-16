@@ -1,10 +1,9 @@
 ---
 title: "How to turn a viral week into an audience you own"
 dek: "A spike gives you attention on loan. This is the order of operations for converting it: where to send the traffic, what to collect while it is hot, and why chasing the spike with your whole feed costs more than it pays."
-date: 2026-08-31
+date: 2026-08-16
 tags: ["music-marketing", "tiktok", "instagram"]
 moment: "post-release"
-draft: true
 hero:
   src: "/img/articles/owned-audience-hero.webp"
   alt: "A spike of bars rising and falling away to nothing, and below it a solid unbroken line that continues past the edge"

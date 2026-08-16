@@ -1,10 +1,9 @@
 ---
 title: "What to release next, and how often"
 dek: "Two decisions that people make on instinct and should not: which of your finished songs to put money behind, and how long to wait before the next one. Test the first with twenty people. Set the second to a calendar, not a mood."
-date: 2026-09-03
+date: 2026-08-16
 tags: ["release-strategy", "music-marketing"]
 moment: "pre-release"
-draft: true
 hero:
   src: "/img/articles/release-pace-photo-hero.webp"
   alt: "A person working at a lit mixing desk in a dark room"

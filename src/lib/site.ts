@@ -115,7 +115,7 @@ export const pathOf = (collection: string, slug?: string) => {
 /* The navigation bar. Six destinations instead of nine.
    The rule Blanca set: what sells goes in the header, what is read can be grouped.
    Results and Services are the commercial pair, flat and first. Everything editorial
-   collapses under Learn — whose children are real anchors in the DOM of every page,
+   collapses under Blog — whose children are real anchors in the DOM of every page,
    grouped for the eye and never hidden from a crawler. On mobile the group flattens,
    because a submenu inside a hamburger is two taps to reach News. */
 export const NAV = [
@@ -123,8 +123,8 @@ export const NAV = [
   { href: '/services/', label: 'Services', id: 'services' },
   {
     href: '/music-marketing/',
-    label: 'Learn',
-    id: 'learn',
+    label: 'Blog',
+    id: 'blog',
     children: [
       { href: '/news/', label: 'News', id: 'news', blurb: 'What changed this week.' },
       { href: '/music-marketing/', label: 'Music Marketing', id: 'music-marketing', blurb: 'Playbooks, by release moment.' },
@@ -143,11 +143,11 @@ export const NAV_FLAT: { href: string; label: string; id: string }[] = NAV.flatM
 
 /** Which top-level nav item should light up for a given active section id. */
 export const NAV_PARENT: Record<string, string> = {
-  news: 'learn',
-  'music-marketing': 'learn',
-  'case-studies': 'learn',
-  business: 'learn',
-  tags: 'learn',
+  news: 'blog',
+  'music-marketing': 'blog',
+  'case-studies': 'blog',
+  business: 'blog',
+  tags: 'blog',
 };
 
 /* The one conversion point in the header, styled as a button rather than a link so it

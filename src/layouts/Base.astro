@@ -123,10 +123,10 @@ const ogImage = new URL(url(image), Astro.site).href;
                 type="button"
                 class="navgroup-btn"
                 aria-expanded="false"
-                aria-controls="nav-learn"
+                aria-controls="nav-blog"
                 aria-current={NAV_PARENT[activeSection] === n.id ? 'true' : undefined}
               >{n.label} <span class="caret" aria-hidden="true">▾</span></button>
-              <div class="navpanel" id="nav-learn">
+              <div class="navpanel" id="nav-blog">
                 <p class="navpanel-head mono">Everything we publish</p>
                 {n.children.map((c: any) => (
                   <a href={url(c.href)} aria-current={activeSection === c.id ? 'page' : undefined}>

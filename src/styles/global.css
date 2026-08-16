@@ -2262,7 +2262,7 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
 /* --- 01 · MENU MOVIL DE VERDAD -------------------------------------------
    El problema medido: a 390px la barra de escritorio se envolvia en tres lineas,
    187px de alto, "MUSIC MARKETING" cortada por el borde y 36px de desbordamiento
-   horizontal, o sea que la pagina se arrastraba de lado. Y el desplegable Learn
+   horizontal, o sea que la pagina se arrastraba de lado. Y el desplegable Blog
    se aplanaba, asi que sus cuatro hijos aparecian sueltos y la jerarquia de
    navegacion desaparecia. Era el criterio 07 entero suspendido.
 
@@ -2313,7 +2313,7 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
     padding: 10px 2px; border-bottom: 1px solid var(--on-dark-rule);
     font-size: 12px;
   }
-  /* Learn NO se aplana: sus hijos se indentan y siguen leyendose como hijos. */
+  /* Blog NO se aplana: sus hijos se indentan y siguen leyendose como hijos. */
   .navwrap > .nav .navgroup { display: block; }
   .navwrap > .nav .navpanel {
     position: static; display: block; opacity: 1; visibility: visible;

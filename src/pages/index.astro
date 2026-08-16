@@ -13,10 +13,14 @@
       claros consecutivos abren más padding entre ellos (.surf-bone + .surf-bone).
       Dos superficies, negro y hueso, y nada intermedio.
 
-   2. EL BLOQUE EDITORIAL ES UN ESCAPARATE, NO UN ARCHIVO. Tres artículos como
-      máximo y tres enlaces de sección encima. Los enlaces son <a> reales, no
-      filtros en cliente: con tres artículos un filtro no revela nada, y un enlace
-      reparte autoridad hacia News, Music Marketing y Business. Coste en JS: cero.
+   2. EL BLOQUE EDITORIAL ES UN ESCAPARATE, NO UN ARCHIVO. Cuatro artículos como
+      máximo y cuatro enlaces de sección encima. Los enlaces son <a> reales, no
+      filtros en cliente: con cuatro artículos un filtro no revela nada, y un
+      enlace reparte autoridad hacia News, Music Marketing, Case Studies y
+      Business. Coste en JS: cero.
+
+      La cuarta fila entra el 16/08 y está reservada: sin ella los case studies no
+      llegaban nunca a la home, no por el filtro sino por el desempate de fechas.
 */
 import Base from '../layouts/Base.astro';
 import Row from '../components/Row.astro';
@@ -38,7 +42,21 @@ for (const s of SECTIONS) {
   for (const e of live(await getCollection(s.id as any))) everything.push(e);
 }
 everything.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-const latest = everything.slice(0, 3);
+
+/* CUATRO FILAS, Y LA CUARTA ESTA RESERVADA. El feed ya leia las tres colecciones
+   — case-studies incluida — desde el principio. Lo que fallaba es el desempate:
+   seis articulos comparten fecha y el orden lo decidia el recorrido de SECTIONS,
+   donde case-studies va la ultima. Resultado, un case study nunca llegaba a la
+   home aunque fuera igual de reciente. No se toca el criterio de fecha, que es el
+   correcto: se reserva la ultima fila para el case study mas reciente cuando
+   ninguno ha entrado por su propio pie. Si ya hay uno arriba, la cuarta fila es
+   el siguiente articulo por fecha y no se pierde nada. */
+const topThree = everything.slice(0, 3);
+const newestCase = everything.find((e: any) => e.collection === 'case-studies');
+const fourth = topThree.some((e: any) => e.collection === 'case-studies')
+  ? everything[3]
+  : (newestCase ?? everything[3]);
+const latest = [...topThree, fourth].filter(Boolean);
 
 const resultsLive = RESULTS_LIVE && RESULTS.length > 0;
 
@@ -243,10 +261,10 @@ const schema = {
 
   <div class="wrap">
 
-    {/* 05 · Learn it free. "Latest" sonaba a blog y escondía lo único que hace
+    {/* 05 · El blog, gratis. "Latest" sonaba a blog y escondía lo único que hace
         distinta a esta casa: que el método está publicado y no cuesta nada. El
         título paga la promesa que hace el hero, literalmente con las mismas
-        palabras. Tres artículos, tope. */}
+        palabras. Cuatro artículos, tope, con la cuarta fila reservada. */}
     {/* Sin <Ambient /> aqui: el lavado lila que sobraba en este bloque no era solo
         el tinte, era tambien el blob ambiental. Un listado de lectura no necesita
         atmosfera; la necesitan los bloques que venden. */}
@@ -262,10 +280,11 @@ const schema = {
           written down. No signup, no gate.
         </p>
         {/* Enlaces reales a cada sección, no filtros. Cero JavaScript y reparten
-            autoridad hacia las tres secciones. */}
+            autoridad hacia las cuatro superficies editoriales. */}
         <nav class="pills" aria-label="Browse by section">
           <a class="pill-link mono" href={url('/news/')}>News</a>
           <a class="pill-link mono" href={url('/music-marketing/')}>Music Marketing</a>
+          <a class="pill-link mono" href={url('/music-marketing/case-studies/')}>Case Studies</a>
           <a class="pill-link mono" href={url('/business/')}>The Money Side</a>
         </nav>
         <ul class="rows">

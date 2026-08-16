@@ -49,12 +49,7 @@ I would rather have four hundred emails from a spike than forty thousand views f
 
 Not all attention is worth the same, and the gap is bigger than people expect. Short-form video platforms tend to move people to streaming better than a feed post does, because the sound is already the thing they engaged with. A photo post asks the viewer to go and look for the music. A video with your track under it has already played it to them.
 
-<div class="keyfact">
-  <span class="mono">Where I stop short</span>
-  <p>You will see figures claiming one platform converts ten times better than another. I have not found a source for that number I would put my name on, and account-level conversion varies enormously by genre and by how the link is set up. Treat the direction as sound and the multiple as unproven. Measure your own: unique link clicks divided by views, per platform, for a month.</p>
-</div>
-
-The measurement matters more than the benchmark. Set up a separate link for each platform so you can tell them apart, then look at click rate rather than view count. Most artists discover their smaller platform is doing more work than the big one, and then move their effort accordingly.
+Which is why the only number worth trusting here is your own. Set up a separate link for each platform so you can tell them apart, then look at click rate rather than view count. Most artists discover their smaller platform is doing more work than the big one, and then move their effort accordingly.
 
 The wider context is worth holding in your head while you do this. [Luminate's 2026 midyear report](https://luminatedata.com/reports/) put global on-demand streams up 9.8 percent, to 2.8 trillion, while US growth reached only 4.8 percent. More listening is happening than ever, and it is spread across more releases than ever. Attention is abundant. The scarce thing is a way to reach the same person twice.
 

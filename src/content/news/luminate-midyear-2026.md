@@ -4,12 +4,13 @@ dek: "Luminate's midyear 2026 report puts global on-demand streams up 9.8 percen
 date: 2026-08-11
 tags: ["news", "music-business"]
 hero:
-  src: "/img/articles/luminate-hero.webp"
-  alt: "A row of bars with two picked out in lavender"
-  thumb: "/img/articles/luminate-thumb.webp"
-  credit: "109MUSIC"
-  license: "Own work"
-  source: "own"
+  src: "/img/articles/luminate-photo-hero.webp"
+  alt: "A large night crowd at an open-air festival, facing a lit stage"
+  thumb: "/img/articles/luminate-photo-thumb.webp"
+  credit: "Nicolás Flor"
+  creditUrl: "https://unsplash.com/photos/crowd-watches-a-dj-perform-on-a-brightly-lit-stage-sa0tkcjgVLU"
+  license: "Unsplash License"
+  source: "unsplash"
 igEmbed: null
 sources:
   - name: "Luminate: 2026 Midyear Music Report"

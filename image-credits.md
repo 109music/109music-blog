@@ -283,3 +283,59 @@ Con Unsplash entrando en el catálogo, el enum pasa a
 `wikimedia | unsplash | pexels | presskit | own`. Sigue siendo cerrado: un valor
 no listado rompe el build a propósito, que es lo que queremos. `photoHero` no
 cambia, sigue siendo «cualquier cosa que no sea `own`».
+
+### Update 26 (16/08/2026) — News deja de ser mitad foto y mitad gráfico
+
+| Artículo | Archivo | Foto original | Año | Autor | Licencia | Ficha |
+|---|---|---|---|---|---|---|
+| news/luminate-midyear-2026 | `luminate-photo-hero.webp` + `-thumb` | `sa0tkcjgVLU`, 7952x4472 | 2026 | Nicolás Flor | **Unsplash License** | https://unsplash.com/photos/crowd-watches-a-dj-perform-on-a-brightly-lit-stage-sa0tkcjgVLU |
+| news/soundcloud-the-upload-launch | `soundcloud-photo-hero.webp` + `-thumb` | `GxYek2QfwpA`, 5650x3767 | 2025 | Janay Peters | **Unsplash License** | https://unsplash.com/photos/GxYek2QfwpA |
+
+**El criterio se amplía, por decisión de Blanca (16/08).** La imagen no tiene que
+ser literal del tema. Vale cualquier cosa que hable de música y de audiencia
+siempre que encaje razonablemente. Prioridad, en este orden: que sea de música,
+que sea buena foto, que encaje. **Una buena foto de concierto gana a un gráfico
+generado.**
+
+El detonante fue mirar el listado de News: el AI Act con foto real de un pleno
+del Parlamento, y a los lados dos gráficos. Al lado de una foto de verdad, un
+gráfico generado desentona. Un listado mezclado se lee peor que uno coherente,
+sea de fotos o sea de gráficos, y aquí la opción buena es fotos.
+
+**Luminate: público enorme de noche.** El artículo va de escala global de
+escucha, y una masa de gente delante de un escenario dice escala sin explicar
+nada. Original de 7952x4472, ya en 16:9 exacto, así que va a fondo completo sin
+recorte. Gamma 0,88. **39 KB**, la cabecera más ligera del blog, porque es casi
+toda negro con una fuente de luz.
+
+**SoundCloud: sala pequeña con el escenario montado.** Focos rojos, batería, unas
+siluetas esperando. El artículo va de curación humana y de artistas emergentes, y
+esto es exactamente la habitación donde toca alguien que nadie conoce todavía.
+Recorte 16:9 desde y=230 para conservar la fila de focos, que es lo que da la
+escala del techo. 100 KB.
+
+**Las dos son distintas entre sí y distintas de las dos que ya teníamos.** El
+Enmore es un patio de butacas lleno visto desde arriba; la de Spotify es un
+escenario con el público grabando. Luminate es exterior de noche a mucha
+distancia y SoundCloud es interior con el escenario vacío. Cuatro fotos con
+público o escenario y ninguna se parece a otra, que era la condición.
+
+Contraste, peor píxel compuesto: **Luminate 13,93 · 9,63 · 5,66. SoundCloud
+12,79 · 10,07 · 5,66.** Las dos cabeceras con más margen del sitio junto a la de
+new-ways.
+
+**Salvedad que dejo por escrito: en la de Luminate se lee «PURA FIESTA VIP» en la
+pantalla del escenario.** Es el nombre del evento, no una marca comercial que
+pinte nada, y entra por la misma regla que el rótulo del portátil en new-ways: es
+una fotografía de una explanada con gente, no un cartel. Pero es el objeto más
+brillante del encuadre y se lee. **No hay recorte que lo arregle** — moverlo
+hacia un lado lo deja debajo del titular y cerrar el encuadre lo agranda, que es
+la lección del photocall de Charli. Si a Blanca le molesta, la alternativa ya
+buscada es `yy8KMTJwpaI`, 5830x4000, joël Armand Amissa, misma idea con luz
+naranja y sin rótulo.
+
+**Descartadas en esta ronda, para no repetir la búsqueda:** `XpxuhBvekjQ` y todo
+el material de tiendas de vinilo (Unsplash+ o portadas de terceros en primer
+plano); `9zh8fSUQb8w`, buena foto de club pero con el rótulo «Solomons Jazz Club»
+legible; `lstL0OETugY`, un cantante identificable en primer plano; `B4Q0RxtWS84`,
+otro patio de butacas lleno, demasiado parecido al Enmore.

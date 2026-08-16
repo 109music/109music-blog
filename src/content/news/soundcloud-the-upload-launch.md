@@ -4,12 +4,13 @@ dek: "SoundCloud launched The Upload on 3 August 2026: a weekly human-curated di
 date: 2026-08-09
 tags: ["news", "music-business", "revenue"]
 hero:
-  src: "/img/articles/soundcloud-hero.webp"
-  alt: "A queue of marks with two picked out and flagged"
-  thumb: "/img/articles/soundcloud-thumb.webp"
-  credit: "109MUSIC"
-  license: "Own work"
-  source: "own"
+  src: "/img/articles/soundcloud-photo-hero.webp"
+  alt: "A small club stage under red lights, drum kit set up, a few silhouettes waiting"
+  thumb: "/img/articles/soundcloud-photo-thumb.webp"
+  credit: "Janay Peters"
+  creditUrl: "https://unsplash.com/photos/GxYek2QfwpA"
+  license: "Unsplash License"
+  source: "unsplash"
 igEmbed: null
 sources:
   - name: "Hypebot: SoundCloud adds The Upload to combat algorithmic fatigue (3 Aug 2026)"

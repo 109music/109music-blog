@@ -2804,3 +2804,73 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
   font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
   color: var(--lav-deep);
 }
+
+/* ==========================================================================
+   PASE 15 (2026-08-16) · LO QUE DICEN LAS ARTISTAS
+
+   Va DENTRO de la seccion de Real Results, no en una seccion aparte. Las
+   tarjetas ponen el dato y las citas ponen la voz: son las dos mitades de la
+   misma prueba, y separarlas en dos bloques numerados haria que la segunda
+   pesara menos por el simple hecho de ir despues.
+
+   Sin foto, y no por falta de material. Una cara junto a una cita compite con
+   las caratulas que estan justo encima, que ya hacen ese trabajo y ademas son
+   el objeto real. Con foto el bloque se lee como un carrusel de retratos; sin
+   ella se lee como lo que es, tres personas hablando.
+
+   La cita NO lleva comillas dibujadas ni comillon decorativo. El filete de la
+   izquierda ya dice que es una cita, y el sitio entero son filetes de 1px.
+   ========================================================================== */
+
+/* El filete de arriba no es adorno: cierra el bloque de las tarjetas y abre
+   otro. Sin el, las tres citas caen en columnas que coinciden al pixel con las
+   tres tarjetas, y eso invita a leer cada cita como si fuera de la artista que
+   tiene encima. Solo una de las tres lo seria. */
+.says {
+  margin-top: clamp(38px, 4.5vw, 60px);
+  padding-top: clamp(30px, 3.4vw, 44px);
+  border-top: 1px solid var(--on-bone-rule);
+}
+
+.says-head {
+  margin: 0 0 20px;
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--lav-deep);
+}
+
+/* Una sola columna en movil, tres en escritorio. El mismo salto de 1000px que
+   la rejilla de las tarjetas, para que los dos bloques cambien de forma a la
+   vez y no en dos momentos distintos al estrechar la ventana. */
+.says-grid { display: grid; gap: 26px; }
+@media (min-width: 1000px) {
+  .says-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: stretch; }
+}
+
+.say {
+  display: flex; flex-direction: column;
+  margin: 0; padding: 0 0 0 18px;
+  border-left: 1px solid var(--on-bone-rule);
+}
+
+.say-q { margin: 0; }
+/* 17px y no mas: la cita no puede acercarse a la cifra de la tarjeta, que es
+   lo que manda en este bloque. Aqui se lee, no se proclama. */
+.say-q p {
+  margin: 0;
+  font-size: 17px; line-height: 1.5; color: var(--ink);
+  text-wrap: pretty;
+}
+
+/* `margin-top: auto` empuja la firma al fondo, igual que en las tarjetas: las
+   tres citas tienen largos muy distintos y sin esto las firmas quedan a tres
+   alturas. */
+.say-by { margin-top: auto; padding-top: 14px; }
+.say-name {
+  display: block;
+  font-size: 13px; font-weight: 600; letter-spacing: .01em; color: var(--ink);
+}
+.say-work {
+  display: block; margin-top: 3px;
+  font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--on-bone-faint);
+}

@@ -412,3 +412,67 @@ export const RESULTS: ResultCard[] = [
     art: '/img/results/cover-karma.webp',
   },
 ];
+
+/* ==========================================================================
+   TESTIMONIOS (16/08/2026)
+
+   Salen de la pagina 6 de la lista de precios, MARKETING > PRICE LISTS 2026 en
+   el Drive de info109records. Comprobadas la version inglesa y la espanola: las
+   dos dicen exactamente lo mismo y con las mismas cifras.
+
+   LA REGLA QUE MANDA AQUI, Y POR QUE DOS CITAS VAN RECORTADAS:
+
+     Una cita NUNCA repite un numero que su tarjeta de Real Results ya da.
+
+   No es pudor, es que los dos bloques van en la misma pantalla y el numero no
+   coincide. Caso a caso:
+
+   - LA KARMA. Su tarjeta mide oyentes mensuales (de 500+ a 25.000+). Su cita
+     media lo mismo y decia otra cosa: "from 300 monthly listeners to over
+     20.000". Lo de 20.000 contra 25.000 se explica solo, la cita es anterior y
+     la campana siguio. Lo que NO se explica es la partida: 300 contra 500+, y
+     un punto de partida no crece con el tiempo. Fuera la frase entera. Le queda
+     elogio sin datos, y esta bien asi: la prueba la pone su tarjeta, que esta al
+     lado. Una cita cargada de cifras compite con la tarjeta en vez de sumar.
+   - MIR NARANJO. Su tarjeta mide STREAMS (65.000+). Su cita decia "nearly
+     50.000 streams", misma metrica y otro numero: fuera esa parte. Los oyentes
+     mensuales se quedan porque su tarjeta no los da, asi que no se pisan y
+     ademas aportan un dato que no estaba en ningun sitio.
+   - INSTINTO DK. Entera. No lleva ni un numero y no tiene tarjeta, asi que no
+     puede contradecir nada. Es tambien la unica que habla de la consultoria.
+
+   `full` guarda la cita completa del PDF. No se usa en la web: esta ahi para
+   que dentro de seis meses se vea que se recorto y no haya que abrir el Drive
+   para saber si falta algo o si sobraba.
+
+   SI ALGUN DIA HAY CIFRAS CONFIRMADAS POR LA ARTISTA: se actualiza la tarjeta,
+   NO se devuelve el numero a la cita. La regla no cambia.
+   ========================================================================== */
+export type Testimonial = {
+  quote: string;
+  name: string;
+  /* Que hicimos con esa persona. No es el tema, es el servicio, porque el tema
+     ya sale en su tarjeta y repetirlo es ruido. */
+  work: string;
+  full?: string;
+};
+
+export const TESTIMONIALS: Testimonial[] = [
+  {
+    quote: 'Working with 109MUSIC was the best decision I\'ve made.',
+    name: 'LA KARMA',
+    work: 'Playlisting and Meta ads',
+    full: 'Working with 109MUSIC was the best decision I\'ve made. I went from 300 monthly listeners on Spotify to over 20,000.',
+  },
+  {
+    quote: 'I ran Meta Ads with 109MUSIC for my song LOCA LA CABEZA and went from 500 to over 7,000 monthly listeners.',
+    name: 'Mir Naranjo',
+    work: 'Meta ads',
+    full: 'I ran Meta Ads with 109MUSIC for my song LOCA LA CABEZA and went from 500 to over 7,000 monthly listeners and nearly 50,000 streams.',
+  },
+  {
+    quote: 'My consultation with 109MUSIC surprised me. I learned things I didn\'t even know about marketing. I started applying them and my promotion has improved massively.',
+    name: 'Instinto DK',
+    work: 'Consultation',
+  },
+];

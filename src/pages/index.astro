@@ -30,7 +30,7 @@ import Ambient from '../components/Ambient.astro';
 import { getCollection } from 'astro:content';
 import {
   SITE, SECTIONS, STEPS, url, readingTime, labelOf, wa, pathOf,
-  RESULTS_LIVE, RESULTS, RESULT_NOTES,
+  RESULTS_LIVE, RESULTS, RESULT_NOTES, TESTIMONIALS,
 } from '../lib/site';
 
 const live = (arr: any[]) =>
@@ -146,6 +146,33 @@ const schema = {
             {nte.line}
           </p>
         ))}
+
+        {/* TESTIMONIOS, DENTRO DE LA MISMA SECCION Y A PROPOSITO (16/08).
+
+            No es un bloque nuevo con su propio numero. Va aqui dentro, bajo las
+            tarjetas, porque hace el mismo trabajo desde el otro lado: las
+            tarjetas ponen el dato y las citas ponen la voz. Separarlos en dos
+            secciones numeradas convertiria una prueba en dos, y la segunda
+            siempre pesa menos.
+
+            Dos de las tres personas que hablan aqui tienen tarjeta arriba, y
+            eso es una ventaja: el lector ve el numero y despues oye a la misma
+            artista. Por eso las citas NO repiten cifras. El motivo largo esta
+            en TESTIMONIALS, en site.ts. */}
+        <div class="says">
+          <p class="says-head mono">What our artists say</p>
+          <div class="says-grid">
+            {TESTIMONIALS.map((t) => (
+              <figure class="say">
+                <blockquote class="say-q"><p>{t.quote}</p></blockquote>
+                <figcaption class="say-by">
+                  <span class="say-name">{t.name}</span>
+                  <span class="say-work mono">{t.work}</span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
       </section>
     )}
 

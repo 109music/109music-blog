@@ -25,7 +25,6 @@
 import Base from '../layouts/Base.astro';
 import Row from '../components/Row.astro';
 import ResultCard from '../components/ResultCard.astro';
-import ResultNote from '../components/ResultNote.astro';
 import SectionMarker from '../components/SectionMarker.astro';
 import Ambient from '../components/Ambient.astro';
 import { getCollection } from 'astro:content';
@@ -137,12 +136,16 @@ const schema = {
           <div class="rcarousel-track" tabindex="0" role="group"
                aria-label="Client results, scroll horizontally">
             {RESULTS.map((r) => <ResultCard data={r} />)}
-            {/* Las notas van SIEMPRE detras de los resultados reales, nunca
-                intercaladas: en escritorio las tres primeras tarjetas visibles
-                tienen que ser las tres cifras, que es el argumento del bloque. */}
-            {RESULT_NOTES.map((nte) => <ResultNote data={nte} />)}
           </div>
         </div>
+        {/* La nota de medicion, como letra pequena y no como naipe negro. De
+            tarjeta competia con las cifras y rompia la rejilla de tres. */}
+        {RESULT_NOTES.map((nte) => (
+          <p class="rnote-line">
+            <span class="mono">{nte.kicker}</span>
+            {nte.line}
+          </p>
+        ))}
       </section>
     )}
 

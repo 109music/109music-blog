@@ -1369,7 +1369,6 @@ body {
   color: var(--ink);
 }
 .rcard-label { margin: 7px 0 0; font-size: 14px; color: var(--on-bone-mute); }
-.rcard-rule { display: block; height: 1px; background: var(--on-bone-rule); margin: 16px 0 12px; }
 .rcard-ctx { margin: 0 0 0; font-size: 12px; line-height: 1.62; color: var(--on-bone-faint); }
 /* The baseline is the part that makes the figure evidence. It gets the accent. */
 .rcard-ctx b { color: var(--lav-deep); font-weight: 600; }
@@ -1665,7 +1664,6 @@ body {
 
 /* Hover de tarjeta: el contorno no se tiñe. Se mueve, que ya es señal suficiente. */
 .leadcard:hover { border-color: var(--on-bone-rule); }
-.rcard:hover { border-color: var(--on-bone-rule); }
 
 /* --------------------------------------------------------------------------
    B · EL PATRÓN DE NEWS, EN TODOS LOS LISTADOS
@@ -1961,7 +1959,6 @@ body {
    sigue siendo lo primero que se lee, que es el punto entero del componente.
    Y el plate de reserva tiene que VERSE: un cuadrado negro vacio parece un fallo
    de carga, no una decision. */
-.rcard-art { aspect-ratio: 4 / 3; object-fit: cover; }
 .rcard-art--plate {
   display: grid; place-items: center; background: var(--ink);
   font-family: var(--display); font-weight: 800; font-size: 34px;
@@ -2356,7 +2353,6 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
    Tenia esquinas redondeadas y sombra suave; el resto del sitio son filetes de
    1px y esquinas vivas. Dos idiomas en la misma pagina, y como el bloque de
    resultados es lo primero que se ve, mandaba la excepcion. */
-.rcard { border-radius: 0; box-shadow: none; border: 1px solid var(--on-bone-rule); }
 .rnote { border-radius: 0; }
 
 /* --- 06 · la unica transicion cara ---------------------------------------
@@ -2428,25 +2424,11 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
 @media (min-width: 860px) { .around-price { text-align: right; } }
 
 /* --- La tarjeta de resultado, simplificada (2026-08-14) ------------------- */
-/* La cifra manda, pero "+1,819%" tiene ocho caracteres y "25,000" seis: a tamaño
-   fijo el largo se salia de la tarjeta. `cqw` no vale porque la tarjeta no es un
-   contenedor de consulta, asi que el tope baja y se permite encoger. */
-.rcard-figure {
-  display: block; margin-top: 4px; line-height: .92;
-  font-size: clamp(38px, 4.4vw, 56px);
-  white-space: nowrap;
-}
-.rcard-ctx { margin-top: 10px; font-size: 13px; line-height: 1.5; color: var(--on-bone-mute); }
-.rcard-unit { color: var(--ink); font-weight: 700; }
-/* La caratula vuelve a CUADRADA y a sangre contra el borde superior, como en la
-   referencia. La habia pasado a 4:3 porque a 1:1 se comia la cifra; con la cifra
-   ya acotada por el clamp, el cuadrado cabe y es el formato correcto: una
-   caratula es cuadrada. */
-.rcard-art { aspect-ratio: 1 / 1; }
-.rcard-label { display: block; margin-top: 6px; font-size: 13.5px; color: var(--on-bone-mute); }
-.rcard-rule { display: block; height: 1px; background: var(--on-bone-rule); margin: 16px 0 12px; }
-.rcard-ctx { margin-top: 0; font-size: 12.5px; line-height: 1.5; color: var(--on-bone-mute); }
-.rcard-unit { color: var(--ink); font-weight: 700; }
+/* Aqui vivian cuatro correcciones de la tarjeta (cifra, filete, unidad,
+   caratula). Se han ido al PASE 14, al final del archivo, junto con las de los
+   pases 8, 10b y 10c. Motivo en el encabezado de aquel bloque: eran cinco sitios
+   distintos declarando lo mismo y lo que salia en pantalla no lo decidio nadie.
+   No devolver reglas de `.rcard-*` a esta zona. */
 
 /* ==========================================================================
    PASE 9 (2026-08-15) · la fila de listado con imagen a la IZQUIERDA
@@ -2570,14 +2552,6 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
    estiraba en vertical por dos razones a la vez: 26px de acolchado y una cifra
    de 56px. Con el texto recortado y estas medidas se compacta sola. */
 .rcarousel-track { grid-auto-columns: 268px; }
-.rcard { padding: 0; }
-.rcard-body { padding: 16px 16px 18px; }
-.rcard-artist { font-size: 10px; letter-spacing: .14em; }
-.rcard-track { font-size: 13.5px; }
-.rcard-figure { font-size: clamp(30px, 3.2vw, 38px); margin-top: 8px; }
-.rcard-label { font-size: 13px; margin-top: 3px; }
-.rcard-rule { margin: 12px 0 9px; }
-.rcard-ctx { font-size: 11.5px; }
 
 /* ==========================================================================
    PASE 10c (2026-08-15) · La caratula era cuadrada solo sobre el papel
@@ -2590,20 +2564,12 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
    320 de alto: ni cuadrada ni 4:3, un formato que nadie decidio.
    `height: auto` devuelve el mando al aspect-ratio sin tocar los atributos, que
    siguen evitando el salto durante la carga. */
-.rcard-art { height: auto; }
 
-/* Con la caratula ya cuadrada la tarjeta baja de 518 a ~462 (ratio 1.73 en vez
-   de 1.93), que era la queja. Pero el panel de la nota es mas alto que una
-   tarjeta, y como el carrusel es un grid, su fila estiraba las tres tarjetas
-   hasta la altura de la nota y metia un hueco muerto bajo el contexto.
-   `align-items: start` deja que cada pieza mida lo suyo: las tres tarjetas son
-   identicas entre si, que es lo unico que tiene que cuadrar. */
-.rcarousel-track { align-items: start; }
-/* El panel de la nota si estira, a proposito. Su altura natural son 226px y al
-   lado de una tarjeta de 464 se queda flotando como un recorte suelto; es una
-   pieza de la misma fila, no una tarjeta corta. Ahora la fila la marcan las
-   tarjetas y el panel las acompana. */
-.rcarousel-track > .rnote { align-self: stretch; }
+/* Aqui estaban `align-items: start` y el estirado del naipe de la nota. Los dos
+   existian por la misma razon: la nota viajaba DENTRO del carrusel y su altura
+   arrastraba la fila. Desde el PASE 14 la nota es letra pequena debajo del
+   bloque, asi que la fila la forman tres piezas identicas y tienen que estirar
+   igual: el estirado se pide alli, no se prohibe aqui. */
 
 /* --- PASE 10c · el dek sobre imagen no es el dek sobre negro ---------------
    Medido pixel a pixel sobre los siete heroes compuestos con el velo: el peor
@@ -2722,3 +2688,119 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
 .player-out { font-size: 10px; letter-spacing: .11em; text-transform: uppercase; color: var(--on-bone-faint); }
 .player iframe { border: 0; display: block; }
 .player-note { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--on-bone-faint); margin: 0 0 18px; }
+
+/* ==========================================================================
+   PASE 14 (2026-08-16) · LA TARJETA DE RESULTADO, DE UNA SOLA PIEZA
+
+   POR QUE SE VEIAN MAL. No era un valor equivocado, eran SIETE PASES
+   superponiendose. `.rcard-*` estaba declarado en cinco sitios distintos del
+   archivo y cada pase anadia una correccion encima en vez de editar la de
+   antes. Lo que se veia en pantalla no lo decidio nadie: era la interseccion
+   accidental de todos. Medido en el navegador antes de tocar nada:
+
+     - caratula 273x262, ratio 1.04. Ni cuadrada ni rectangular: un formato
+       que nadie eligio, resultado de pelearse `aspect-ratio` con `height:auto`.
+       Y al salir distinta en cada tarjeta, TODO lo de debajo se desalineaba
+       entre las tres.
+     - radio 0, cuando la referencia y el resto del sistema son 16px.
+     - cifra a 38px con interlineado 0,92. La referencia la pone a 48.
+     - relleno 16px en vez de 20px.
+
+   Y encima el coverflow: las tarjetas 1 y 3 giradas 16 grados. Eso es lo unico
+   de este bloque que NO viene de la referencia, y es lo que mas dano hace: una
+   cifra en perspectiva se lee peor, y este bloque existe para que se lea la
+   cifra. Fuera.
+
+   A partir de aqui, TODA la tarjeta se declara aqui y en ningun otro sitio.
+   ========================================================================== */
+
+/* --- 1 · la tarjeta --------------------------------------------------- */
+.rcard {
+  border-radius: 16px;
+  border: 1px solid var(--on-bone-rule);
+  background: var(--white);
+  overflow: hidden;
+  padding: 0;
+}
+.rcard:hover { border-color: var(--lav-deep); transform: none; }
+
+/* --- 2 · la caratula, cuadrada de verdad ------------------------------
+   El <img> lleva width y height como ATRIBUTOS para reservar el hueco. Un
+   height explicito gana a aspect-ratio, asi que hay que neutralizar los dos
+   con `height:auto` Y dejar el ratio mandando. Una sola regla, sin peleas. */
+.rcard-art {
+  display: block; width: 100%; height: auto;
+  aspect-ratio: 1 / 1; object-fit: cover;
+}
+
+/* --- 3 · el cuerpo, con el contexto anclado abajo ----------------------
+   `margin-top:auto` en el filete empuja el contexto al fondo. Asi las tres
+   tarjetas alinean su ultima linea aunque el texto tenga distinto largo, que
+   era la mitad del desorden. */
+.rcard-body { display: flex; flex-direction: column; flex: 1; padding: 20px; }
+.rcard-artist {
+  margin: 0; font-size: 11px; font-weight: 500; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--on-bone-faint);
+}
+.rcard-track {
+  margin: 3px 0 18px; font-size: 14px; font-weight: 600;
+  line-height: 1.25; color: var(--ink);
+}
+.rcard-figure {
+  display: block; margin: 0; font-family: var(--display); font-weight: 600;
+  font-size: clamp(38px, 3.4vw, 48px); line-height: 1; letter-spacing: -.035em;
+  color: var(--ink); white-space: nowrap;
+}
+.rcard-label { margin: 9px 0 0; font-size: 14px; line-height: 1.35; color: var(--on-bone-mute); }
+/* `margin-top: auto` es lo que ancla el contexto al fondo. El resto de margenes
+   a cero: si se escriben en la forma corta hay que poner el auto DENTRO de esa
+   forma, o la segunda declaracion pisa a la primera y el anclaje se pierde. */
+.rcard-rule {
+  display: block; width: 100%; height: 1px;
+  background: var(--on-bone-rule);
+  margin: auto 0 0;
+}
+.rcard-ctx { margin: 12px 0 0; font-size: 12px; line-height: 1.6; color: var(--on-bone-faint); }
+.rcard-ctx b { color: var(--lav-deep); font-weight: 600; }
+.rcard-unit { color: var(--ink); font-weight: 700; }
+
+/* --- 4 · fuera el ladeo ------------------------------------------------ */
+@media (min-width: 1000px) {
+  .rcarousel-track > :nth-child(1),
+  .rcarousel-track > :nth-child(3),
+  .rcarousel-track > :hover { transform: none; }
+}
+.rcarousel-track > .rcard { animation-name: none; transform: none; }
+
+/* --- 5 · tres tarjetas, rejilla, no carrusel ---------------------------
+   Hay exactamente tres resultados y en escritorio caben los tres. Un carrusel
+   para tres cosas que caben es movimiento sin motivo. En movil sigue siendo
+   scroller, que ahi si hace falta. */
+@media (min-width: 1000px) {
+  .rcarousel { overflow: visible; }
+  .rcarousel-track {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    overflow: visible; padding-block: 0;
+    /* Explicito, y no por gusto: `align-items: start` estaba puesto mas arriba
+       para que el naipe de la nota no estirase la fila. Sin estirado, una
+       tarjeta con contexto de una linea mide menos que las otras y el
+       `margin-top: auto` del filete no tiene contra que empujar. */
+    align-items: stretch;
+  }
+}
+
+/* --- 6 · la nota deja de ser una tarjeta -------------------------------
+   En la referencia la nota de medicion es letra pequena debajo del bloque, no
+   un naipe negro del mismo tamano que un resultado. Como tarjeta competia con
+   las cifras y ademas rompia la rejilla de tres. */
+.rnote-line {
+  margin: 22px 0 0; padding-top: 14px;
+  border-top: 1px solid var(--on-bone-rule);
+  font-size: 12.5px; line-height: 1.6; color: var(--on-bone-faint);
+  max-width: 78ch;
+}
+.rnote-line .mono {
+  display: block; margin-bottom: 5px; font-family: var(--mono);
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--lav-deep);
+}

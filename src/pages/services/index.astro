@@ -1,63 +1,158 @@
 ---
+/* SERVICES, reestructurada 2026-08-16 (pase 12).
+
+   Tres bloques, y el orden cuenta el recorrido de entrada, no el catalogo:
+   primero lo unico que se compra sin hablar con nadie, despues los dos
+   servicios que si son conversacion.
+
+   EL PROBLEMA DE JERARQUIA, Y COMO SE RESUELVE. Poner el producto de 5 EUR
+   primero corre el riesgo de que parezca el principal. La solucion no es el
+   orden, es el tamano: la puerta es una TARJETA CONTENIDA con h3, y los dos
+   servicios son SECCIONES ABIERTAS con display h2, que a esta escala es casi
+   el doble de alto. Lo pequeno y encajonado se lee como producto; lo grande y
+   abierto, como servicio.
+
+   SIN PRECIOS, salvo dos excepciones deliberadas:
+   - los 5 EUR del envio, porque es una transaccion y no decir el importe antes
+     de mandar a pagar seria peor que no publicarlo;
+   - el "desde 100 EUR" del pitching, porque anclaba barato y no caro, y quien
+     mas necesita saberlo es justo quien no va a escribir para preguntarlo.
+   Todo lo demas se cotiza en un mensaje. */
 import Base from '../../layouts/Base.astro';
-import { SITE, SERVICES_AROUND, url, wa } from '../../lib/site';
+import { SERVICES_AROUND, KOFI, PLAYLISTS_URL, url, wa } from '../../lib/site';
+
+/* El cobro va por Ko-fi, que es donde YA se cobra y donde hay 72 transacciones
+   de historial. El boton de esta tarjeta manda a /submit-your-track/ y no a
+   Ko-fi directamente, a proposito: ahi es donde se explica que el enlace de
+   Spotify hay que pegarlo en el mensaje del pago. Ese es el unico paso que
+   falla, y mandar a pagar sin explicarlo es como se pierden los envios. */
+
 const SERVICES = [
+  {
+    id: 'playlist-pitching',
+    name: 'Playlist pitching',
+    line: 'Discovery outside our own lists. Your track pitched to real external curators, one by one, in the genres that actually programme it.',
+    points: [
+      'One track, pitched to 100% organic playlists',
+      'No bots, no bought placements',
+      'You get the list of who was pitched, placed or not',
+      'Six tiers. One message and you have the whole ladder',
+    ],
+    fact: 'What changes between tiers is how many curators we go to, not how hard we try.',
+    price: 'Starts at 100 EUR · the full ladder in one message, same day',
+    waKey: 'playlisting' as const,
+    money: false,
+  },
   {
     id: 'meta-ads',
     name: 'Meta ads for music',
     line: 'Reach you control. Campaigns built, targeted and optimised in-house, run mostly to Spotify and adjusted while they are live.',
-    points: ['Release and tour campaigns', 'Geo-targeting down to the venue radius', 'The pixel sits on your ad account, not ours', 'Weekly reporting against a baseline we record first'],
-    price: '450 EUR management · ad spend from 500 EUR, paid by you straight to the platform',
+    points: [
+      'Release and tour campaigns',
+      'Geo-targeting down to the venue radius',
+      'The pixel sits on your ad account, not ours',
+      'Weekly reporting against a baseline we record first',
+    ],
+    fact: null,
+    price: null,
     waKey: 'meta-ads' as const,
-    priced: false,
-  },
-  {
-    id: 'playlisting',
-    name: 'Playlisting',
-    line: 'Discovery. Your track where people find music they were not looking for, pitched to real curators.',
-    points: ['One track, pitched to 100% organic playlists', 'No bots, no bought placements', 'You get the list of who was pitched', 'Six tiers, from 100 to 1,300 EUR'],
-    price: 'From 100 EUR · fixed price, no retainer',
-    waKey: 'playlisting' as const,
-    priced: true,
+    money: true,
   },
 ];
 ---
-<Base title="Services" description="Meta ads and playlisting for independent artists, run by 109MUSIC." activeSection="services">
+<Base title="Services" description="Meta ads and playlist pitching for independent artists, run by 109MUSIC." activeSection="services">
   <div class="slab slab--tight">
    <div class="wrap">
     <section class="hero">
       <p class="kicker mono rise">109MUSIC · Services</p>
       <h1 class="display face rise">Our<br /><span class="lav">services</span></h1>
-      <p class="sub rise">Everything we run, and what each one costs.</p>
+      <p class="sub rise">
+        One thing you can buy in a minute, two services we run for you, and
+        everything around them.
+      </p>
     </section>
    </div>
   </div>
 
   <div class="wrap">
+
+    {/* 01 · LA PUERTA. Lo unico con precio cerrado y compra directa. */}
+    <section id="own-playlists">
+      <div class="svc-door">
+        <p class="door-kick">
+          <span class="door-tag">Buy it now</span>
+          <span>5 EUR per submission · no call, no waiting</span>
+        </p>
+        <h3>109MUSIC Playlists</h3>
+        <p>
+          One Spotify link, five euros, considered for the playlists we run ourselves.
+          Around 35,000 likes across them, and every one of them is public, so you can
+          hear exactly what you are paying to be considered for before you pay it.
+        </p>
+        <ul class="ticks">
+          <li>One Spotify link per submission</li>
+          <li>Urban, Spanish urban, bedroom and chill, hardstyle for the gym</li>
+          <li><a href={PLAYLISTS_URL} target="_blank" rel="noopener">Listen to the playlists first</a> and decide whether you fit</li>
+          <li>No guaranteed placement. Anyone promising one is selling you something else</li>
+        </ul>
+        <a class="btn" href={url('/submit-your-track/')}>
+          <span>Submit your track · 5 EUR</span><span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <p class="door-fine">
+          This is the door, not the campaign. It puts one track in front of our own
+          lists. It does not pitch you to outside curators and it does not run ads.
+        </p>
+      </div>
+    </section>
+
+    <p class="svc-seam">The two services we run for you</p>
+
+    {/* 02 y 03 · LOS SERVICIOS. Seccion abierta, display h2, CTA de conversacion. */}
     {SERVICES.map((s) => (
       <section id={s.id}>
         <div class="sec-head"><h2 class="display">{s.name}</h2></div>
         <p class="sec-intro">{s.line}</p>
         <ul class="ticks">{s.points.map((p) => <li>{p}</li>)}</ul>
-        <p class="svc-price mono">{s.price}</p>
-        {s.priced ? (
-          <a class="btn" href={url('/submit-your-track/')}>
-            <span>Submit your track · 5 EUR</span><span class="arrow" aria-hidden="true">→</span>
-          </a>
-        ) : (
-          <a class="btn" href={wa(s.waKey)} target="_blank" rel="noopener">
-            <span>Ask about {s.name}</span><span class="arrow" aria-hidden="true">→</span>
-          </a>
+
+        {s.fact && (
+          <div class="keyfact">
+            <span class="mono">What the tiers actually change</span>
+            <p>{s.fact}</p>
+          </div>
         )}
+
+        {s.money && (
+          <ul class="aroundlist moneyflow">
+            <li>
+              <span class="around-name">Our fee</span>
+              <span class="around-line">Flat. It does not move when your budget moves.</span>
+              <span class="around-price">Quoted in one message</span>
+            </li>
+            <li>
+              <span class="around-name">Your ad spend</span>
+              <span class="around-line">Paid by you, straight to Meta, from your own ad account. It never passes through us.</span>
+              <span class="around-price">You set it, you control it</span>
+            </li>
+            <li>
+              <span class="around-name">Our cut of that spend</span>
+              <span class="around-line">There is not one. We do not take a percentage of what you spend on ads, at any budget.</span>
+              <span class="around-price is-zero">Nothing</span>
+            </li>
+          </ul>
+        )}
+
+        {s.price && <p class="svc-price mono">{s.price}</p>}
+
+        <a class="btn" href={wa(s.waKey)} target="_blank" rel="noopener">
+          <span>Chat with us on WhatsApp</span><span class="arrow" aria-hidden="true">→</span>
+        </a>
       </section>
     ))}
 
-    {/* Segundo nivel. NO son cinco servicios al mismo peso: cinco iguales vuelven
-        a poner al artista a elegir, que es justo lo que el proceso promete que no
-        tiene que hacer. Dos productos arriba, y lo que va alrededor debajo. */}
+    {/* 04 · Lo de alrededor. NO al mismo peso que los dos servicios. */}
     <section id="around">
       <div class="sec-head"><h2 class="display">And everything around them</h2></div>
-      <p class="sec-intro">Added to a campaign, or bought on their own.</p>
+      <p class="sec-intro">Added to a campaign, or bought on their own. All quoted in the same conversation.</p>
       <ul class="aroundlist">
         {SERVICES_AROUND.map((a) => (
           <li>
@@ -75,7 +170,7 @@ const SERVICES = [
       <section class="workband">
         <p class="mono">Not sure which</p>
         <h2 class="display">Tell us what you are putting out.</h2>
-        <p class="workband-line">We will tell you straight whether we can move it, and what it would cost.</p>
+        <p class="workband-line">We will tell you straight whether we can move it, what it would cost, and whether it is worth it yet.</p>
         <a class="btn" href={wa('services')} target="_blank" rel="noopener">
           <span>Message us on WhatsApp</span><span class="arrow" aria-hidden="true">→</span>
         </a>

@@ -2643,3 +2643,52 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
     rgba(10, 10, 10, .18) 100%
   ), linear-gradient(rgba(10, 10, 10, .40), rgba(10, 10, 10, .40));
 }
+
+/* --------------------------------------------------------------------------
+   PASE 12 · SERVICES EN TRES BLOQUES (2026-08-16)
+   Una sola cosa se compra por la web y cuesta 5 EUR; las otras dos son
+   conversacion. El riesgo de poner la barata primero es que parezca el
+   producto principal, asi que la jerarquia NO la da el orden: la da el
+   TAMANO. La puerta es una tarjeta contenida con h3; los servicios son
+   secciones abiertas con display h2, que en esta escala es casi el doble.
+   Lo pequeno se lee como producto, lo grande como servicio, y el orden
+   queda libre para contar el recorrido de entrada.
+   -------------------------------------------------------------------------- */
+.svc-door {
+  padding: clamp(22px, 3.4vw, 30px);
+  border: 1px solid var(--on-bone-rule);
+  background: var(--bone-sunk);
+}
+.svc-door .door-kick {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin: 0 0 12px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--on-bone-faint);
+}
+.svc-door .door-tag {
+  padding: 4px 9px; background: var(--lav); color: var(--ink);
+  font-weight: 700; letter-spacing: .12em;
+}
+.svc-door h3 {
+  margin: 0 0 10px; font-family: var(--display);
+  font-size: clamp(19px, 2.4vw, 25px); letter-spacing: -.02em;
+  text-transform: uppercase; line-height: 1.05; color: var(--ink);
+}
+.svc-door > p { margin: 0; max-width: 62ch; font-size: 15px; line-height: 1.6; }
+.svc-door .ticks { margin: 16px 0 20px; font-size: 15px; }
+.svc-door .door-fine {
+  margin: 20px 0 0; padding-top: 14px; border-top: 1px solid var(--on-bone-rule);
+  font-family: var(--mono); font-size: 10px; letter-spacing: .1em;
+  text-transform: uppercase; line-height: 1.8; color: var(--on-bone-faint);
+}
+/* La costura. Dice en voz alta que a partir de aqui se habla, no se compra. */
+.svc-seam {
+  margin: 46px 0 -10px; display: flex; align-items: center; gap: 14px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--on-bone-faint);
+}
+.svc-seam::after { content: ''; flex: 1; height: 1px; background: var(--on-bone-rule); }
+/* La fila del cero, en el desglose de a donde va el dinero. */
+.moneyflow .is-zero {
+  font-family: var(--display); font-size: 20px; letter-spacing: -.01em;
+  text-transform: none; color: var(--lav-deep);
+}

@@ -13,6 +13,14 @@ export const SITE = {
 
 /* Every wa.me link carries a different pre-filled message so the origin of each
    enquiry is readable in the inbox without asking. Add a key, not a raw link. */
+/* Donde se cobra hoy el envio de 5 EUR. Ko-fi, no Stripe: ya funciona, tiene 72
+   transacciones detras y no hay un segundo producto que justifique montar una
+   pasarela propia todavia. Una sola constante para no repetir la URL. */
+export const KOFI = 'https://ko-fi.com/109music';
+/* La coleccion publica de listas, para que el artista compruebe el encaje ANTES
+   de pagar. Es lo que mas baja la friccion y lo que mas protege la reputacion. */
+export const PLAYLISTS_URL = 'https://open.spotify.com/user/31jk6ht3ed5436kzxqjoggmp7cee';
+
 export const WA_MESSAGES = {
   'meta-ads': 'Hola, me interesa la gestion de Meta ads para mi musica',
   playlisting: 'Hola, me interesa el servicio de playlisting',
@@ -252,7 +260,7 @@ export const RESULTS_LIVE = true;
 export const SERVICES_AROUND = [
   { label: 'Creative for the ads', line: 'We cut the video and write the copy when you do not have it.', price: 'Quoted per campaign' },
   { label: 'Release planning', line: 'The calendar, the assets and the order things go out in.', price: 'Quoted per release' },
-  { label: 'Consultations', line: 'Private 1:1 sessions on your career, your organic social, or auditing the campaigns you run yourself.', price: '100 EUR per hour' },
+  { label: 'Consultations', line: 'Private 1:1 sessions on your career, your organic social, or auditing the campaigns you run yourself.', price: 'Quoted by the hour' },
 ] as const;
 
 export const STEPS = [
@@ -266,7 +274,7 @@ export const STEPS = [
        un capitulo del PDF, no un paso, y su copy estaba escrito para alguien que
        tiene el dossier delante: en la web el visitante no lo tiene. */
     h: 'What it costs',
-    p: 'The full price list, sent the same day. Every service and every tier written down, so you can decide without another call. Nothing is quoted case by case and nothing is hidden until you ask.',
+    p: 'Playlist pitching starts at 100 EUR and the whole ladder comes in one message, the same day. Ads are quoted against what you are actually putting out, because the number depends on the spend. Either way it is written down before you commit, the numbers are the same for everyone, and nothing lands on the invoice that was not on that list.',
     shot: null,
   },
   {

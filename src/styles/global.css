@@ -2806,71 +2806,78 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
 }
 
 /* ==========================================================================
-   PASE 15 (2026-08-16) · LO QUE DICEN LAS ARTISTAS
+   PASE 16 (2026-08-16) · LO QUE DICEN LAS ARTISTAS, EN FICHA
 
-   Va DENTRO de la seccion de Real Results, no en una seccion aparte. Las
-   tarjetas ponen el dato y las citas ponen la voz: son las dos mitades de la
-   misma prueba, y separarlas en dos bloques numerados haria que la segunda
-   pesara menos por el simple hecho de ir despues.
+   BLOQUE 05, AL FINAL Y CON NUMERO PROPIO. Ocupa el hueco que dejo la
+   comparativa. La posicion es la que tenia aquella y por su misma razon: lo que
+   convence va justo antes de pedir la accion, no al entrar.
 
-   Sin foto, y no por falta de material. Una cara junto a una cita compite con
-   las caratulas que estan justo encima, que ya hacen ese trabajo y ademas son
-   el objeto real. Con foto el bloque se lee como un carrusel de retratos; sin
-   ella se lee como lo que es, tres personas hablando.
+   FICHA, NO CITA TIPOGRAFICA. Antes era un filete a la izquierda con la cita
+   grande, en 17px. Ahora es un panel hundido con esquinas de 16px, como el
+   resto de tarjetas del sitio, y la cita baja a 15px de texto normal: aqui la
+   persona importa mas que la frase. Referencia: el bloque de Aura.
 
-   La cita NO lleva comillas dibujadas ni comillon decorativo. El filete de la
-   izquierda ya dice que es una cita, y el sitio entero son filetes de 1px.
+   EL NOMBRE VA ARRIBA, Y ESO ARREGLA UN PROBLEMA REAL. Con la firma al pie
+   habia que empujarla con `margin-top: auto` para que las tres cuadrasen, y la
+   cita corta de LA KARMA dejaba un hueco EN MEDIO de su tarjeta, que se lee
+   como un fallo. Con el nombre arriba las tres firmas cuadran solas, porque
+   empiezan a la misma altura, y el sobrante cae al FONDO de la tarjeta corta,
+   donde se lee como relleno y no como error.
+
+   SIN ESTRELLAS. Ver el bloque de comentarios de TESTIMONIALS en site.ts: no
+   hay sistema de puntuacion, nadie nos ha puntuado, y cinco estrellas en una
+   ficha con forma de resena afirman una nota que no existe. El sitio entero se
+   sostiene sobre no publicar un dato que no se pueda ensenar.
+
+   SIN AVATAR. El circulo con inicial existe para dar cara a un desconocido de
+   internet. Estas tres son artistas con nombre, y dos de ellas salen tres
+   bloques mas arriba con su caratula y su cifra: un circulo gris con una letra
+   las haria MENOS reales, no mas. Y la caratula del tema queda descartada por
+   partida doble: Instinto DK no tiene tema en Real Results, asi que solo la
+   tendrian dos de las tres, y repetir la misma imagen dos veces en la pagina
+   invita justo a la lectura que evitamos, la de atribuir cada cita a la tarjeta
+   que le toca.
    ========================================================================== */
 
-/* El filete de arriba no es adorno: cierra el bloque de las tarjetas y abre
-   otro. Sin el, las tres citas caen en columnas que coinciden al pixel con las
-   tres tarjetas, y eso invita a leer cada cita como si fuera de la artista que
-   tiene encima. Solo una de las tres lo seria. */
-.says {
-  margin-top: clamp(38px, 4.5vw, 60px);
-  padding-top: clamp(30px, 3.4vw, 44px);
-  border-top: 1px solid var(--on-bone-rule);
-}
-
-.says-head {
-  margin: 0 0 20px;
-  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--lav-deep);
-}
+.says { margin-top: 4px; }
 
 /* Una sola columna en movil, tres en escritorio. El mismo salto de 1000px que
    la rejilla de las tarjetas, para que los dos bloques cambien de forma a la
    vez y no en dos momentos distintos al estrechar la ventana. */
-.says-grid { display: grid; gap: 26px; }
+.says-grid { display: grid; gap: 18px; }
 @media (min-width: 1000px) {
-  .says-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: stretch; }
+  .says-grid { grid-template-columns: repeat(3, 1fr); gap: 22px; align-items: stretch; }
 }
 
+/* El panel hundido es el mismo gesto que `--bone-sunk` hace en el resto del
+   sitio. Sin borde: dos senales (fondo Y filete) para separar tres fichas que
+   ya estan separadas por 22px de aire es una de mas. */
 .say {
   display: flex; flex-direction: column;
-  margin: 0; padding: 0 0 0 18px;
-  border-left: 1px solid var(--on-bone-rule);
+  margin: 0; padding: 22px 22px 24px;
+  background: var(--bone-sunk);
+  border-radius: 16px;
+}
+
+.say-by { margin: 0 0 14px; }
+.say-name {
+  display: block;
+  font-size: 15px; font-weight: 600; letter-spacing: -.005em; color: var(--ink);
+}
+/* Lo que hicimos con esa persona, en el sitio donde Aura pone las estrellas.
+   Hace el mismo trabajo (decir de que va esta resena) y ademas es comprobable:
+   playlisting y anuncios son servicios que estan en la web con su pagina. */
+.say-work {
+  display: block; margin-top: 5px;
+  font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--lav-deep);
 }
 
 .say-q { margin: 0; }
-/* 17px y no mas: la cita no puede acercarse a la cifra de la tarjeta, que es
-   lo que manda en este bloque. Aqui se lee, no se proclama. */
+/* 15px de texto corriente. La cita ya no compite con nada: ni con la cifra de
+   las tarjetas ni con el h2. Se lee, no se proclama. */
 .say-q p {
   margin: 0;
-  font-size: 17px; line-height: 1.5; color: var(--ink);
+  font-size: 15px; line-height: 1.6; color: var(--on-bone-mute);
   text-wrap: pretty;
-}
-
-/* `margin-top: auto` empuja la firma al fondo, igual que en las tarjetas: las
-   tres citas tienen largos muy distintos y sin esto las firmas quedan a tres
-   alturas. */
-.say-by { margin-top: auto; padding-top: 14px; }
-.say-name {
-  display: block;
-  font-size: 13px; font-weight: 600; letter-spacing: .01em; color: var(--ink);
-}
-.say-work {
-  display: block; margin-top: 3px;
-  font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
-  color: var(--on-bone-faint);
 }

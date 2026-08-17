@@ -147,32 +147,6 @@ const schema = {
           </p>
         ))}
 
-        {/* TESTIMONIOS, DENTRO DE LA MISMA SECCION Y A PROPOSITO (16/08).
-
-            No es un bloque nuevo con su propio numero. Va aqui dentro, bajo las
-            tarjetas, porque hace el mismo trabajo desde el otro lado: las
-            tarjetas ponen el dato y las citas ponen la voz. Separarlos en dos
-            secciones numeradas convertiria una prueba en dos, y la segunda
-            siempre pesa menos.
-
-            Dos de las tres personas que hablan aqui tienen tarjeta arriba, y
-            eso es una ventaja: el lector ve el numero y despues oye a la misma
-            artista. Por eso las citas NO repiten cifras. El motivo largo esta
-            en TESTIMONIALS, en site.ts. */}
-        <div class="says">
-          <p class="says-head mono">What our artists say</p>
-          <div class="says-grid">
-            {TESTIMONIALS.map((t) => (
-              <figure class="say">
-                <blockquote class="say-q"><p>{t.quote}</p></blockquote>
-                <figcaption class="say-by">
-                  <span class="say-name">{t.name}</span>
-                  <span class="say-work mono">{t.work}</span>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        </div>
       </section>
     )}
 
@@ -334,60 +308,56 @@ const schema = {
       </section>
     )}
 
-    {/* 06 · Lo que ya has probado. Va al final a propósito: es manejo de
-        objeciones, y las objeciones se tratan justo antes de pedir la acción, no
-        al entrar. Cuatro filas, no cinco. La última es la única que nuestra
-        competencia no puede escribir. */}
+    {/* 05 · LO QUE DICEN LAS ARTISTAS.
+
+        Aqui estaba la comparativa "What most artists try first", que sale de la
+        home el 16/08. NO se ha borrado: vive en /results, que es su sitio, y
+        alli la sigue acompanando la fila que ninguna herramienta puede escribir
+        sobre si misma. Si alguien la echa de menos aqui, el enlace de abajo la
+        lleva.
+
+        Las citas ocupan su hueco, al final y con numero propio. La posicion es
+        la misma que tenia la comparativa y por la misma razon: lo que convence
+        va justo antes de pedir la accion, no al entrar.
+
+        Las citas NO repiten ninguna cifra de las tarjetas de Real Results. El
+        motivo, caso a caso, esta en TESTIMONIALS, en site.ts. */}
     <section class="surf-bone">
-      <SectionMarker n={mark()} slug="the_alternatives" />
-      <div class="sec-head"><h2 class="display">What most artists try first</h2></div>
-      <div class="cmp-scroll">
-        <table class="cmp">
-          <thead>
-            <tr>
-              <th class="cmp-lab"><span class="visually-hidden">Comparison</span></th>
-              <th>Paid playlist placements</th>
-              <th>Agency retainer</th>
-              <th>Running ads yourself</th>
-              <th class="cmp-us">109MUSIC</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th class="cmp-lab" scope="row">What you get</th>
-              <td data-label="Paid playlist placements">Streams from accounts that never come back</td>
-              <td data-label="Agency retainer">A deck, monthly</td>
-              <td data-label="Running ads yourself">Reach, if the targeting is right</td>
-              <td data-label="109MUSIC" class="cmp-us">Listeners who save and follow</td>
-            </tr>
-            <tr>
-              <th class="cmp-lab" scope="row">What it costs</th>
-              <td data-label="Paid playlist placements">Per placement, with no floor</td>
-              <td data-label="Agency retainer">Monthly retainer, three-month minimum</td>
-              <td data-label="Running ads yourself">Ad spend plus your own week</td>
-              <td data-label="109MUSIC" class="cmp-us">Ad spend plus one flat fee</td>
-            </tr>
-            <tr>
-              <th class="cmp-lab" scope="row">Who keeps the pixel</th>
-              <td data-label="Paid playlist placements">Not applicable</td>
-              <td data-label="Agency retainer">Usually the agency</td>
-              <td data-label="Running ads yourself">You</td>
-              <td data-label="109MUSIC" class="cmp-us">You, always</td>
-            </tr>
-            <tr>
-              <th class="cmp-lab" scope="row">Can you check the method</th>
-              <td data-label="Paid playlist placements">No</td>
-              <td data-label="Agency retainer">No</td>
-              <td data-label="Running ads yourself">Only your own</td>
-              <td data-label="109MUSIC" class="cmp-us">Yes. We publish it before you pay</td>
-            </tr>
-          </tbody>
-        </table>
+      <SectionMarker n={mark()} slug="what_our_artists_say" />
+      <div class="sec-head"><h2 class="display">What our artists say</h2></div>
+      <div class="says">
+        {/* `figcaption` PRIMERO y `blockquote` despues. Es HTML valido (el
+            figcaption puede ir de primer o de ultimo hijo) y es lo que hace que
+            las tres firmas cuadren solas, sin empujarlas con `auto`: empiezan a
+            la misma altura y el sobrante de la cita corta cae al FONDO de su
+            ficha, donde se lee como relleno y no como hueco.
+
+            Las comillas se ponen aqui y no en el dato: la cita se guarda limpia
+            en site.ts, que es de donde saldria si algun dia se usa en otro
+            sitio.
+
+            OJO: este comentario va FUERA del .map(). Dentro y delante del
+            <figure> son dos nodos hermanos devueltos por la flecha, y el
+            compilador de Astro corta el build. */}
+        <div class="says-grid">
+          {TESTIMONIALS.map((t) => (
+            <figure class="say">
+              <figcaption class="say-by">
+                <span class="say-name">{t.name}</span>
+                <span class="say-work mono">{t.work}</span>
+              </figcaption>
+              <blockquote class="say-q"><p>"{t.quote}"</p></blockquote>
+            </figure>
+          ))}
+        </div>
       </div>
+      {/* LO UNICO QUE ME HE INVENTADO EN ESTE BLOQUE. Al sacar la comparativa,
+          la home se queda sin ningun sitio donde se traten objeciones antes del
+          cierre. Esta linea no la sustituye, pero al menos deja la puerta
+          abierta a quien esta comparando. Se borra con quitar el <p>. */}
       <p class="cmp-foot mono">
-        The last row is the whole argument. Every article in
-        <a href={url('/music-marketing/')}>the 109 blog</a> is what we run for clients,
-        written down.
+        Comparing us with a playlist plug or an agency?{' '}
+        <a href={url('/results/')}>See how the four options stack up</a>.
       </p>
     </section>
   </div>

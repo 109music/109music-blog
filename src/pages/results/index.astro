@@ -66,8 +66,9 @@ const description =
       <SectionMarker n={2} slug="the_alternatives" />
       <div class="sec-head"><h2 class="display">What most artists try first</h2></div>
       <p class="sec-intro">
-        Four ways to spend money on a release. Three of them we would talk you out of,
-        and the last row is the one only we can write.
+        Four ways to spend money on a release, compared on five things. Three of the four
+        we would talk you out of. One row admits what can go wrong here, and the last row
+        is the one only we can write.
       </p>
       <div class="cmp-scroll">
       <table class="cmp">
@@ -83,37 +84,51 @@ const description =
         <tbody>
           <tr>
             <th class="cmp-lab" scope="row">What you get</th>
-            <td>Streams from accounts that never come back</td>
-            <td>A deck, monthly</td>
-            <td>Reach, if the targeting is right</td>
-            <td class="cmp-us">Listeners who save and follow</td>
+            <td data-label="Paid playlist placements">Streams from accounts that never come back</td>
+            <td data-label="Agency retainer">A deck, monthly</td>
+            <td data-label="Running ads yourself">Reach, if the targeting is right</td>
+            <td data-label="109MUSIC" class="cmp-us">Listeners who save and follow</td>
           </tr>
           <tr>
             <th class="cmp-lab" scope="row">What it costs</th>
-            <td>Per placement, with no floor</td>
-            <td>Monthly retainer, three-month minimum</td>
-            <td>Ad spend plus your own week</td>
-            <td class="cmp-us">Ad spend plus one flat fee</td>
+            <td data-label="Paid playlist placements">Per placement, with no floor</td>
+            <td data-label="Agency retainer">Monthly retainer, three-month minimum</td>
+            <td data-label="Running ads yourself">Ad spend plus your own week</td>
+            <td data-label="109MUSIC" class="cmp-us">Ad spend plus one flat fee</td>
           </tr>
           <tr>
             <th class="cmp-lab" scope="row">Who keeps the pixel</th>
-            <td>Not applicable</td>
-            <td>Usually the agency</td>
-            <td>You</td>
-            <td class="cmp-us">You, always</td>
+            <td data-label="Paid playlist placements">Not applicable</td>
+            <td data-label="Agency retainer">Usually the agency</td>
+            <td data-label="Running ads yourself">You</td>
+            <td data-label="109MUSIC" class="cmp-us">You, always</td>
           </tr>
+          {/* EL RIESGO, RECUPERADO, Y EN LA CUARTA FILA, NO EN LA QUINTA.
+              Nuestra celda es la unica de toda la tabla que admite algo en vez
+              de ganar, y por eso no puede ir la ultima: el pie dice que la
+              ultima fila es el argumento entero, y ese argumento es publicar el
+              metodo, no reconocer un riesgo. Puesta aqui, la tabla admite y
+              DESPUES cierra. Puesta al final, cierra admitiendo y deja el pie
+              mintiendo. */}
           <tr>
             <th class="cmp-lab" scope="row">Risk to the release</th>
-            <td>Bot flags and playlist removal</td>
-            <td>Slow to react mid-campaign</td>
-            <td>Budget burnt learning</td>
-            <td class="cmp-us">We publish our method — read it before you pay</td>
+            <td data-label="Paid playlist placements">Bot flags and playlist removal</td>
+            <td data-label="Agency retainer">Slow to react mid-campaign</td>
+            <td data-label="Running ads yourself">Budget burnt learning</td>
+            <td data-label="109MUSIC" class="cmp-us">Ad spend that does not convert. Nothing you are locked into</td>
+          </tr>
+          <tr>
+            <th class="cmp-lab" scope="row">Can you check the method</th>
+            <td data-label="Paid playlist placements">No</td>
+            <td data-label="Agency retainer">No</td>
+            <td data-label="Running ads yourself">Only your own</td>
+            <td data-label="109MUSIC" class="cmp-us">Yes. We publish it before you pay</td>
           </tr>
         </tbody>
       </table>
       </div>
       <p class="cmp-foot mono">
-        The last row is the whole argument. Everything under
+        The last row is the whole argument. Everything under{' '}
         <a href={url('/music-marketing/')}>Music Marketing</a> is what we run for clients,
         written down.
       </p>

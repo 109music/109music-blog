@@ -6,7 +6,7 @@
    Old URLs redirect permanently from src/pages/case-studies/. */
 import SectionIndex from '../../../components/SectionIndex.astro';
 import { getCollection } from 'astro:content';
-import { sectionOf } from '../../../lib/site';
+import { sectionOf, SHOW_RESULTS } from '../../../lib/site';
 
 const s = sectionOf('case-studies')!;
 const entries = await getCollection('case-studies');
@@ -16,7 +16,10 @@ const entries = await getCollection('case-studies');
   label={s.label}
   blurb={s.blurb}
   entries={entries}
-  crossLink={{ href: '/results/', label: 'These are not our clients. Our own numbers are under Results' }}
+  {/* El enlace cruzado apunta a Results, asi que desaparece con ella. */}
+  crossLink={SHOW_RESULTS
+    ? { href: '/results/', label: 'These are not our clients. Our own numbers are under Results' }
+    : undefined}
   listHeading="Rollouts, taken apart"
   listIntro="Every one of these is somebody else's campaign, reconstructed from what was public. We do it to show the structure, because the structure is the part you can afford."
 />

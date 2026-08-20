@@ -1,3 +1,6 @@
+import { SHOW_RESULTS } from './flags.mjs';
+export { SHOW_RESULTS };
+
 export const SITE = {
   name: '109MUSIC',
   tagline: 'Music marketing, broken down.',
@@ -115,7 +118,9 @@ export const SECTIONS = [
     /* Read this next to RESULTS and keep them apart. Case Studies are OTHER people's
        rollouts pulled apart for teaching. Our own client numbers live at /results/ and
        never use the word "case". If the two ever blur, the commercial page stops
-       meaning anything. */
+       meaning anything.
+       NOTA 17/08: /results/ esta apagada con SHOW_RESULTS. La distincion sigue
+       valiendo y el dia que se encienda no hay que reescribir nada aqui. */
     blurb: 'Major-label rollouts taken apart, so you can steal the structure at your budget.',
     parent: 'music-marketing',
   },
@@ -166,8 +171,15 @@ export const NAV = [
   { href: '/resources/', label: 'Resources', id: 'resources' },
 ] as const;
 
+/* LA NAVEGACION QUE SE PINTA. NAV de arriba es el catalogo completo y no se
+   toca; esta es la que ven las plantillas. Con SHOW_RESULTS en false, Results
+   desaparece del escritorio y del movil a la vez, porque las dos salen de aqui.
+   Filtrar en el sitio de uso y no en NAV deja el catalogo intacto para cuando se
+   vuelva a encender. */
+export const NAV_VISIBLE = NAV.filter((n: any) => n.id !== 'results' || SHOW_RESULTS);
+
 /** Every nav destination, flattened. Drives the mobile menu and the link audit. */
-export const NAV_FLAT: { href: string; label: string; id: string }[] = NAV.flatMap((n: any) =>
+export const NAV_FLAT: { href: string; label: string; id: string }[] = NAV_VISIBLE.flatMap((n: any) =>
   n.children ? n.children.map((c: any) => ({ href: c.href, label: c.label, id: c.id }))
              : [{ href: n.href, label: n.label, id: n.id }],
 );
@@ -263,6 +275,8 @@ export const LEGACY_CASE_STUDY_SLUGS = [
    visto y confirmado, y publicar antes habria hecho falsa esa frase el dia uno.
    Las tres confirmaciones estan fechadas en claude/client-cases-inventory.md.
    Si se anade una tarjeta nueva sin confirmar, esto vuelve a false. */
+/* El interruptor vive en flags.mjs porque astro.config.mjs tambien lo lee.
+   Aqui solo se reexporta, para que las plantillas lo importen de un sitio. */
 export const RESULTS_LIVE = true;
 
 /* El CTA comercial es agendar una llamada, no comprar, y va por WhatsApp como el
@@ -286,23 +300,35 @@ export const SERVICES_AROUND = [
   { label: 'Consultations', line: 'Private 1:1 sessions on your career, your organic social, or auditing the campaigns you run yourself.', price: 'Quoted by the hour' },
 ] as const;
 
+/* TRES PASOS, NO CINCO (17/08/2026).
+
+   Los cinco venian del dossier de precios: discovery call, what it costs,
+   selection and payment, strategy in motion, growth and optimisation. En un PDF
+   eso funciona, porque un PDF necesita un capitulo por concepto. En una pagina
+   producia el problema contrario al que queriamos:
+
+   - Los tres primeros son la MISMA escena. Una conversacion que termina en una
+     decision. No son tres pasos, son tres momentos de la misma llamada.
+   - Y salian tres filas seguidas de texto plano antes de que apareciera el
+     trabajo de verdad, que es el cuarto.
+   - El del pago era ademas el parrafo mas LARGO del bloque, cinco lineas contra
+     dos o tres. En una lista, longitud se lee como importancia, asi que la
+     logistica de facturacion pesaba mas que la campana. Y era el contenido menos
+     interesante que hay: nadie contrata a nadie por como emite facturas.
+   - La escalera de precios y el "sin retainer" ya estan escritos en /services/,
+     que es donde alguien los busca. Aqui estaban duplicados.
+
+   Lo que NO podia perderse, y donde queda cada cosa:
+     no hace falta elegir servicio de antemano  -> linea de contexto + paso 01
+     la primera llamada es gratis               -> paso 01, primera frase
+     corremos Meta ads y playlisting            -> linea de contexto + paso 02
+     el pixel se queda en la cuenta del artista -> paso 02
+     precios por escrito antes de comprometerse -> paso 01
+     sin retainer ni permanencia                -> paso 01                      */
 export const STEPS = [
   {
-    h: 'Discovery call',
-    p: 'Thirty minutes. We map the record, the goal and where you are right now. You leave knowing which service fits, and that read costs nothing whether you hire us or not.',
-    shot: null,
-  },
-  {
-    /* Renombrado desde "Services & pricing" del dossier. Aquel titulo describia
-       un capitulo del PDF, no un paso, y su copy estaba escrito para alguien que
-       tiene el dossier delante: en la web el visitante no lo tiene. */
-    h: 'What it costs',
-    p: 'Playlist pitching starts at 100 EUR and the whole ladder comes in one message, the same day. Ads are quoted against what you are actually putting out, because the number depends on the spend. Either way it is written down before you commit, the numbers are the same for everyone, and nothing lands on the invoice that was not on that list.',
-    shot: null,
-  },
-  {
-    h: 'Selection and payment',
-    p: 'You pick what you want to run. We invoice, and the work starts the moment the payment clears. No retainer, no minimum term.',
+    h: 'We talk, and you decide',
+    p: 'Thirty minutes on a call, free, whether you hire us or not. We map the record, the goal and where you are today, and you leave knowing which service fits. Prices come in writing before you commit, and they are the same numbers for everyone. No retainer, no minimum term: the work starts when you say go.',
     shot: null,
   },
   {
@@ -412,6 +438,17 @@ export const RESULTS: ResultCard[] = [
     art: '/img/results/cover-karma.webp',
   },
 ];
+
+/* LOS GUARDADOS, SUMADOS DE LAS DOS LISTAS Y NO ESCRITOS A MANO. El 22.000
+   estaba tecleado dentro de submit-your-track. Al actualizar una lista habia que
+   acordarse de tocar tambien esa frase, y ese es exactamente el fallo que ya
+   cometimos con la cifra de 35.000, que era el total de cinco listas cuando solo
+   quedaban dos activas. Se redondea A LA BAJA, como todas las cifras del sitio.
+   Con las dos listas de hoy: 6.389 + 15.951 = 22.340 -> "22,000+". */
+export const PLAYLIST_SAVES = (() => {
+  const exact = PLAYLISTS.reduce((n, p) => n + Number(p.saves.replace(/,/g, '')), 0);
+  return { exact, rounded: `${Math.floor(exact / 1000)},000+` };
+})();
 
 /* ==========================================================================
    TESTIMONIOS (16/08/2026)

@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { SHOW_RESULTS } from './src/lib/flags.mjs';
 import rehypeMedia from './src/lib/rehype-media.mjs';
 
 // 109MUSIC runs on its own apex domain. There is no repo subpath any more — the site
@@ -37,6 +38,11 @@ export default defineConfig({
       filter: (page) => {
         const path = new URL(page).pathname;
         const RETIRED = ['/guides/', '/case-studies/', '/music-business/'];
+        /* Results, mientras este apagada. Se lee del MISMO archivo que la lee el
+           sitio, asi que encender el interruptor la devuelve al sitemap sola. Si
+           esto estuviera escrito a mano aqui, tarde o temprano la pagina vuelve a
+           estar visible y sigue fuera del sitemap, o al reves. */
+        if (!SHOW_RESULTS && (path === '/results/' || path.startsWith('/results/'))) return false;
         return !RETIRED.some((p) => path === p || path.startsWith(p));
       },
     }),

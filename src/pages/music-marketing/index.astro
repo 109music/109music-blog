@@ -10,7 +10,7 @@ import Base from '../../layouts/Base.astro';
 import Row from '../../components/Row.astro';
 import SectionMarker from '../../components/SectionMarker.astro';
 import { getCollection } from 'astro:content';
-import { readingTime, url, orderTags, tagLabel, sectionOf, MOMENTS, wa, pathOf } from '../../lib/site';
+import { readingTime, url, orderTags, tagLabel, sectionOf, MOMENTS, wa, pathOf, SHOW_RESULTS } from '../../lib/site';
 
 const s = sectionOf('music-marketing')!;
 const cs = sectionOf('case-studies')!;
@@ -110,9 +110,13 @@ let n = 0;
         <h2 class="display">{cs.label}</h2>
         <a href={url('/music-marketing/case-studies/')}>All case studies →</a>
       </div>
+      {/* La coletilla que manda a Results solo tiene sentido si Results existe.
+          Con el interruptor apagado la frase se queda sin su mitad util, asi que
+          se corta ahi: la distincion entre case study y cliente sigue dicha. */}
       <p class="sec-intro">
-        {cs.blurb} These are not our clients — our own campaign numbers live under
-        {' '}<a href={url('/results/')}>Results</a>.
+        {SHOW_RESULTS
+          ? <>{cs.blurb} These are not our clients — our own campaign numbers live under{' '}<a href={url('/results/')}>Results</a>.</>
+          : <>{cs.blurb} These are not our clients: they are other people's rollouts, reconstructed from what was public.</>}
       </p>
       {cases.length ? (
         <ul class="rows">

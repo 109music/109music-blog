@@ -9,22 +9,30 @@
 import Base from '../../layouts/Base.astro';
 import ResultCard from '../../components/ResultCard.astro';
 import SectionMarker from '../../components/SectionMarker.astro';
-import { url, wa, RESULTS_LIVE, RESULTS } from '../../lib/site';
+import Compare from '../../components/Compare.astro';
+import { wa, RESULTS_LIVE, RESULTS, SHOW_RESULTS } from '../../lib/site';
 
-const live = RESULTS_LIVE && RESULTS.length > 0;
+/* `live` cuelga tambien del interruptor. Esconder Results y dejar las tarjetas
+   visibles a quien escriba la URL seria esconderlo a medias. */
+const live = SHOW_RESULTS && RESULTS_LIVE && RESULTS.length > 0;
 const description =
   'Real campaign numbers from 109MUSIC: streams added, followers gained and the baseline each one started from.';
 ---
-<Base title="Results" description={description} activeSection="results">
+{/* Con el interruptor apagado: noindex para que salga del indice de Google sin
+    devolver un 404 en una URL que ya esta en el sitemap, y `data-pagefind-ignore`
+    para que el buscador del sitio no la ofrezca. La pagina sigue existiendo y
+    sigue diciendo la verdad a quien escriba la URL a mano. */}
+<Base title="Results" description={description} activeSection="results" noindex={!SHOW_RESULTS}>
 
-  <div class="slab slab--tight">
+  <div class="slab slab--tight" data-pagefind-ignore={!SHOW_RESULTS ? "all" : undefined}>
    <div class="wrap">
     <section class="hero">
       <p class="kicker mono rise">109MUSIC · Client results</p>
       <h1 class="display face rise">Real artists.<br /><span class="lav">Real numbers.</span></h1>
       <p class="sub rise">
-        Every figure below is a campaign we ran, measured against the week before it
-        started. No rounding up, no screenshots without a baseline.
+        {live
+          ? 'Every figure below is a campaign we ran, measured against the week before it started. No rounding up, no screenshots without a baseline.'
+          : 'This page is where our own campaign numbers go. It is empty on purpose until there are enough of them, and until every artist has signed off on hers.'}
       </p>
       <div class="hero-cta rise">
         <a class="btn" href={wa('results')} target="_blank" rel="noopener">
@@ -61,78 +69,16 @@ const description =
       )}
     </section>
 
-    <!-- what the alternatives cost, on tint -->
-    <section class="surf-tint">
-      <SectionMarker n={2} slug="the_alternatives" />
-      <div class="sec-head"><h2 class="display">What most artists try first</h2></div>
-      <p class="sec-intro">
-        Four ways to spend money on a release, compared on five things. Three of the four
-        we would talk you out of. One row admits what can go wrong here, and the last row
-        is the one only we can write.
-      </p>
-      <div class="cmp-scroll">
-      <table class="cmp">
-        <thead>
-          <tr>
-            <th class="cmp-lab"><span class="visually-hidden">Comparison</span></th>
-            <th>Paid playlist placements</th>
-            <th>Agency retainer</th>
-            <th>Running ads yourself</th>
-            <th class="cmp-us">109MUSIC</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th class="cmp-lab" scope="row">What you get</th>
-            <td data-label="Paid playlist placements">Streams from accounts that never come back</td>
-            <td data-label="Agency retainer">A deck, monthly</td>
-            <td data-label="Running ads yourself">Reach, if the targeting is right</td>
-            <td data-label="109MUSIC" class="cmp-us">Listeners who save and follow</td>
-          </tr>
-          <tr>
-            <th class="cmp-lab" scope="row">What it costs</th>
-            <td data-label="Paid playlist placements">Per placement, with no floor</td>
-            <td data-label="Agency retainer">Monthly retainer, three-month minimum</td>
-            <td data-label="Running ads yourself">Ad spend plus your own week</td>
-            <td data-label="109MUSIC" class="cmp-us">Ad spend plus one flat fee</td>
-          </tr>
-          <tr>
-            <th class="cmp-lab" scope="row">Who keeps the pixel</th>
-            <td data-label="Paid playlist placements">Not applicable</td>
-            <td data-label="Agency retainer">Usually the agency</td>
-            <td data-label="Running ads yourself">You</td>
-            <td data-label="109MUSIC" class="cmp-us">You, always</td>
-          </tr>
-          {/* EL RIESGO, RECUPERADO, Y EN LA CUARTA FILA, NO EN LA QUINTA.
-              Nuestra celda es la unica de toda la tabla que admite algo en vez
-              de ganar, y por eso no puede ir la ultima: el pie dice que la
-              ultima fila es el argumento entero, y ese argumento es publicar el
-              metodo, no reconocer un riesgo. Puesta aqui, la tabla admite y
-              DESPUES cierra. Puesta al final, cierra admitiendo y deja el pie
-              mintiendo. */}
-          <tr>
-            <th class="cmp-lab" scope="row">Risk to the release</th>
-            <td data-label="Paid playlist placements">Bot flags and playlist removal</td>
-            <td data-label="Agency retainer">Slow to react mid-campaign</td>
-            <td data-label="Running ads yourself">Budget burnt learning</td>
-            <td data-label="109MUSIC" class="cmp-us">Ad spend that does not convert. Nothing you are locked into</td>
-          </tr>
-          <tr>
-            <th class="cmp-lab" scope="row">Can you check the method</th>
-            <td data-label="Paid playlist placements">No</td>
-            <td data-label="Agency retainer">No</td>
-            <td data-label="Running ads yourself">Only your own</td>
-            <td data-label="109MUSIC" class="cmp-us">Yes. We publish it before you pay</td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
-      <p class="cmp-foot mono">
-        The last row is the whole argument. Everything under{' '}
-        <a href={url('/music-marketing/')}>Music Marketing</a> is what we run for clients,
-        written down.
-      </p>
-    </section>
+    {/* La comparativa solo se monta aqui cuando Results esta VISIBLE. Con el
+        interruptor apagado esta pagina no la ve nadie, asi que la tabla se muda
+        sola a la home y no queda escondida detras de un noindex. */}
+    {SHOW_RESULTS && (
+      <section class="surf-bone">
+        <SectionMarker n={2} slug="the_alternatives" />
+        <div class="sec-head"><h2 class="display">What most artists try first</h2></div>
+        <Compare />
+      </section>
+    )}
   </div>
 
   <div class="slab slab--tight">

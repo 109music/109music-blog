@@ -26,11 +26,12 @@ import Base from '../layouts/Base.astro';
 import Row from '../components/Row.astro';
 import ResultCard from '../components/ResultCard.astro';
 import SectionMarker from '../components/SectionMarker.astro';
+import Compare from '../components/Compare.astro';
 import Ambient from '../components/Ambient.astro';
 import { getCollection } from 'astro:content';
 import {
   SITE, SECTIONS, STEPS, url, readingTime, labelOf, wa, pathOf,
-  RESULTS_LIVE, RESULTS, RESULT_NOTES, TESTIMONIALS,
+  RESULTS_LIVE, RESULTS, RESULT_NOTES, TESTIMONIALS, SHOW_RESULTS, PLAYLIST_SAVES, PLAYLISTS_URL,
 } from '../lib/site';
 
 const live = (arr: any[]) =>
@@ -57,7 +58,10 @@ const fourth = topThree.some((e: any) => e.collection === 'case-studies')
   : (newestCase ?? everything[3]);
 const latest = [...topThree, fourth].filter(Boolean);
 
-const resultsLive = RESULTS_LIVE && RESULTS.length > 0;
+/* Con SHOW_RESULTS apagado el bloque entero no se renderiza: ni marcador, ni
+   titular, ni tarjetas, ni la nota de medicion. La numeracion de secciones se
+   recoloca sola porque mark() cuenta llamadas, no posiciones. */
+const resultsLive = SHOW_RESULTS && RESULTS_LIVE && RESULTS.length > 0;
 
 /* Los marcadores numerados cuentan desde una sola fuente: si un bloque se apaga con
    una bandera, la numeración no se queda con un hueco. */
@@ -111,7 +115,7 @@ const schema = {
       <section class="surf-bone">
         <Ambient />
         <SectionMarker n={mark()} slug="real_results" />
-        <div class="sec-head">
+        <div class="sec-head" data-rvl>
           <h2 class="display">Real artists. Real numbers.</h2>
           <a href={url('/results/')}>All results →</a>
         </div>
@@ -157,7 +161,7 @@ const schema = {
     <section class="surf-bone">
       <Ambient />
       <SectionMarker n={mark()} slug="what_we_offer" />
-      <div class="sec-head"><h2 class="display">What we offer</h2></div>
+      <div class="sec-head" data-rvl><h2 class="display">What we offer</h2></div>
 
       <div class="offergrid">
         <div class="offer">
@@ -234,7 +238,7 @@ const schema = {
             las capturas reales se sustituyen y no se toca el layout. */}
         <ol class="steps">
           {STEPS.map((s, i) => (
-            <li class={s.shot ? 'step step--shot' : 'step'}>
+            <li class={s.shot ? 'step step--shot' : 'step'} data-rvl>
               <span class="step-n mono">{String(i + 1).padStart(2, '0')}</span>
               <div class="step-body">
                 <h3 class="display">{s.h}</h3>
@@ -275,7 +279,7 @@ const schema = {
     {latest.length > 0 && (
       <section class="surf-bone">
         <SectionMarker n={mark()} slug="the_109_blog" />
-        <div class="sec-head">
+        <div class="sec-head" data-rvl>
           <h2 class="display">The 109 blog</h2>
           <a href={url('/rss.xml')}>Subscribe via RSS →</a>
         </div>
@@ -324,7 +328,16 @@ const schema = {
         motivo, caso a caso, esta en TESTIMONIALS, en site.ts. */}
     <section class="surf-bone">
       <SectionMarker n={mark()} slug="what_our_artists_say" />
-      <div class="sec-head"><h2 class="display">What our artists say</h2></div>
+      <div class="sec-head" data-rvl><h2 class="display">What our artists say</h2></div>
+      {/* EL UNICO NUMERO DE LA HOME MIENTRAS RESULTS ESTE OCULTO, y por eso tiene
+          que ser el mas comprobable de todos: sale de sumar los guardados de las
+          dos listas, las dos son publicas, y el enlace las abre. No se teclea,
+          se calcula en site.ts a partir de PLAYLISTS y se redondea a la baja. */}
+      <p class="sec-intro">
+        Our two playlists hold <b>{PLAYLIST_SAVES.rounded} saves</b> between them.
+        Both are public:{' '}
+        <a href={PLAYLISTS_URL} target="_blank" rel="noopener">open them and check</a>.
+      </p>
       <div class="says">
         {/* `figcaption` PRIMERO y `blockquote` despues. Es HTML valido (el
             figcaption puede ir de primer o de ultimo hijo) y es lo que hace que
@@ -341,7 +354,7 @@ const schema = {
             compilador de Astro corta el build. */}
         <div class="says-grid">
           {TESTIMONIALS.map((t) => (
-            <figure class="say">
+            <figure class="say" data-rvl>
               <figcaption class="say-by">
                 <span class="say-name">{t.name}</span>
                 <span class="say-work mono">{t.work}</span>
@@ -355,11 +368,24 @@ const schema = {
           la home se queda sin ningun sitio donde se traten objeciones antes del
           cierre. Esta linea no la sustituye, pero al menos deja la puerta
           abierta a quien esta comparando. Se borra con quitar el <p>. */}
-      <p class="cmp-foot mono">
-        Comparing us with a playlist plug or an agency?{' '}
-        <a href={url('/results/')}>See how the four options stack up</a>.
-      </p>
     </section>
+
+    {/* 06 · LA COMPARATIVA, DE VUELTA MIENTRAS RESULTS ESTE OCULTO.
+
+        No es una copia: es el mismo componente que monta Results cuando el
+        interruptor esta encendido. Una tabla, dos posibles anfitriones, nunca
+        las dos a la vez.
+
+        Y va aqui, al final, por lo de siempre: es el unico bloque que trata
+        objeciones, y las objeciones se tratan justo antes de pedir la accion.
+        Cuando Results vuelva, este bloque desaparece de la home solo. */}
+    {!SHOW_RESULTS && (
+      <section class="surf-bone">
+        <SectionMarker n={mark()} slug="the_alternatives" />
+        <div class="sec-head" data-rvl><h2 class="display">What most artists try first</h2></div>
+        <Compare />
+      </section>
+    )}
   </div>
 
   {/* 07 · Cierre */}

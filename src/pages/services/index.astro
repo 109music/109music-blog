@@ -78,7 +78,7 @@ const SERVICES = [
 
     {/* 01 · LA PUERTA. Lo unico con precio cerrado y compra directa. */}
     <section id="own-playlists">
-      <div class="svc-door">
+      <div class="svc-door" data-rvl>
         <p class="door-kick">
           <span class="door-tag">Buy it now</span>
           <span>5 EUR per submission · no call, no waiting</span>
@@ -110,7 +110,7 @@ const SERVICES = [
     {/* 02 y 03 · LOS SERVICIOS. Seccion abierta, display h2, CTA de conversacion. */}
     {SERVICES.map((s) => (
       <section id={s.id}>
-        <div class="sec-head"><h2 class="display">{s.name}</h2></div>
+        <div class="sec-head" data-rvl><h2 class="display">{s.name}</h2></div>
         <p class="sec-intro">{s.line}</p>
         <ul class="ticks">{s.points.map((p) => <li>{p}</li>)}</ul>
 
@@ -151,7 +151,7 @@ const SERVICES = [
 
     {/* 04 · Lo de alrededor. NO al mismo peso que los dos servicios. */}
     <section id="around">
-      <div class="sec-head"><h2 class="display">And everything around them</h2></div>
+      <div class="sec-head" data-rvl><h2 class="display">And everything around them</h2></div>
       <p class="sec-intro">Added to a campaign, or bought on their own. All quoted in the same conversation.</p>
       <ul class="aroundlist">
         {SERVICES_AROUND.map((a) => (

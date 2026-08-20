@@ -1,0 +1,75 @@
+---
+/* LA COMPARATIVA, EN UN SOLO SITIO.
+
+   Vivia dentro de results/index.astro y ademas hubo una copia en la home. Las
+   dos divergieron: distinta cuarta fila, y a la de Results le faltaban los
+   `data-label`, que son los que en movil ponen el nombre de la columna encima de
+   cada dato. Sin ellos cada celda pintaba una etiqueta VACIA.
+
+   Ahora se declara aqui y la montan las dos paginas. Cual de las dos depende de
+   SHOW_RESULTS: encendido va en Results, apagado se muda a la home. Nunca las
+   dos a la vez.
+
+   EL ORDEN DE LAS FILAS NO ES LIBRE. "Risk to the release" es la unica celda de
+   toda la tabla donde admitimos algo en vez de ganar, y va la CUARTA. El pie
+   dice que la ultima fila es el argumento entero, y ese argumento es publicar el
+   metodo, no reconocer un riesgo. Al final, la tabla cerraria admitiendo algo
+   justo antes del boton. */
+import { url } from '../lib/site';
+
+interface Props { intro?: boolean }
+const { intro = true } = Astro.props;
+
+const COLS = ['Paid playlist placements', 'Agency retainer', 'Running ads yourself'] as const;
+
+const ROWS = [
+  { label: 'What you get',
+    cells: ['Streams from accounts that never come back', 'A deck, monthly', 'Reach, if the targeting is right'],
+    us: 'Listeners who save and follow' },
+  { label: 'What it costs',
+    cells: ['Per placement, with no floor', 'Monthly retainer, three-month minimum', 'Ad spend plus your own week'],
+    us: 'Ad spend plus one flat fee' },
+  { label: 'Who keeps the pixel',
+    cells: ['Not applicable', 'Usually the agency', 'You'],
+    us: 'You, always' },
+  { label: 'Risk to the release',
+    cells: ['Bot flags and playlist removal', 'Slow to react mid-campaign', 'Budget burnt learning'],
+    us: 'Ad spend that does not convert. Nothing you are locked into' },
+  { label: 'Can you check the method',
+    cells: ['No', 'No', 'Only your own'],
+    us: 'Yes. We publish it before you pay' },
+];
+---
+{intro && (
+  <p class="sec-intro">
+    Four ways to spend money on a release, compared on five things. Three of the four
+    we would talk you out of. One row admits what can go wrong here, and the last row
+    is the one only we can write.
+  </p>
+)}
+
+<div class="cmp-scroll" data-rvl>
+  <table class="cmp">
+    <thead>
+      <tr>
+        <th class="cmp-lab"><span class="visually-hidden">Comparison</span></th>
+        {COLS.map((c) => <th>{c}</th>)}
+        <th class="cmp-us">109MUSIC</th>
+      </tr>
+    </thead>
+    <tbody>
+      {ROWS.map((r) => (
+        <tr>
+          <th class="cmp-lab" scope="row">{r.label}</th>
+          {r.cells.map((cell, i) => <td data-label={COLS[i]}>{cell}</td>)}
+          <td data-label="109MUSIC" class="cmp-us">{r.us}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+<p class="cmp-foot mono">
+  The last row is the whole argument. Everything under{' '}
+  <a href={url('/music-marketing/')}>Music Marketing</a> is what we run for clients,
+  written down.
+</p>

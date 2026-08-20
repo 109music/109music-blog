@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { SITE, NAV, NAV_PARENT, NAV_CTA, FOOT_NAV, url } from '../lib/site';
+import { SITE, NAV_VISIBLE, NAV_PARENT, NAV_CTA, FOOT_NAV, url } from '../lib/site';
 import Search from '../components/Search.astro';
 
 interface Props {
@@ -77,6 +77,15 @@ const ogImage = new URL(url(image), Astro.site).href;
 
   {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
   <slot name="head" />
+<!-- Motion: el unico JS del sistema. El porque, en PASE 17 de global.css. -->
+<script is:inline>
+(function(){var r=document.documentElement;
+if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+r.className+=' rvl';
+addEventListener('DOMContentLoaded',function(){
+var io=new IntersectionObserver(function(es){for(var i=0;i<es.length;i++)if(es[i].isIntersecting){es[i].target.classList.add('is-in');io.unobserve(es[i].target)}},{rootMargin:'0px 0px -8% 0px'});
+var e=document.querySelectorAll('[data-rvl]');for(var i=0;i<e.length;i++)io.observe(e[i]);});})();
+</script>
 </head>
 <body class={paper ? 'paper' : ''}>
   {/* Enlace de salto. Sin el, quien navega con teclado se come SIETE tabuladores
@@ -112,7 +121,7 @@ const ogImage = new URL(url(image), Astro.site).href;
           <span class="navtoggle-word mono">Menu</span>
         </button>
       <nav class="nav" id="sitenav" aria-label="Sections">
-        {NAV.map((n: any) =>
+        {NAV_VISIBLE.map((n: any) =>
           n.children ? (
             /* Grouped, not hidden. Every child is a real anchor in the DOM on every
                page, so the group costs nothing in crawlability. The panel opens on

@@ -35,7 +35,7 @@ const {
 /* Sin filtro. El gris vive solo en los carruseles de Instagram. */
 const thumb = hero ? (hero.thumb ?? hero.src) : null;
 ---
-<li class="row">
+<li class="row" data-rvl>
   <a href={url(href)} class={thumb ? 'has-thumb' : undefined}>
     {thumb && (
       <span class="row-thumb">

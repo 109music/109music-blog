@@ -2881,3 +2881,135 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
   font-size: 15px; line-height: 1.6; color: var(--on-bone-mute);
   text-wrap: pretty;
 }
+
+/* ==========================================================================
+   PASE 17 (2026-08-17) · EL SISTEMA DE MOVIMIENTO
+
+   De donde sale. Medi auramusic.ai con estilos computados, 1.186 elementos, y
+   el resultado va en contra de lo que se espera al pedir "mas movimiento":
+
+     - CERO reveals al hacer scroll. Ni IntersectionObserver, ni
+       animation-timeline, ni framer-motion, ni GSAP, ni AOS.
+     - Lo unico que se mueve solo son siete manchas desenfocadas de 10 a 16
+       segundos DETRAS del texto, y una marquesina de 52s.
+     - El hover dura 0,15s y casi siempre solo cambia color.
+     - Un solo easing en 148 elementos.
+
+   Se siente caro porque casi nada se mueve como respuesta a ti. Ese es el
+   criterio 06 de la lista de los 10k, "motion that whispers", y este bloque
+   esta escrito contra el, no contra un catalogo de efectos.
+
+   Lo nuestro, medido igual: animamos el 17,1% de los elementos contra su 15,5%,
+   ya teniamos UN easing, y `.rise` estaba en TRES elementos, todos del hero. El
+   problema nunca fue que faltaran efectos. Era que la pagina se movia una vez al
+   cargar y despues estaba muerta hasta el final, y que las duraciones eran cinco
+   numeros sueltos en vez de una escala.
+   ========================================================================== */
+
+/* --- 1 · LA ESCALA. Tres valores, y ninguno mas ------------------------- */
+:root {
+  --t-fast:  150ms;   /* color, borde. La medida de Aura */
+  --t-base:  220ms;   /* transform, hover, paneles */
+  --t-enter: 420ms;   /* entrada en pantalla */
+}
+
+/* --- 2 · ENTRADA --------------------------------------------------------
+
+   EL SCRIPT VIVE EN EL HEAD DE Base.astro, y el porque esta aqui y no alli:
+   los comentarios de este archivo los borra Lightning CSS al construir, asi que
+   explicar cuesta cero bytes. Un comentario de HTML en Base.astro viaja tal cual
+   a cada pagina: el que habia ocupaba 1.084 bytes por carga.
+
+   POR QUE VA EN EL HEAD Y NO AL FINAL DEL BODY. La clase `rvl` tiene que estar
+   puesta antes del primer pintado. Si se pusiera despues, los bloques se
+   dibujarian visibles, saltarian a opacidad 0 y entrarian con un parpadeo.
+
+   POR QUE EL ESTADO OCULTO CUELGA DE `html.rvl`. Esa clase la pone el propio
+   script. Si no corre (JS desactivado, error, navegador viejo, o el visitante
+   pide menos movimiento) no hay clase, y sin clase no se oculta nada: la pagina
+   se ve entera. El fallo seguro es quedarse sin animacion, nunca sin contenido.
+
+   POR QUE ESTA ESCRITO APRETADO. Astro NO minifica los `is:inline`: lo que se
+   teclea dentro del <script> es exactamente lo que se descarga. Con formato
+   holgado ocupaba 631 bytes y con su comentario dentro, 787. Apretado y con los
+   comentarios aqui: 511.                                                    */
+/* El estado oculto cuelga de `html.rvl`, que pone el script del head. Sin
+   script no hay clase, y sin clase no se oculta nada: el fallo seguro es
+   quedarse sin animacion, nunca sin contenido. */
+html.rvl [data-rvl] { opacity: 0; transform: translateY(14px); }
+[data-rvl] {
+  transition: opacity var(--t-enter) var(--ease), transform var(--t-enter) var(--ease);
+}
+[data-rvl].is-in { opacity: 1; transform: none; }
+
+/* Escalonado de 60ms entre hermanos y TOPE EN TRES. Una fila de tres columnas
+   termina en 540ms; sin tope, una lista de diez articulos tardaria 1,2s en
+   acabar de aparecer y el ultimo se leeria como un fallo de carga. */
+[data-rvl]:nth-child(2)   { transition-delay: 60ms; }
+[data-rvl]:nth-child(3)   { transition-delay: 120ms; }
+[data-rvl]:nth-child(n+4) { transition-delay: 180ms; }
+
+/* `.rise` deja de ser un caso aparte. Era 0,8s, el doble de lento que nada mas
+   en el sitio, y solo lo llevaban tres elementos del hero. Mismo recorrido y
+   misma duracion que el reveal general: una sola idea de "entrar". */
+.rise { animation-duration: var(--t-enter); }
+
+/* --- 3 · RESPUESTA ------------------------------------------------------
+   Maximo 2px de desplazamiento y nunca escala sobre texto. Escalar texto lo
+   desenfoca durante la transicion, y este sitio se lee. */
+.btn .arrow, .navcta .arrow, .offer-cta .arrow {
+  display: inline-block;
+  transition: transform var(--t-base) var(--ease);
+}
+.btn:hover .arrow, .navcta:hover .arrow, .offer-cta:hover .arrow { transform: translateX(3px); }
+
+.say, .leadcard { transition: border-color var(--t-fast) var(--ease), transform var(--t-base) var(--ease); }
+.say:hover { transform: translateY(-2px); }
+
+/* --- 4 · REPOSO. Solo sobre negro, y nunca cerca de una cifra ------------
+   Las manchas existian ya pero estaban QUIETAS. Se les da periodo distinto a
+   cada una (13s, 17s, 19s) para que el bucle no se lea como bucle: con el mismo
+   periodo las tres vuelven a su sitio a la vez y el ojo lo pilla. El recorrido
+   es minusculo, entre 12 y 20px, porque van detras del texto: si se nota, es que
+   estorba. */
+@keyframes drift-a { 50% { transform: translate3d(18px, -12px, 0); } }
+@keyframes drift-b { 50% { transform: translate3d(-14px, 16px, 0); } }
+@keyframes drift-c { 50% { transform: translate3d(12px, 14px, 0); } }
+.ambient .a1 { animation: drift-a 13s ease-in-out infinite; }
+.ambient .a2 { animation: drift-b 17s ease-in-out infinite; }
+.ambient .a3 { animation: drift-c 19s ease-in-out infinite; }
+
+/* --- 5 · ENTRE PAGINAS, SIN UN BYTE DE JAVASCRIPT -----------------------
+   Astro trae <ClientRouter />, pero son unos 8KB comprimidos: veinte veces el
+   presupuesto entero del sitio por un fundido. Las transiciones de vista entre
+   documentos hacen lo mismo en CSS puro. Donde el navegador no las soporta, la
+   pagina carga como cargaba, sin capa de compatibilidad ni error. */
+@view-transition { navigation: auto; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 200ms; }
+
+/* --- 6 · DONDE NO SE MUEVE NADA -----------------------------------------
+   Esta es la mitad del sistema y es la que hay que defender cuando alguien pida
+   "un poco mas". Se anota como regla, no como omision:
+
+     - Las CIFRAS. Ni contador ascendente ni entrada escalonada. Una cifra que se
+       anima es una cifra que no se puede leer, y un contador sobre un numero que
+       aun no ha confirmado la artista es teatro.
+     - Los PARRAFOS de cuerpo. Se revelan bloques, no frases. Leer no es un
+       espectaculo.
+     - La NAVEGACION. Instantanea siempre.
+     - La columna de texto de los ARTICULOS, por debajo del titular.
+     - La TABLA comparativa: entra entera o no entra. Escalonar fila por fila
+       invita a leerla como una secuencia, y es una comparacion.
+     - El paso del PAGO y los botones de compra. Nada que distraiga ni retrase un
+       clic.
+
+   Por eso `[data-rvl]` se pone A MANO en la plantilla y no con una lista de
+   selectores dentro del script. Una lista se queda desactualizada en silencio en
+   cuanto alguien renombra una clase; un atributo se ve al leer el archivo y se
+   busca con grep. */
+@media (prefers-reduced-motion: reduce) {
+  html.rvl [data-rvl] { opacity: 1; transform: none; }
+  [data-rvl] { transition: none; }
+  .ambient i { animation: none; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+}

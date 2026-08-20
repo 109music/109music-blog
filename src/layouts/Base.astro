@@ -83,8 +83,11 @@ const ogImage = new URL(url(image), Astro.site).href;
 if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
 r.className+=' rvl';
 addEventListener('DOMContentLoaded',function(){
-var io=new IntersectionObserver(function(es){for(var i=0;i<es.length;i++)if(es[i].isIntersecting){es[i].target.classList.add('is-in');io.unobserve(es[i].target)}},{rootMargin:'0px 0px -8% 0px'});
-var e=document.querySelectorAll('[data-rvl]');for(var i=0;i<e.length;i++)io.observe(e[i]);});})();
+var e=document.querySelectorAll('[data-rvl]'),i;
+var io=new IntersectionObserver(function(es){for(var i=0;i<es.length;i++)if(es[i].isIntersecting){es[i].target.classList.add('is-in');io.unobserve(es[i].target)}},{rootMargin:'0px 0px -5% 0px'});
+for(i=0;i<e.length;i++)io.observe(e[i]);
+var net=function(){for(var i=0;i<e.length;i++){var t=e[i];if(!t.classList.contains('is-in')&&t.getBoundingClientRect().top<innerHeight){t.classList.add('is-in');io.unobserve(t)}}};
+addEventListener('scroll',net,{passive:true});addEventListener('load',net);setTimeout(net,1200);});})();
 </script>
 </head>
 <body class={paper ? 'paper' : ''}>

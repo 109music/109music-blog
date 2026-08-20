@@ -2929,6 +2929,14 @@ h1.display.face { text-transform: uppercase; letter-spacing: -.028em; }
    pide menos movimiento) no hay clase, y sin clase no se oculta nada: la pagina
    se ve entera. El fallo seguro es quedarse sin animacion, nunca sin contenido.
 
+   LA RED DE SEGURIDAD, anadida el 20/08 despues de romper produccion. El
+   observador basta en teoria, pero si por lo que sea no dispara para un bloque,
+   ese bloque se queda EN BLANCO para siempre. `net()` recorre los pendientes y
+   revela cualquiera cuyo borde superior ya haya pasado por debajo del alto de la
+   ventana, o sea todo aquello por lo que el visitante ya ha pasado. Se llama al
+   hacer scroll, al terminar de cargar y una vez a los 1,2s. Cuesta unos 180
+   bytes y convierte "seccion en blanco" en un fallo imposible, no improbable.
+
    POR QUE ESTA ESCRITO APRETADO. Astro NO minifica los `is:inline`: lo que se
    teclea dentro del <script> es exactamente lo que se descarga. Con formato
    holgado ocupaba 631 bytes y con su comentario dentro, 787. Apretado y con los
@@ -2940,7 +2948,13 @@ html.rvl [data-rvl] { opacity: 0; transform: translateY(14px); }
 [data-rvl] {
   transition: opacity var(--t-enter) var(--ease), transform var(--t-enter) var(--ease);
 }
-[data-rvl].is-in { opacity: 1; transform: none; }
+/* EL `html.rvl` DE DELANTE NO ES DECORATIVO, Y SU AUSENCIA ROMPIO EL SITIO.
+   La regla que oculta es `html.rvl [data-rvl]`: tipo + clase + atributo, o sea
+   especificidad 0-2-1. Escrita como `[data-rvl].is-in`, la regla que revela era
+   atributo + clase, 0-2-0. Pierde. El observador anadia `is-in` correctamente y
+   el bloque se quedaba a opacidad 0 para siempre.
+   Con `html.rvl` delante son 0-3-1 y gana. NO quitar ese prefijo. */
+html.rvl [data-rvl].is-in { opacity: 1; transform: none; }
 
 /* Escalonado de 60ms entre hermanos y TOPE EN TRES. Una fila de tres columnas
    termina en 540ms; sin tope, una lista de diez articulos tardaria 1,2s en
@@ -3008,7 +3022,8 @@ html.rvl [data-rvl] { opacity: 0; transform: translateY(14px); }
    cuanto alguien renombra una clase; un atributo se ve al leer el archivo y se
    busca con grep. */
 @media (prefers-reduced-motion: reduce) {
-  html.rvl [data-rvl] { opacity: 1; transform: none; }
+  /* Mismo prefijo por el mismo motivo de especificidad. */
+  html.rvl [data-rvl], html.rvl [data-rvl].is-in { opacity: 1; transform: none; }
   [data-rvl] { transition: none; }
   .ambient i { animation: none; }
   ::view-transition-old(root), ::view-transition-new(root) { animation: none; }

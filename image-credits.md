@@ -585,3 +585,43 @@ al cuerpo como figura.
 **Catorce artículos, catorce cabeceras, catorce con foto real.** Ya no queda
 ninguno con gráfico propio en la cabecera. Los gráficos propios siguen donde
 tienen que estar, en el cuerpo y solo cuando hay datos.
+
+## 2026-09-02 — heroes de los dos artículos de W36
+
+Sustituyen a los gráficos tipográficos con los que salieron esa misma mañana. Nombres de archivo NUEVOS, no se
+reutiliza el de la versión anterior: un cambio de imagen bajo el mismo nombre es indistinguible de ningún cambio
+para cualquier caché del camino (lección del 2026-08-16).
+
+### plan-a-release-rollout
+- Archivo: `/img/articles/rollout-plan-photo-hero.webp` (1600x900, 103 KB) y `-thumb.webp` (640x360, 16 KB)
+- Original: `mcpeter-ag3CIh8OON4-unsplash.jpg`, 6516x4344, 5,30 MB (0,187 bytes/px)
+- Autor: mcpeter · Unsplash License · https://unsplash.com/photos/ag3CIh8OON4
+- Qué es: sala de trabajo vacía, escritorio con portátil y teclado, guitarra apoyada, silla retirada, pared magenta.
+- Recorte: se quitan 679 px de arriba (techo y panel acústico) para llegar a 16:9. Sin gamma ni apagado añadido.
+- Marca en el encuadre: se lee "harman/kardon" en el altavoz. Entra por la regla de 2026-08-16: la marca aparece,
+  no es el sujeto. Mismo caso que el rótulo LEGION aceptado en `new-ways`.
+- Descartada la alternativa `AW9Y-YiyhLU` del mismo autor: 5343x4275 es relación 1,25, no llega a apaisada
+  (w > h*1.3), y pesa 0,061 bytes/px, la señal de poco detalle que dejó floja la foto de Ariana (0,047).
+
+### jennie-fallen-angel-two-product-rollout
+- Archivo: `/img/articles/jennie-merch-photo-hero.webp` (1600x900, 89 KB) y `-thumb.webp` (640x360, 22 KB)
+- Original: `marija-zaric-lydrOqcPopI-unsplash.jpg`, 6000x4000, 1,66 MB
+- Autora: Marija Zaric · Unsplash License · https://unsplash.com/photos/lydrOqcPopI
+- Qué es: pila de cajas de CD vista de canto sobre un estante de contrachapado. Habla del producto físico y de
+  una serie que se colecciona, que es el mecanismo del artículo.
+- Recorte: se quitan 625 px de abajo para llegar a 16:9. Sin gamma ni apagado añadido.
+- Sin obra ajena identificable: se ven cantos, no carátulas. Se descartaron por eso `KmJNYz_vdGM` (portadas de
+  The Shins legibles) y los tres collages de carátulas `jGmJ8zuKxUU`, `1MmB4To4fKY`, `jSGZZ0D1AHM`.
+- NO se usa foto de JENNIE: en Commons su categoría solo tiene logotipos y lo único real son tres fotos del
+  concierto de Ámsterdam de 2019, con Jisoo en el encuadre. Siete años y plano de directo para un artículo sobre
+  un lanzamiento de 2026. Búsqueda cerrada, no repetirla.
+
+### Contraste, medido sobre la cabecera compuesta
+Compuesto el velo real de `.masthead--photo` de global.css (capa plana de #0A0A0A al 40% más el degradado
+0.98/0.95/0.78/0.42/0.18 de abajo arriba) sobre cada foto, y medido el PEOR píxel de la caja del titular
+(mitad izquierda, del 40% al 88% de altura), contra blanco:
+- rollout: peor 15,88:1 · mediana 19,69:1
+- merch:   peor 14,26:1 · mediana 19,21:1
+Ambas muy por encima de AA. Por eso las dos van SIN gamma y SIN apagado lateral: el velo del sitio ya hace todo
+el trabajo y oscurecerlas más solo las mataría. Medición hecha en el contenedor componiendo el CSS, no sobre la
+página construida: eso queda por confirmar en el build.

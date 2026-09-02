@@ -5,13 +5,13 @@ date: 2026-09-02
 tags: ["case-study", "release-strategy", "music-business"]
 moment: "release-week"
 hero:
-  src: "/img/articles/jennie-two-product-hero.webp"
-  alt: "Typographic statement on bone: one release, two products, six weeks of runway"
-  thumb: "/img/articles/jennie-two-product-thumb.webp"
-  credit: "109MUSIC"
-  license: "Own work"
-  source: "own"
-  layout: "below"
+  src: "/img/articles/jennie-merch-photo-hero.webp"
+  alt: "A stack of CD jewel cases seen edge on, resting on a plywood shelf against a plain wall"
+  thumb: "/img/articles/jennie-merch-photo-thumb.webp"
+  credit: "Marija Zaric"
+  creditUrl: "https://unsplash.com/photos/lydrOqcPopI"
+  license: "Unsplash License"
+  source: "unsplash"
 igEmbeds:
   - url: "https://www.instagram.com/p/DcsnVEwFEcK/"
     caption: "Carousel 01, published 31 August 2026"

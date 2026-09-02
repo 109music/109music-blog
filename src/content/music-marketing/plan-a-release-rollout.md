@@ -5,13 +5,13 @@ date: 2026-09-06
 tags: ["release-strategy", "music-marketing"]
 moment: "pre-release"
 hero:
-  src: "/img/articles/rollout-plan-hero.webp"
-  alt: "Typographic statement on bone: plan the rollout four weeks out, not four days"
-  thumb: "/img/articles/rollout-plan-thumb.webp"
-  credit: "109MUSIC"
-  license: "Own work"
-  source: "own"
-  layout: "below"
+  src: "/img/articles/rollout-plan-photo-hero.webp"
+  alt: "An empty studio workroom before anyone is in it: a desk with a laptop and keyboard, an acoustic guitar leaning against it, a mesh chair pulled back, magenta light on the wall"
+  thumb: "/img/articles/rollout-plan-photo-thumb.webp"
+  credit: "mcpeter"
+  creditUrl: "https://unsplash.com/photos/ag3CIh8OON4"
+  license: "Unsplash License"
+  source: "unsplash"
 igEmbeds: []
 cta:
   keyword: "CALL"

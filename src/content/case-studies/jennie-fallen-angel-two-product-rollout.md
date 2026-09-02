@@ -5,13 +5,13 @@ date: 2026-09-02
 tags: ["case-study", "release-strategy", "music-business"]
 moment: "release-week"
 hero:
-  src: "/img/articles/jennie-merch-photo-hero.webp"
-  alt: "A stack of CD jewel cases seen edge on, resting on a plywood shelf against a plain wall"
-  thumb: "/img/articles/jennie-merch-photo-thumb.webp"
-  credit: "Marija Zaric"
-  creditUrl: "https://unsplash.com/photos/lydrOqcPopI"
-  license: "Unsplash License"
-  source: "unsplash"
+  src: "/img/articles/jennie-governorsball-photo-hero.webp"
+  alt: "JENNIE performing at The Governors Ball, June 2026, lit against a large LED screen"
+  thumb: "/img/articles/jennie-governorsball-photo-thumb.webp"
+  credit: "Picikepocok22"
+  creditUrl: "https://commons.wikimedia.org/wiki/File:Jennie_Kim_on_the_stage_in_2026.jpg"
+  license: "CC0"
+  source: "wikimedia"
 igEmbeds:
   - url: "https://www.instagram.com/p/DcsnVEwFEcK/"
     caption: "Carousel 01, published 31 August 2026"

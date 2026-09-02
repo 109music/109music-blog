@@ -625,3 +625,48 @@ Compuesto el velo real de `.masthead--photo` de global.css (capa plana de #0A0A0
 Ambas muy por encima de AA. Por eso las dos van SIN gamma y SIN apagado lateral: el velo del sitio ya hace todo
 el trabajo y oscurecerlas más solo las mataría. Medición hecha en el contenedor componiendo el CSS, no sobre la
 página construida: eso queda por confirmar en el build.
+
+### CORRECCIÓN 2026-09-02 (tarde) — el hero de JENNIE sí existía
+
+Sustituye a la pila de CD `jennie-merch-photo-hero.webp`, que estuvo en vivo unas horas. Los ficheros de la
+pila se quedan en el repo por si vuelven a hacer falta, pero el artículo ya no los referencia.
+
+- Archivo: `/img/articles/jennie-governorsball-photo-hero.webp` (1600x900, 124 KB) y `-thumb.webp` (640x360, 28 KB)
+- Original: `Jennie Kim on the stage in 2026.jpg`, 1179x1546, 513 KB
+- Autor: Picikepocok22 · **CC0** · sin `restrictions` · tomada 2026-06-10
+- Ficha: https://commons.wikimedia.org/wiki/File:Jennie_Kim_on_the_stage_in_2026.jpg
+- Qué es: JENNIE en directo en The Governors Ball, junio de 2026. Es literalmente el momento del que habla el
+  primer movimiento del artículo, la siembra en directo durante la gira de festivales de 2026, que nombra
+  Governors Ball. Licencia CC0: ni marca de agua que esquivar ni derecho de imagen que sortear.
+- Recorte: banda 1179x663 desde y=100, y AMPLIADA 1,36x hasta 1600x900. Es la única foto suya libre con
+  suficiente cara; el resto o son diminutas o llevan `restrictions`.
+- Desenfoque selectivo: la pantalla LED del fondo es una trama de puntos, el caso "tramas finas" que revienta
+  el presupuesto de peso. Sin tocar, no bajaba de 155 KB ni a calidad 46. Solución: gaussiana de 2,0 SOLO fuera
+  de la banda x 240-960, con 140 px de transición, dejando la cara nítida. Con eso, 124 KB a calidad 80.
+- Contraste sobre la cabecera compuesta: peor píxel 13,93:1, mediana 19,12:1. Muy por encima de AA. La
+  ampliación no se aprecia bajo el velo, comprobado en la previsualización compuesta.
+
+## LECCIÓN DE BÚSQUEDA (2026-09-02) — no filtrar Commons por nombre de fichero
+
+Se concluyó por error que no existía ninguna foto de JENNIE utilizable. Era falso: `Special:MediaSearch`
+devuelve 14.298 resultados y su primera pantalla está llena de primeros planos suyos.
+
+Dos fallos, y el segundo es el que importa:
+
+1. **La API `action=query&generator=search` no reproduce MediaSearch.** Son backends distintos.
+   `Special:MediaSearch` busca sobre DATOS ESTRUCTURADOS (declaraciones "depicts", leyendas, etiquetas),
+   no sobre el texto de la página. Buscar por la API y dar el resultado por bueno deja fuera la mayoría.
+2. **Se filtró exigiendo que el NOMBRE DEL FICHERO contuviera "jennie".** Un fichero de Commons puede
+   llamarse de cualquier forma y estar correctamente etiquetado: una foto suya puede titularse
+   "BLACKPINK at Coachella" o con un código de fecha. Filtrar por el nombre tira material bueno sin verlo.
+
+**Regla: en Commons se busca por `Special:MediaSearch` EN EL NAVEGADOR y se miran las miniaturas.** La API
+sirve después, para sacar tamaño, licencia, autor y `restrictions` de las candidatas que ya has visto. Nunca
+al revés, y nunca filtrando por el nombre del fichero.
+
+Es el mismo error de forma que el de la API anónima de Openverse cortando en 12 páginas: confundir el límite
+de la herramienta con el límite del material. Cuando una búsqueda devuelve poco, la primera hipótesis es que
+la consulta está mal, no que no exista.
+
+Añadido: Openverse (search.creativecommons.org) ya no sirve para esto. Su API pública devuelve 401 sin
+autenticar, y la web da "No results" para "jennie blackpink" y "jennie kim". No repetir esa vía para artistas.

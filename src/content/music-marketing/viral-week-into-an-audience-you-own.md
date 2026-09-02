@@ -2,6 +2,7 @@
 title: "How to turn a viral week into an audience you own"
 dek: "A spike gives you attention on loan. This is the order of operations for converting it: where to send the traffic, what to collect while it is hot, and why chasing the spike with your whole feed costs more than it pays."
 date: 2026-08-16
+updated: 2026-09-02
 tags: ["music-marketing", "tiktok", "instagram"]
 moment: "post-release"
 hero:
@@ -13,6 +14,10 @@ hero:
   license: "Unsplash License"
   source: "unsplash"
 igEmbed: null
+igEmbeds:
+  - url: "https://www.instagram.com/p/DcvbPoUD-my/"
+    after: "faster-and-worse"
+    caption: "Carousel 05, published 1 September 2026"
 cta:
   keyword: "OWNED"
   heading: "The 48-hour spike checklist"
@@ -22,11 +27,15 @@ cta:
 sources:
   - name: "Luminate: 2026 Midyear Music Report"
     url: "https://luminatedata.com/reports/"
+  - name: "Chartmetric: why TikTok songs go viral faster and convert worse"
+    url: "https://hmc.chartmetric.com/why-tiktok-songs-go-viral-faster"
 faq:
   - q: "How long does a viral spike on TikTok or Reels actually last?"
     a: "Plan for two days of real traffic and a long thin tail after that. The exact shape varies, which is why the work is to convert early rather than to predict the curve. If you wait a week to set up a landing page you have already spent the window."
   - q: "Should I post more when something goes viral?"
     a: "Post again quickly, but post the same thing you were already making. The audience arriving is deciding whether you are worth following based on the three posts under the one they found, so those three should look like your act rather than like a reaction to the spike."
+  - q: "How much is a TikTok post worth in Spotify streams now?"
+    a: "Roughly 275 streams per post in 2025, down from about 738 in 2020 according to Chartmetric. The drop of 63 percent is the reason a spike converts worse than it used to, and the reason the conversion work matters more than the spike itself."
   - q: "Is an email list still worth building for a musician in 2026?"
     a: "Yes, because it is the only list you keep when a platform changes its distribution. It does not have to be email specifically. A phone number, a Discord, a Beacons subscriber list all do the same job: a direct line that nobody can throttle."
 ---
@@ -55,6 +64,40 @@ The wider context is worth holding in your head while you do this. [Luminate's 2
 
 <aside class="pullquote">
   <p>Attention is abundant. The scarce thing is a way to reach the same person twice.</p>
+  <cite>109MUSIC</cite>
+</aside>
+
+## Virality got faster and worse at the same time {#faster-and-worse}
+
+Two numbers from Chartmetric explain why this article exists at all.
+
+Reaching 100,000 TikTok posts on one song took 340 days in 2020. In 2025 it takes 48, and one BLACKPINK track did it in 5. Songs travel faster than they ever have.
+
+And they convert worse. Each TikTok post drove around 738 Spotify streams in 2020. By 2025 that is roughly 275, a fall of 63 percent. The cause is saturation: more songs chasing the same feed, and audiences trained by years of pre-release snippets to hear a hook without going to look for it.
+
+<div class="keyfact">
+  <span class="mono">What changed</span>
+  <p><b>7x faster</b> to reach 100,000 posts, from 340 days to 48.<br/><b>63 percent less efficient</b> per post, from about 738 streams to about 275.</p>
+</div>
+
+Put together, those two numbers say something specific. The spike is easier to get and worth less when you get it. That does not make virality pointless, it makes the conversion window the entire value, which is what the rest of this piece is about.
+
+## Ship inside the window, then answer the sound {#ship-inside-the-window}
+
+The one behaviour that separates a spike that compounds from a spike that evaporates is shipping while it is still happening.
+
+The average viral window now runs about 48 days before the attention moves to somebody else. That is longer than the two days of peak traffic and much shorter than most release schedules, which is the mismatch that wastes so many of these moments. An artist whose next release is eight weeks out has already missed it.
+
+Three moves, in order:
+
+**Ship fast.** Release the full song, a live version or a video within days of the spike, not weeks. Whatever is closest to finished wins over whatever is best.
+
+**Give it a second format.** A live take or a visualiser gives the platforms a fresh object to recommend and gives the audience a reason to hear the same song again without it being a repost.
+
+**Answer the sound.** Post two or three follow-up clips using your own audio. When other people are already making videos to your song, you are the only account that can post as the source, and that is the cheapest reach available to you all year.
+
+<aside class="pullquote">
+  <p>The spike is easier to get than it used to be and worth less when you get it. The window is the value.</p>
   <cite>109MUSIC</cite>
 </aside>
 
